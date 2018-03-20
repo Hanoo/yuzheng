@@ -87,4 +87,12 @@ public class StatisticController {
 
         return JSONArray.fromObject(result);
     }
+
+    @RequestMapping("/getPCountByCrimeType")
+    @ResponseBody
+    public JSONArray getPCountByCrimeType() throws Exception {
+        List result = ageGroupsService.getPCountByCrimeType();
+
+        return JSONArray.fromObject(result);
+    }
 }

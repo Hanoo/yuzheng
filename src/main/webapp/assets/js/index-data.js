@@ -219,7 +219,7 @@ $(function() {
         }
     });
 
-    // 加载各监区囚徒数量
+    // 加载各民族囚徒数量
     $.ajax({
         type:"get",
         url: "/statistic/getPCountInNation",
@@ -267,53 +267,60 @@ $(function() {
             mzBar.setOption(mz_option);
         }
     });
-    //犯罪类型统计
-    fzlx_option = {
-        legend: {
-            x : 'right',
-            y : 'top',
-            data: ['一般刑事犯','重大犯罪','政治犯罪','一般犯罪'],
-            selectedMode: true,
-            textStyle: {color: '#ccc'}
-        },
-        title: {
-            //text: '各监区警力分析图',
-            //subtext: 'from global web index',
-            x: 'center',
-            y: '10',
-            textStyle: {
-                // fontFamily: 'Arial, Verdana, sans...',
-                fontSize: 24,
-                fontStyle: 'normal',
-                fontWeight: 'normal',
-                color: '#ff1f1f'
-            }
-        },
-        color: ['#D66B94', '#F3E59A', '#EDA936', '#E87355'],
-        calculable : true,
-        series : [
 
-            {
-                name:'面积模式',
-                type:'pie',
-                radius : [30, 110],
-                center : ['50%', '50%'],
-                roseType : 'area',
-                data:[
-                    {value:10, name:'一般刑事犯'},
-                    {value:5, name:'重大犯罪'},
-                    {value:15, name:'政治犯罪'},
-                    {value:25, name:'一般犯罪'}
-                ]
+    // 按犯罪类型统计
+    $.ajax({
+        type:"get",
+        url: "/statistic/getPCountByCrimeType",
+        contentType: 'application/json;charset=UTF-8',
+        dataType: 'json',
+        success:function(pCountList){
+            var dataList = [];
+            var nameList = [];
+            for(var i=0;i<pCountList.length;i++) {
+                var pCount = pCountList[i];
+                dataList[i] = {"value":pCount.count, "name":pCount.name};
+                nameList[i] = pCount.name;//犯罪类型统计
+                var fzlx_option = {
+                    legend: {
+                        x : 'right',
+                        y : 'top',
+                        data: nameList,
+                        selectedMode: true,
+                        textStyle: {color: '#ccc'}
+                    },
+                    title: {
+                        // text: '犯罪类型统计',
+                        //subtext: 'from global web index',
+                        x: 'center',
+                        y: '10',
+                        textStyle: {
+                            // fontFamily: 'Arial, Verdana, sans...',
+                            fontSize: 24,
+                            fontStyle: 'normal',
+                            fontWeight: 'normal',
+                            color: '#ff1f1f'
+                        }
+                    },
+                    color: ['#D66B94', '#F3E59A', '#EDA936', '#E87355'],
+                    calculable : true,
+                    series : [
+                        {
+                            name:'面积模式',
+                            type:'pie',
+                            radius : [30, 110],
+                            center : ['50%', '50%'],
+                            roseType : 'area',
+                            data:dataList
+                        }
+                    ]
+                };
+                var fzlx_pie = echarts.init(document.getElementById('fzlxPie'));
+                fzlx_pie.setOption(fzlx_option);
             }
-        ]
-    };
-    var fzlx_pie = echarts.init(document.getElementById('fzlxPie'));
-    // fzlx_pie.showLoading({
-    //     text: '数据获取中',
-    //     effect: 'whirling'
-    // });
-    fzlx_pie.setOption(fzlx_option);
+        }
+    });
+
 
 });
 

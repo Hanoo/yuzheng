@@ -53,4 +53,10 @@ public class StatisticServiceImpl implements StatisticService {
         result.add(others);
         return result;
     }
+
+    public List<Map> getPCountByCrimeType() throws Exception {
+        DataSourceTypeManager.set(DataSources.JGXT);
+        List<Map> list = (List) dao.findForList("AgeGroup.getPCountByCrimeType",null);
+        return list;
+    }
 }

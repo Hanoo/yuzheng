@@ -26,4 +26,11 @@ public interface StatisticService {
      * @throws Exception
      */
     List<Map> getPCountInNation() throws Exception;
+
+    /**
+     * 按犯罪类型进行数量统计
+     * @return
+     * @throws Exception
+     */
+    List<Map> getPCountByCrimeType() throws Exception;
 }

@@ -1,3 +1,6 @@
+/**
+    值班信息表
+ */
 create table duty_info(
   id                      char(10)   NOT NULL  COMMENT '用户唯一标志id',
   p_quantity              INT                  comment '囚犯总数',
@@ -14,6 +17,9 @@ create table duty_info(
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/**
+    管理信息表
+ */
 create table manage_info(
   id                      char(10)   NOT NULL  COMMENT '用户唯一标志id',
   police_quantity         INT                  COMMENT '警察数量',
@@ -45,5 +51,32 @@ create table manage_info(
   external_vehicle        INT                  COMMENT '外部车辆',
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+    公告新闻表
+ */
+create table bulletin (
+  id                      char(32)    not NULL comment '主键',
+  publisher               varchar(20)          comment '发布人ID',
+  dispaly_text            varchar(100)         comment '实际展示内容',
+  publish_time            DATE                 comment '发布时间',
+  primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+    系统用户表
+ */
+create table sys_user (
+  id                      char(32)    not NULL comment '主键',
+  user_name               VARCHAR(20) not null comment '用户登录名',
+  user_password           varchar(12) not null comment '登录密码',
+  display_name            varchar(20)          comment '展示名称',
+  prison_area             char(2)     not null comment '所属监区',
+  primary key (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/**
+    生成初始化数据
+ */
 INSERT INTO `db_jianyu`.`duty_info` (`id`) VALUES ('theOnlyRec');
 INSERT INTO `db_jianyu`.`manage_info` (`id`) VALUES ('theOnlyRec');
