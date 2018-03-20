@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DianMingMapper">
+
+    <cache type="com.css.redis.RedisCache"  />
+
+    <resultMap id="dianMingResultMap" type="DMinfo">
+        <id column="xh" property="xh"/>
+        <result column="name" property="name"/>
+        <result column="value" property="value"/>
+        <result column="pcount" property="pcount"/>
+
+    </resultMap>
+    <resultMap id="dmqx" type="DMinfo">
+        <id column="xh" property="xh"/>
+        <result column="name" property="name"/>
+        <result column="qxyy" property="qxyy"/>
+    </resultMap>
+
+
+    <!--  获取当前时间前一小时当前监狱所有监区应到人数和实际到达人数-->
+    <select id="getydSum" parameterType="java.util.Map" resultType="int">
+
+        SELECT sum(pcount) as ydNum from zte_AreaQd_Log  where 1=1 ${params}
+
+    </select>
+    <!--  获取监区所有人数-->
+    <select id="getDmYdNum" resultType="int">
+
+        SELECT sum(pcount)  as ydNum from zte_AreaQdPlanDetail
+
+    </select>
+    <select id="getsdSum" parameterType="java.util.Map" resultType="int">
+
+        SELECT  sum(pcountsum) as sdNum from zte_AreaQd_Log  where 1=1 ${params}
+
+    </select>
+
+
+    <!-- 获取当前时间前一小时点名监区的点名情况-->
+    <select id="getDianMingInfo" parameterType="java.util.Map" resultMap="dianMingResultMap">
+
+        select
+          a.aname as name,
+        (CASE WHEN a.aid IS null THEN 0 ELSE a.aid END ) as xh ,
+        (CASE WHEN z.pcountsum IS null THEN 0 ELSE z.pcountsum END) as value,
+        (CASE WHEN   z.pcount IS null THEN 0 ELSE   z.pcount END) as pcount
+          from
+                zte_AreaDetail a
+                LEFT JOIN
+                (
+                SELECT * from zte_AreaQd_Log where 1=1 ${params}
+                )z
+                ON
+                a.aid=z.aid
+                ORDER BY
+                CONVERT(INT,a.aid)
+    </select>
+
+    <!-- 获取当前时间前一小时点名监区的点名情况-->
+    <select id="getAllDianMingInfo" parameterType="java.util.Map" resultMap="dianMingResultMap">
+
+        select
+          a.aname as name,
+        (CASE WHEN a.aid IS null THEN 0 ELSE a.aid END ) as xh ,
+        (CASE WHEN z.pcountsum IS null THEN 0 ELSE z.pcountsum END) as value,
+        (CASE WHEN   z.pcount IS null THEN 0 ELSE   z.pcount END) as pcount
+          from
+                zte_AreaDetail a
+                LEFT JOIN
+                (
+                SELECT * from zte_AreaQd_Log where 1=1 ${params}
+                )z
+                ON
+                a.aid=z.aid
+                ORDER BY
+                CONVERT(INT,a.aid)
+    </select>
+
+
+
+    <!-- 获取当前时间前一小时已点名监区的点名情况-->
+    <select id="getDMInfo" parameterType="java.util.Map" resultMap="dianMingResultMap">
+
+        select
+        a.aname as name,
+        (CASE WHEN z.xh IS null THEN 0 ELSE z.xh END ) as xh ,
+        (CASE WHEN z.pcountsum IS null THEN 0 ELSE z.pcountsum END) as value,
+        (CASE WHEN   z.pcount IS null THEN 0 ELSE   z.pcount END) as pcount
+        from
+        zte_AreaDetail a
+        RIGHT JOIN
+        (
+        SELECT * from zte_AreaQd_Log where 1=1 ${params}
+        )z
+        ON
+        a.aid=z.aid
+        ORDER BY
+        CONVERT(INT,a.aid)
+    </select>
+
+    <!-- 获取当前时间前一小时每个监区的点名情况-->
+    <select id="getAllDMInfo" parameterType="java.util.Map" resultMap="dianMingResultMap">
+
+        select
+        a.aname as name,
+        (CASE WHEN z.xh IS null THEN 0 ELSE z.xh END ) as xh ,
+        (CASE WHEN z.pcountsum IS null THEN 0 ELSE z.pcountsum END) as value,
+        (CASE WHEN   z.pcount IS null THEN 0 ELSE   z.pcount END) as pcount
+        from
+        zte_AreaDetail a
+        LEFT JOIN
+        (
+        SELECT * from zte_AreaQd_Log where 1=1 ${params}
+        )z
+        ON
+        a.aid=z.aid
+        ORDER BY
+        CONVERT(INT,a.aid)
+    </select>
+
+    <!-- 获取当前时间前一小时每个监区的点名未到人员情况-->
+    <select id="getWdDMInfo" parameterType="java.util.Map" resultMap="dmqx">
+        select q.qxyy as qxyy,u.uname as  name from zte_AreaQd_qxLog q
+        left JOIN
+            zte_UserInfo u
+            ON
+            q.userid=u.userid
+             where jkxh= ${params}
+             ORDER  BY q.qxyy
+    </select>
+
+    <select id="getAreaList" resultType="DMinfo">
+        select aid code,aname caption from zte_AreaDetail
+    </select>
+
+    <select id="getDmNum" resultType="DMinfo">
+        select  convert(int,a.aid) as xh,a.aname as name ,
+        case
+ when  p.num  is null THEN '0'
+else p.num
+end
+  as pcount from zte_AreaDetail a
+        LEFT JOIN
+        (
+        SELECT pid, count(*) as num from zte_AreaQd_Log  where  1=1 ${params}
+        GROUP BY  pid) p
+        ON
+        p.pid=a.aid
+        ORDER BY  convert(int,a.aid)
+    </select>
+
+
+
+    <select id="getAreaNum" resultType="java.lang.Integer">
+        SELECT  count(*) num from zte_AreaDetail
+    </select>
+
+    <select id="getAreaLog" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(*) num from zte_AreaQd_Log where 1=1 ${params}
+     </select>
+
+    <select id="getJQRealCGPcount" parameterType="java.util.Map" resultMap="dianMingResultMap">
+        select  convert(int,a.aid) as xh,a.pname as name ,a.pcount,
+        case
+        when  p.num  is null
+        THEN '0'
+        else p.num
+        end
+        as realCount from zte_AreaQdPlanDetail a
+        LEFT JOIN
+        (
+        SELECT pid, pcountsum as num from zte_AreaQd_Log  where  1=1 ${params}
+        ) p
+        ON
+        p.pid=a.aid
+        ORDER BY  convert(int,a.aid)
+    </select>
+
+    <select id="getPCountByArea" resultType="DMinfo">
+        select convert(int,a.aid) as xh,a.pname as name ,a.pcount from zte_AreaQdPlanDetail a order by xh
+    </select>
+</mapper>

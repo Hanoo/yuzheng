@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="XunGeng">
+    <!--<cache type="com.css.redis.RedisCache"/>-->
+    <resultMap type="XunGeng" id="XunGengLine">
+
+        <result column="LineID" property="LineID"/>
+        <result column="AddrID" property="AddrID"/>
+        <result column="AddrName" property="AddrName"/>
+        <result column="LogDate" property="LogDate"/>
+    </resultMap>
+
+    <select id="getXunGengInfo" parameterType="java.util.Map" resultMap="XunGengLine">
+        select d.AddrID,d.AddrName, ISNULL(t.LineID , '0') AS LineID from Ptr_AddrDef d left join (
+        select * from (
+        SELECT
+        row_number()OVER(partition by Log.AddrID order by Log.LogDate) rank,
+        Log.AddrID,
+
+        Log.LineID ,
+        Log.LogDate
+
+
+        from
+        Ptr_Log AS Log
+        left join
+        Ptr_AddrDef AS AddrDef
+        ON
+        Log.AddrID=AddrDef.AddrID
+
+        WHERE
+        1=1
+        ${params}) t where t.rank = 1 ) t on d.AddrID = t.AddrID
+    </select>
+
+
+
+    <select id="getXGfenxiInfo" resultType="XunGeng">
+        select
+        Ptr_AddrDef.AddrID,
+        Ptr_AddrDef.AddrName
+        from
+        Ptr_AddrDef
+        where
+        Ptr_AddrDef.AddrID
+        NOT IN  (
+        SELECT
+        distinct Log.AddrID
+        from
+        Ptr_Log AS Log
+        WHERE
+        1=1
+        ${params}
+        )
+        ORDER BY Ptr_AddrDef.AddrID
+    </select>
+
+    <resultMap type="XunGeng" id="XGLateTime">
+        <result column="LogDate" property="LogDate"/>
+
+    </resultMap>
+
+    <select id="getXGfenxiToday" resultMap="XGLateTime">
+        SELECT
+        TOP (1) Log.LogDate
+        FROM
+        Ptr_Log LOG
+        WHERE
+        1=1 ${params}
+        ORDER BY
+        Log.LogDate DESC
+    </select>
+
+    <select id="XGtongjiMap" resultType="XunGeng">
+        SELECT AddrDef.AddrName ,
+			(case when t.Xgnum is null then 0 else t.Xgnum END  )Xgnum
+		from Ptr_AddrDef AS AddrDef  LEFT JOIN
+          (SELECT t.AddrName, COUNT(t.AddrName) Xgnum from (
+                SELECT
+                    Log.AddrID,
+                    AddrDef.AddrName  AddrName,
+                    Log.LineID ,
+                    Log.LogDate
+                 from
+                Ptr_Log AS Log
+        left join
+        Ptr_AddrDef AS AddrDef
+        ON
+        Log.AddrID=AddrDef.AddrID
+        WHERE
+        Log.LogDate >=  CONVERT(datetime,#{strdate},20)
+        and Log.LogDate &lt;=  CONVERT(datetime,#{enddate},20)
+        )t GROUP BY t.AddrName) t on AddrDef.AddrName = t.AddrName
+    </select>
+
+
+    <resultMap type="XunGeng" id="wxgTongjiInfo">
+        <result column="AddrID" property="AddrID"/>
+        <result column="AddrName" property="AddrName"/>
+    </resultMap>
+
+    <select id="WXGtongjiMap" resultMap="wxgTongjiInfo">
+        SELECT Ptr_AddrDef.AddrID,Ptr_AddrDef.AddrName from Ptr_AddrDef  where Ptr_AddrDef.AddrID NOT IN(
+
+        SELECT
+
+        Log.AddrID
+
+
+
+        from
+        Ptr_Log Log
+        left join
+        Ptr_AddrDef Def
+        ON
+        Log.AddrID=Def.AddrID
+
+        WHERE
+        Log.LogDate >=  CONVERT(datetime,#{strdate},20)
+        and Log.LogDate  &lt;=  CONVERT(datetime,#{enddate},20) )
+    </select>
+
+</mapper>

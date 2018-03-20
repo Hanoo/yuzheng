@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AgeGroup">
+    <resultMap type="AgeGroup" id="BaseResultMap">
+        <result column="age_group" property="ageGroup"/>
+        <result column="count" property="count"/>
+    </resultMap>
+
+    <select id="getAgeGroups" resultMap="BaseResultMap">
+        SELECT '1930' as 'ageGroup', COUNT(id) as 'count'
+        FROM DA_JBXX
+        where DA_JBXX.csrq>19300101 and 19301231>DA_JBXX.csrq
+        UNION ALL
+        SELECT '1940' as 'ageGroup', COUNT(id) as 'count'
+        FROM DA_JBXX
+        where DA_JBXX.csrq>19400101 and 19401231>DA_JBXX.csrq
+        UNION ALL
+        SELECT '1950' as 'ageGroup', COUNT(id) as 'count'
+        FROM DA_JBXX
+        where DA_JBXX.csrq>19500101 and 19501231>DA_JBXX.csrq
+        UNION ALL
+        SELECT '1960' as 'ageGroup', COUNT(id) as 'count'
+        FROM DA_JBXX
+        where DA_JBXX.csrq>19600101 and 19601231>DA_JBXX.csrq
+        UNION ALL
+        SELECT '1970' as 'ageGroup', COUNT(id) as 'count'
+        FROM DA_JBXX
+        where DA_JBXX.csrq>19700101 and 19701231>DA_JBXX.csrq
+        UNION ALL
+        SELECT '1980' as 'ageGroup', COUNT(id) as 'count'
+        FROM DA_JBXX
+        where DA_JBXX.csrq>19800101 and 19801231>DA_JBXX.csrq
+        UNION ALL
+        SELECT '1990' as 'ageGroup', COUNT(id) as 'count'
+        FROM DA_JBXX
+        where DA_JBXX.csrq>19900101 and 19901231>DA_JBXX.csrq
+    </select>
+
+    <select id="getSentenceLength" resultMap="BaseResultMap">
+        select '1' as 'ageGroup', count(xq) as count from DA_JBXX where xq>600 and 10000>xq and xq !=9995 and xq!=9996
+        UNION ALL
+        select '3' as 'ageGroup', count(xq) as count from DA_JBXX where xq>10000 and 30000>xq
+        UNION ALL
+        select '10' as 'ageGroup', count(xq) as count from DA_JBXX where xq>30000 and 100000>xq
+        UNION ALL
+        select '15' as 'ageGroup', count(xq) as count from DA_JBXX where xq>100000 and 150000>xq
+        UNION ALL
+        select '20' as 'ageGroup', count(xq) as count from DA_JBXX where xq>150000 and 200000>xq
+        UNION ALL
+        select '100' as 'ageGroup', count(xq) as count from DA_JBXX where xq=9995 or xq =9996
+    </select>
+
+    <select id="getPCountInNation" resultType="java.util.Map">
+        SELECT DISTINCT(mz) as 'mz', COUNT(mz) as count
+        from DA_JBXX
+        where ISNUMERIC(mz)=1
+        GROUP BY mz
+        ORDER BY count DESC
+    </select>
+
+    <select id="getPCount" resultType="java.lang.Integer">
+        SELECT count(mz) from DA_JBXX where ISNUMERIC(mz)=1 and 57 > CONVERT(INT, mz)
+    </select>
+</mapper>

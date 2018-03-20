@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DeptJLMapper">
+
+    <cache type="com.css.redis.RedisCache" flushInterval="2000"/>
+
+    <resultMap id="deptJLResultMap" type="DeptJL">
+        <id column="DeptID" property="DeptID"/>
+        <result column="DeptNo" property="DeptNo"/>
+        <result column="DeptName" property="DeptName"/>
+        <result column="realCount" property="realCount"/>
+        <result column="planCount" property="planCount"/>
+        <result column="perc" property="perc"/>
+    </resultMap>
+
+    <resultMap id="deptJLCountHJMap" type="DeptJL">
+        <result column="totalRealCount" property="realCount"/>
+        <result column="totalPlanCount" property="planCount"/>
+        <result column="perc" property="perc"/>
+    </resultMap>
+
+    <resultMap id="empInfoMap" type="EmpInfo">
+        <result column="EmpID" property="empId"/>
+        <result column="EmpNO" property="empNo"/>
+        <result column="EmpName" property="empName"/>
+        <result column="TypeName" property="typeName"/>
+        <result column="DeptID" property="deptID"/>
+        <result column="DeptName" property="deptName"/>
+    </resultMap>
+
+
+    <!--分部门获取统计 ${params}：自定义条件可加人员类型限制；${params1}：自定义条件可加入 部门类型限制 -->
+    <select id="getYDDeptJLCount" parameterType="java.util.Map" resultMap="deptJLResultMap">
+
+            SELECT yingdao.DeptID,yingdao.DeptNo,yingdao.DeptName,yingdao.EmpCount planCount,shidao.i realCount,(CASE WHEN yingdao.EmpCount is NULL OR yingdao.EmpCount=0 OR shidao.i is NULL OR shidao.i=0 THEN '0%' ELSE CONVERT(varchar(10), CONVERT(decimal(10, 2), CONVERT(decimal, shidao.i) / CONVERT(decimal, yingdao.EmpCount) * 100)) + '%' END) perc FROM
+	            (SELECT DeptID,SUM(CASE WHEN t.IoDoorB=1 THEN t.ios ELSE 0 END) i,SUM(CASE WHEN t.IoDoorB=0 THEN t.ios ELSE 0 END) o FROM
+		            (SELECT DeptID,IoDoorB,COUNT(*) ios FROM HrEmployee emp WHERE 1=1 AND emp.Leave=0 GROUP BY emp.DeptID,emp.IoDoorB ) t
+	            GROUP BY t.DeptID)shidao
+
+	        LEFT JOIN
+
+	        (SELECT
+				  dept.DeptID,
+				  dept.DeptNo,
+				  dept.DeptName,
+				  dept.DeptType,
+				  dept_count.EmpCount
+
+			    FROM HrDept dept
+			    LEFT JOIN (SELECT DeptID ,COUNT(*) EmpCount from HrEmployee emp WHERE 1=1 AND emp.Leave=0 GROUP BY DeptID) dept_count
+			    ON dept.DeptID=dept_count.DeptID
+			    WHERE 1=1)yingdao
+            ON shidao.DeptID=yingdao.DeptID
+            WHERE 1=1 ${params}
+    </select>
+
+    <!--所有部门合计统计情况 ${params}：自定义条件可加人员类型限制；${params1}：自定义条件可加入 部门类型限制-->
+    <select id="getYDDeptJLCountHJ" parameterType="java.util.Map" resultMap="deptJLCountHJMap">
+       SELECT SUM(ys.realCount) totalRealCount,SUM(ys.planCount) totalPlanCount,(CASE WHEN SUM(ys.planCount) = '0' THEN '0%' ELSE CONVERT(varchar(10), CONVERT(decimal(10, 2), CONVERT(decimal, SUM(ys.realCount)) / CONVERT(decimal, SUM(ys.planCount)) * 100)) + '%' END) perc FROM
+
+            (SELECT yingdao.DeptID,yingdao.DeptNo,yingdao.DeptName,yingdao.EmpCount planCount,shidao.i realCount,(CASE WHEN yingdao.EmpCount is NULL OR yingdao.EmpCount=0 OR shidao.i is NULL OR shidao.i=0 THEN '0%' ELSE CONVERT(varchar(10), CONVERT(decimal(10, 2), CONVERT(decimal, shidao.i) / CONVERT(decimal, yingdao.EmpCount) * 100)) + '%' END) perc FROM
+	            (SELECT DeptID,SUM(CASE WHEN t.IoDoorB=1 THEN t.ios ELSE 0 END) i,SUM(CASE WHEN t.IoDoorB=0 THEN t.ios ELSE 0 END) o FROM
+		            (SELECT DeptID,IoDoorB,COUNT(*) ios FROM HrEmployee emp WHERE 1=1 AND  emp.Leave=0 AND emp.EmpType=1  GROUP BY emp.DeptID,emp.IoDoorB ) t
+	            GROUP BY t.DeptID)shidao
+
+	        LEFT JOIN
+
+	        (SELECT
+				  dept.DeptID,
+				  dept.DeptNo,
+				  dept.DeptName,
+				  dept.DeptType,
+				  dept_count.EmpCount
+
+			    FROM HrDept dept
+			    LEFT JOIN (SELECT DeptID ,COUNT(*) EmpCount from HrEmployee emp WHERE 1=1 AND emp.Leave=0 AND emp.EmpType=1 GROUP BY DeptID) dept_count
+			    ON dept.DeptID=dept_count.DeptID
+			    WHERE 1=1)yingdao
+            ON shidao.DeptID=yingdao.DeptID
+            WHERE 1=1 ${params})ys
+    </select>
+
+    <!--所有监区合计统计情况-->
+    <select id="getEmpIoList" parameterType="java.util.Map" resultMap="empInfoMap">
+        SELECT EmpID,EmpNO,EmpName,TypeName,DeptID,DeptName FROM(
+          SELECT emp.EmpID,emp.EmpNO,emp.EmpName,emp.IoDoorB,emptype.TypeID,emptype.TypeName,dept.DeptID,dept.DeptName,dept.DeptType
+
+          FROM HrEmployee emp
+
+          LEFT JOIN HrEmpType emptype
+          ON emp.EmpType=emptype.TypeID
+		  LEFT JOIN HrDept dept
+		  ON emp.DeptID=dept.DeptID
+          WHERE 1=1 AND emp.Leave=0
+          ) t
+        WHERE 1=1 ${params}
+        ORDER BY TypeID ,EmpNO
+    </select>
+
+    <!--各人员类型统计情况-->
+    <select id="getEmpTypeHJ" parameterType="java.util.Map" resultType="DeptJL">
+        SELECT emptype.typeID,emptype.typeName,hj.i realCount,hj.o absentCount FROM HrEmpType emptype
+
+        LEFT JOIN
+
+        (SELECT EmpType,SUM(CASE WHEN t.IoDoorB=1 THEN t.ios ELSE 0 END) i,SUM(CASE WHEN t.IoDoorB=0 THEN t.ios ELSE 0 END) o FROM
+		    (SELECT emp.EmpType,emp.IoDoorB,COUNT(*) ios FROM HrEmployee emp LEFT JOIN HrDept dept ON emp.DeptID=dept.DeptID  WHERE 1=1 AND emp.Leave=0 GROUP BY emp.EmpType,emp.IoDoorB ) t
+	        GROUP BY t.EmpType) hj
+
+        ON emptype.TypeID=hj.EmpType
+    </select>
+
+    <!-- 获取系统时间前一天以小时为单位各类型人员进出统计 -->
+    <select id="getYesterdayTjData" parameterType="java.util.Map" resultType="DeptJL">
+        SELECT
+            t1.xh,
+            (case WHEN t2.timeNodes is not NULL THEN t2.timeNodes ELSE t1.xh-1 END) timeNodes,
+            (case WHEN t2.mjis is not NULL THEN t2.mjis ELSE 0 END) mjis,
+            (case WHEN t2.mjos is not NULL THEN t2.mjos ELSE 0 END) mjos,
+            (case WHEN t2.sydwis is not NULL THEN t2.sydwis ELSE 0 END) sydwis,
+            (case WHEN t2.sydwos is not NULL THEN t2.sydwos ELSE 0 END) sydwos,
+            (case WHEN t2.zgis is not NULL THEN t2.zgis ELSE 0 END) zgis,
+            (case WHEN t2.zgos is not NULL THEN t2.zgos ELSE 0 END) zgos,
+            (case WHEN t2.wdwis is not NULL THEN t2.wdwis ELSE 0 END) wdwis,
+            (case WHEN t2.wswos is not NULL THEN t2.wswos ELSE 0 END) wswos
+            FROM
+            (select number xh,(number-1) relateid from master..spt_values where type='p' and number between 1 and 24) t1
+            LEFT JOIN
+            (SELECT
+                    ttt.timeNodes,
+                    SUM(CASE WHEN ttt.usertype=1 THEN ttt.i ELSE 0 END) mjis,
+                    SUM(CASE WHEN ttt.usertype=1 THEN ttt.o ELSE 0 END) mjos,
+                    SUM(CASE WHEN ttt.usertype=2 THEN ttt.i ELSE 0 END) sydwis,
+                    SUM(CASE WHEN ttt.usertype=2 THEN ttt.o ELSE 0 END) sydwos,
+                    SUM(CASE WHEN ttt.usertype=3 THEN ttt.i ELSE 0 END) zgis,
+                    SUM(CASE WHEN ttt.usertype=3 THEN ttt.o ELSE 0 END) zgos,
+                    SUM(CASE WHEN ttt.usertype=4 THEN ttt.i ELSE 0 END) wdwis,
+                    SUM(CASE WHEN ttt.usertype=4 THEN ttt.o ELSE 0 END) wswos
+
+                    FROM(SELECT timeNodes,usertype,SUM(case WHEN tt.iostate=1 then tt.ios else 0 END) i,SUM(case WHEN tt.iostate=0 then tt.ios else 0 END) o
+                        FROM(
+                                    SELECT  cast(t.timeNodes as int) timeNodes,t.usertype,t.iostate,count(*) ios FROM(
+                                        SELECT
+                                            userid,
+                                            usertype,
+                                            datename(HOUR, opptime) timeNodes,
+                                            iostate
+                                        FROM
+                                            T_records
+                                        WHERE
+                                            CONVERT(VARCHAR(100), opptime, 23) = CONVERT(VARCHAR (100),DATEADD(dd ,- 1, getdate()),23)
+                                    ) t GROUP BY t.timeNodes,t.usertype,t.iostate)tt
+                         GROUP BY tt.timeNodes,tt.usertype)ttt
+
+                    GROUP BY ttt.timeNodes )t2
+
+            ON t1.relateid=t2.timeNodes order BY t1.xh
+    </select>
+
+    <!-- 根据历史时间统计各部门当时进出情况 -->
+    <select id="getHistoryTjDeptJl" parameterType="java.util.Map" resultType="DeptJL">
+        SELECT
+        dept.deptid DeptID,
+        dept.deptname DeptName,
+        (
+        CASE
+        WHEN t6.i IS NOT NULL THEN
+        t6.i
+        ELSE
+        0
+        END
+        ) realCount,
+        (
+        CASE
+        WHEN t6.o IS NOT NULL THEN
+        t6.o
+        ELSE
+        0
+        END
+        ) absentCount
+        FROM
+        HrDept dept
+        LEFT JOIN (
+        SELECT
+        deptid,
+        SUM (
+        CASE
+        WHEN iostate = 1 THEN
+        ios
+        ELSE
+        0
+        END
+        ) i,
+        SUM (
+        CASE
+        WHEN iostate = 0 THEN
+        ios
+        ELSE
+        0
+        END
+        ) o
+        FROM
+        (
+        SELECT
+        deptid,
+        iostate,
+        COUNT (*) ios
+        FROM
+        (
+        SELECT
+        t3.userid,
+        t3.iostate,
+        emp.deptid
+        FROM
+        (
+        SELECT
+        t2.userid,
+        t2.iostate,
+        t2.opptime
+        FROM
+        (
+        SELECT
+        t1.*, row_number () OVER (
+        partition BY t1.userid
+        ORDER BY
+        t1.opptime DESC
+        ) r
+        FROM
+        (
+        SELECT
+        userid,
+        iostate,
+        opptime
+        FROM
+        T_records t
+        WHERE
+        1 = 1
+        AND usertype = 1
+        ${params}
+
+        ) t1
+        ) t2
+        WHERE
+        1=1
+        AND t2.r = 1
+        ) t3
+        LEFT JOIN HrEmployee emp ON t3.userid = emp.empid
+        WHERE 1=1 AND emp.Leave=0
+        ) t4
+        GROUP BY
+        deptid,
+        iostate
+        ) t5
+        GROUP BY
+        deptid
+        ) t6 ON dept.deptid = t6.deptid
+        WHERE
+        1=1 AND dept.depttype = 1
+    </select>
+
+    <!-- 获取所有监区的值班信息 -->
+    <select id="getDeptZBInfo" parameterType="java.util.Map" resultType="ZhiBan">
+        select
+            t.ZBID,
+            t.aid,
+            t.ZBNAME,
+            t.ZBFlAG,
+            t.ZBTEL,
+            t.ZBTEMP1,
+            t.ZBTEMP2
+        from t_zb t
+        WHERE 1=1
+        ${params}
+        ORDER BY t.aid
+    </select>
+</mapper>
+
+

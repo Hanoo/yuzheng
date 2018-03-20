@@ -1,0 +1,33 @@
+.ssyj{
+   margin-top: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #3bafda;
+    margin-bottom: 0;
+    font-size:14px;
+}
+.list-group li{font-size:12px;}
+.tabs-bordered{
+    padding-bottom: 5px;
+    font-weight: normal;
+    font-size:12px;
+}
+.box-sm{
+    margin-top: 10px;
+}
+.content-page > .content-top{
+    margin-top:50px;
+}
+.card-box {
+    padding: 20px 10px 0px 10px;
+    border: 1px solid rgba(54, 64, 74, .08);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin-bottom: 20px;
+    background-color: lighten($dark,2%);
+}
+.hz-title{
+    font-size: 12px;
+    font-weight: normal;
+}

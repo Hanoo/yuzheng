@@ -1,0 +1,111 @@
+.content-page {
+    margin-left: 0px;
+    overflow: hidden;
+    color:#ffffff;
+}
+.page-title-box{
+    background-color: transparent;
+}
+.card-box{
+    background-color: transparent;
+    margin-bottom: 0;
+}
+.title-name{
+    margin-top: 30px;
+    color:#ffffff;
+}
+.text-pink{
+
+}
+.text-primary {
+    color: #74cff1 !important;
+
+}
+.text-success {
+    color: #df7dff!important;
+}
+.text-muted{
+    color:#ffffff!important;
+    font-size:22px;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    border: 1px solid #3bafda;
+}
+.page-title-box{
+    box-shadow:none;
+}
+.color-g{
+    color:#39e227;
+    font-size:22px;
+    font-family: "Arial,Arial Black";
+    margin: 0 10px;
+}
+.zhiban-name{
+    margin: 0 20px;
+    color:#70ff4a;
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th{
+    text-align: center;
+    font-size:22px;
+}
+.footer {
+    background-color: transparent;
+    left: 0;
+    text-align: center;
+}
+.content-page > .content {
+    margin-bottom: 60px;
+    margin-top: 0px;
+    padding: 20px 5px 15px 5px;
+}
+.thead-default th {
+    color: #ffffff;
+    /*background-color: #e9ecef;*/
+
+    background-color: transparent;
+}
+.zb-bottom{
+    margin-bottom: 45px;
+    margin-top: 40px;
+}
+.shou2-title{
+    border-bottom: 4px solid #434f5c;
+    padding-bottom: 20px;
+}
+.shou2-bottom{
+
+    text-align: center;
+    margin-bottom: 20px;
+}
+hr{
+    border-top: 1px solid #4487f0;
+}
+code {
+
+    margin: 0 10px;
+    font-family: Arial, Baskerville, monospace;
+    font-size:32px;
+    background-color: transparent;
+    width: 100px;
+    display:inline-block;
+    font-weight: bold;
+    vertical-align:middle;
+}
+
+html,body{
+    background-image:url("../images/bj2.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+}
+.mt-0{
+    font-size: 36px;
+}
+.m-b-20 {
+    margin-bottom: 10px;
+}
+.number{
+    width:100px;
+    font-size:32px;
+}

@@ -1,0 +1,46 @@
+.card-box {
+    padding: 20px;
+    border: 1px solid rgba(54, 64, 74, 0.08);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-clip: padding-box;
+    margin-bottom: 20px;
+    background-color: #36404a;
+    width: 100%;
+}
+.header-title {
+    text-transform: uppercase;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 16px;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+.tborder3 {
+    clear: both;
+    font-size: 1px;
+    height: 3px;
+    line-height: 3px;
+    background: #fff;
+    -moz-opacity: 0.4;
+    -khtml-opacity: 0.4;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+.tit02 {
+    font-size: 21px;
+    color: #fff;
+    font-weight: bold;
+    height: 44px;
+    line-height: 44px;
+}
+.greens {
+    color: #00ff00;
+}
+.reds {
+    color: #ff0000;
+}
+.cyans {
+    color: #00ffff;
+}

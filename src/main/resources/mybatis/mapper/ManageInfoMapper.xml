@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ManageInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.css.entity.ManageInfo" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="police_quantity" property="policeQuantity" jdbcType="INTEGER" />
+    <result column="prisoner_quantity" property="prisonerQuantity" jdbcType="INTEGER" />
+    <result column="prison_area_quantity" property="prisonAreaQuantity" jdbcType="INTEGER" />
+    <result column="police_on_duty" property="policeOnDuty" jdbcType="INTEGER" />
+    <result column="police_on_patrol" property="policeOnPatrol" jdbcType="INTEGER" />
+    <result column="police_in_reserve" property="policeInReserve" jdbcType="INTEGER" />
+    <result column="prisoner_in_reprieve" property="prisonerInReprieve" jdbcType="INTEGER" />
+    <result column="prisoner_in_life" property="prisonerInLife" jdbcType="INTEGER" />
+    <result column="prisoner_in_roc" property="prisonerInRoc" jdbcType="INTEGER" />
+    <result column="prisoner_recidivist" property="prisonerRecidivist" jdbcType="INTEGER" />
+    <result column="prisoner_drug_related" property="prisonerDrugRelated" jdbcType="INTEGER" />
+    <result column="prisoner_mobdom_related" property="prisonerMobdomRelated" jdbcType="INTEGER" />
+    <result column="prisoner_cult_related" property="prisonerCultRelated" jdbcType="INTEGER" />
+    <result column="prisoner_old_sick" property="prisonerOldSick" jdbcType="INTEGER" />
+    <result column="prisoner_outsider" property="prisonerOutsider" jdbcType="INTEGER" />
+    <result column="prisoner_foreigner" property="prisonerForeigner" jdbcType="INTEGER" />
+    <result column="prisoner_parole" property="prisonerParole" jdbcType="INTEGER" />
+    <result column="prisoner_probation" property="prisonerProbation" jdbcType="INTEGER" />
+    <result column="prisoner_at_large" property="prisonerAtLarge" jdbcType="INTEGER" />
+    <result column="prisoner_imprison" property="prisonerImprison" jdbcType="INTEGER" />
+    <result column="prisoner_release" property="prisonerRelease" jdbcType="INTEGER" />
+    <result column="prisoner_medical_parole" property="prisonerMedicalParole" jdbcType="INTEGER" />
+    <result column="prisoner_confine" property="prisonerConfine" jdbcType="INTEGER" />
+    <result column="prisoner_strick_ctrl" property="prisonerStrickCtrl" jdbcType="INTEGER" />
+    <result column="meeting_quantity" property="meetingQuantity" jdbcType="INTEGER" />
+    <result column="assistor_quantity" property="assistorQuantity" jdbcType="INTEGER" />
+    <result column="external_vehicle" property="externalVehicle" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, police_quantity, prisoner_quantity, prison_area_quantity, police_on_duty, police_on_patrol, 
+    police_in_reserve, prisoner_in_reprieve, prisoner_in_life, prisoner_in_roc, prisoner_recidivist, 
+    prisoner_drug_related, prisoner_mobdom_related, prisoner_cult_related, prisoner_old_sick, 
+    prisoner_outsider, prisoner_foreigner, prisoner_parole, prisoner_probation, prisoner_at_large, 
+    prisoner_imprison, prisoner_release, prisoner_medical_parole, prisoner_confine, prisoner_strick_ctrl, 
+    meeting_quantity, assistor_quantity, external_vehicle
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from manage_info
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from manage_info
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.css.entity.ManageInfo" >
+    insert into manage_info (id, police_quantity, prisoner_quantity, 
+      prison_area_quantity, police_on_duty, police_on_patrol, 
+      police_in_reserve, prisoner_in_reprieve, prisoner_in_life, 
+      prisoner_in_roc, prisoner_recidivist, prisoner_drug_related, 
+      prisoner_mobdom_related, prisoner_cult_related, 
+      prisoner_old_sick, prisoner_outsider, prisoner_foreigner, 
+      prisoner_parole, prisoner_probation, prisoner_at_large, 
+      prisoner_imprison, prisoner_release, prisoner_medical_parole, 
+      prisoner_confine, prisoner_strick_ctrl, meeting_quantity, 
+      assistor_quantity, external_vehicle)
+    values (#{id,jdbcType=CHAR}, #{policeQuantity,jdbcType=INTEGER}, #{prisonerQuantity,jdbcType=INTEGER}, 
+      #{prisonAreaQuantity,jdbcType=INTEGER}, #{policeOnDuty,jdbcType=INTEGER}, #{policeOnPatrol,jdbcType=INTEGER}, 
+      #{policeInReserve,jdbcType=INTEGER}, #{prisonerInReprieve,jdbcType=INTEGER}, #{prisonerInLife,jdbcType=INTEGER}, 
+      #{prisonerInRoc,jdbcType=INTEGER}, #{prisonerRecidivist,jdbcType=INTEGER}, #{prisonerDrugRelated,jdbcType=INTEGER}, 
+      #{prisonerMobdomRelated,jdbcType=INTEGER}, #{prisonerCultRelated,jdbcType=INTEGER}, 
+      #{prisonerOldSick,jdbcType=INTEGER}, #{prisonerOutsider,jdbcType=INTEGER}, #{prisonerForeigner,jdbcType=INTEGER}, 
+      #{prisonerParole,jdbcType=INTEGER}, #{prisonerProbation,jdbcType=INTEGER}, #{prisonerAtLarge,jdbcType=INTEGER}, 
+      #{prisonerImprison,jdbcType=INTEGER}, #{prisonerRelease,jdbcType=INTEGER}, #{prisonerMedicalParole,jdbcType=INTEGER}, 
+      #{prisonerConfine,jdbcType=INTEGER}, #{prisonerStrickCtrl,jdbcType=INTEGER}, #{meetingQuantity,jdbcType=INTEGER}, 
+      #{assistorQuantity,jdbcType=INTEGER}, #{externalVehicle,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.css.entity.ManageInfo" >
+    insert into manage_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="policeQuantity != null" >
+        police_quantity,
+      </if>
+      <if test="prisonerQuantity != null" >
+        prisoner_quantity,
+      </if>
+      <if test="prisonAreaQuantity != null" >
+        prison_area_quantity,
+      </if>
+      <if test="policeOnDuty != null" >
+        police_on_duty,
+      </if>
+      <if test="policeOnPatrol != null" >
+        police_on_patrol,
+      </if>
+      <if test="policeInReserve != null" >
+        police_in_reserve,
+      </if>
+      <if test="prisonerInReprieve != null" >
+        prisoner_in_reprieve,
+      </if>
+      <if test="prisonerInLife != null" >
+        prisoner_in_life,
+      </if>
+      <if test="prisonerInRoc != null" >
+        prisoner_in_roc,
+      </if>
+      <if test="prisonerRecidivist != null" >
+        prisoner_recidivist,
+      </if>
+      <if test="prisonerDrugRelated != null" >
+        prisoner_drug_related,
+      </if>
+      <if test="prisonerMobdomRelated != null" >
+        prisoner_mobdom_related,
+      </if>
+      <if test="prisonerCultRelated != null" >
+        prisoner_cult_related,
+      </if>
+      <if test="prisonerOldSick != null" >
+        prisoner_old_sick,
+      </if>
+      <if test="prisonerOutsider != null" >
+        prisoner_outsider,
+      </if>
+      <if test="prisonerForeigner != null" >
+        prisoner_foreigner,
+      </if>
+      <if test="prisonerParole != null" >
+        prisoner_parole,
+      </if>
+      <if test="prisonerProbation != null" >
+        prisoner_probation,
+      </if>
+      <if test="prisonerAtLarge != null" >
+        prisoner_at_large,
+      </if>
+      <if test="prisonerImprison != null" >
+        prisoner_imprison,
+      </if>
+      <if test="prisonerRelease != null" >
+        prisoner_release,
+      </if>
+      <if test="prisonerMedicalParole != null" >
+        prisoner_medical_parole,
+      </if>
+      <if test="prisonerConfine != null" >
+        prisoner_confine,
+      </if>
+      <if test="prisonerStrickCtrl != null" >
+        prisoner_strick_ctrl,
+      </if>
+      <if test="meetingQuantity != null" >
+        meeting_quantity,
+      </if>
+      <if test="assistorQuantity != null" >
+        assistor_quantity,
+      </if>
+      <if test="externalVehicle != null" >
+        external_vehicle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="policeQuantity != null" >
+        #{policeQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerQuantity != null" >
+        #{prisonerQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="prisonAreaQuantity != null" >
+        #{prisonAreaQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="policeOnDuty != null" >
+        #{policeOnDuty,jdbcType=INTEGER},
+      </if>
+      <if test="policeOnPatrol != null" >
+        #{policeOnPatrol,jdbcType=INTEGER},
+      </if>
+      <if test="policeInReserve != null" >
+        #{policeInReserve,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerInReprieve != null" >
+        #{prisonerInReprieve,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerInLife != null" >
+        #{prisonerInLife,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerInRoc != null" >
+        #{prisonerInRoc,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerRecidivist != null" >
+        #{prisonerRecidivist,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerDrugRelated != null" >
+        #{prisonerDrugRelated,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerMobdomRelated != null" >
+        #{prisonerMobdomRelated,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerCultRelated != null" >
+        #{prisonerCultRelated,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerOldSick != null" >
+        #{prisonerOldSick,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerOutsider != null" >
+        #{prisonerOutsider,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerForeigner != null" >
+        #{prisonerForeigner,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerParole != null" >
+        #{prisonerParole,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerProbation != null" >
+        #{prisonerProbation,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerAtLarge != null" >
+        #{prisonerAtLarge,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerImprison != null" >
+        #{prisonerImprison,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerRelease != null" >
+        #{prisonerRelease,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerMedicalParole != null" >
+        #{prisonerMedicalParole,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerConfine != null" >
+        #{prisonerConfine,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerStrickCtrl != null" >
+        #{prisonerStrickCtrl,jdbcType=INTEGER},
+      </if>
+      <if test="meetingQuantity != null" >
+        #{meetingQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="assistorQuantity != null" >
+        #{assistorQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="externalVehicle != null" >
+        #{externalVehicle,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.css.entity.ManageInfo" >
+    update manage_info
+    <set >
+      <if test="policeQuantity != null" >
+        police_quantity = #{policeQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerQuantity != null" >
+        prisoner_quantity = #{prisonerQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="prisonAreaQuantity != null" >
+        prison_area_quantity = #{prisonAreaQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="policeOnDuty != null" >
+        police_on_duty = #{policeOnDuty,jdbcType=INTEGER},
+      </if>
+      <if test="policeOnPatrol != null" >
+        police_on_patrol = #{policeOnPatrol,jdbcType=INTEGER},
+      </if>
+      <if test="policeInReserve != null" >
+        police_in_reserve = #{policeInReserve,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerInReprieve != null" >
+        prisoner_in_reprieve = #{prisonerInReprieve,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerInLife != null" >
+        prisoner_in_life = #{prisonerInLife,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerInRoc != null" >
+        prisoner_in_roc = #{prisonerInRoc,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerRecidivist != null" >
+        prisoner_recidivist = #{prisonerRecidivist,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerDrugRelated != null" >
+        prisoner_drug_related = #{prisonerDrugRelated,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerMobdomRelated != null" >
+        prisoner_mobdom_related = #{prisonerMobdomRelated,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerCultRelated != null" >
+        prisoner_cult_related = #{prisonerCultRelated,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerOldSick != null" >
+        prisoner_old_sick = #{prisonerOldSick,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerOutsider != null" >
+        prisoner_outsider = #{prisonerOutsider,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerForeigner != null" >
+        prisoner_foreigner = #{prisonerForeigner,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerParole != null" >
+        prisoner_parole = #{prisonerParole,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerProbation != null" >
+        prisoner_probation = #{prisonerProbation,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerAtLarge != null" >
+        prisoner_at_large = #{prisonerAtLarge,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerImprison != null" >
+        prisoner_imprison = #{prisonerImprison,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerRelease != null" >
+        prisoner_release = #{prisonerRelease,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerMedicalParole != null" >
+        prisoner_medical_parole = #{prisonerMedicalParole,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerConfine != null" >
+        prisoner_confine = #{prisonerConfine,jdbcType=INTEGER},
+      </if>
+      <if test="prisonerStrickCtrl != null" >
+        prisoner_strick_ctrl = #{prisonerStrickCtrl,jdbcType=INTEGER},
+      </if>
+      <if test="meetingQuantity != null" >
+        meeting_quantity = #{meetingQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="assistorQuantity != null" >
+        assistor_quantity = #{assistorQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="externalVehicle != null" >
+        external_vehicle = #{externalVehicle,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.css.entity.ManageInfo" >
+    update manage_info
+    set police_quantity = #{policeQuantity,jdbcType=INTEGER},
+      prisoner_quantity = #{prisonerQuantity,jdbcType=INTEGER},
+      prison_area_quantity = #{prisonAreaQuantity,jdbcType=INTEGER},
+      police_on_duty = #{policeOnDuty,jdbcType=INTEGER},
+      police_on_patrol = #{policeOnPatrol,jdbcType=INTEGER},
+      police_in_reserve = #{policeInReserve,jdbcType=INTEGER},
+      prisoner_in_reprieve = #{prisonerInReprieve,jdbcType=INTEGER},
+      prisoner_in_life = #{prisonerInLife,jdbcType=INTEGER},
+      prisoner_in_roc = #{prisonerInRoc,jdbcType=INTEGER},
+      prisoner_recidivist = #{prisonerRecidivist,jdbcType=INTEGER},
+      prisoner_drug_related = #{prisonerDrugRelated,jdbcType=INTEGER},
+      prisoner_mobdom_related = #{prisonerMobdomRelated,jdbcType=INTEGER},
+      prisoner_cult_related = #{prisonerCultRelated,jdbcType=INTEGER},
+      prisoner_old_sick = #{prisonerOldSick,jdbcType=INTEGER},
+      prisoner_outsider = #{prisonerOutsider,jdbcType=INTEGER},
+      prisoner_foreigner = #{prisonerForeigner,jdbcType=INTEGER},
+      prisoner_parole = #{prisonerParole,jdbcType=INTEGER},
+      prisoner_probation = #{prisonerProbation,jdbcType=INTEGER},
+      prisoner_at_large = #{prisonerAtLarge,jdbcType=INTEGER},
+      prisoner_imprison = #{prisonerImprison,jdbcType=INTEGER},
+      prisoner_release = #{prisonerRelease,jdbcType=INTEGER},
+      prisoner_medical_parole = #{prisonerMedicalParole,jdbcType=INTEGER},
+      prisoner_confine = #{prisonerConfine,jdbcType=INTEGER},
+      prisoner_strick_ctrl = #{prisonerStrickCtrl,jdbcType=INTEGER},
+      meeting_quantity = #{meetingQuantity,jdbcType=INTEGER},
+      assistor_quantity = #{assistorQuantity,jdbcType=INTEGER},
+      external_vehicle = #{externalVehicle,jdbcType=INTEGER}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

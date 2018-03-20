@@ -1,0 +1,8 @@
+﻿/*
+自定义datagrid样式
+*/
+.datagrid-cell {font-size:16px;}
+/*.l-btn-text {background:none; font-size: 16px; background-color: rgba(27, 41, 36, 0.89)}*/
+.tabs-title {font-size:16px;}
+.panel-title {font-size:16px;}
+.datagrid-header .datagrid-cell span{font-size:16px;}

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DutyInfoMapper" >
+  <resultMap id="BaseResultMap" type="DutyInfo" >
+    <id column="id" property="id" jdbcType="CHAR" />
+    <result column="p_quantity" property="pQuantity" jdbcType="INTEGER" />
+    <result column="p_real_quantity" property="pRealQuantity" jdbcType="INTEGER" />
+    <result column="police_quantity" property="policeQuantity" jdbcType="INTEGER" />
+    <result column="police_on_duty_quantity" property="policeOnDutyQuantity" jdbcType="INTEGER" />
+    <result column="chief_officer" property="chiefOfficer" jdbcType="VARCHAR" />
+    <result column="officer" property="officer" jdbcType="VARCHAR" />
+    <result column="chief_officer_tel" property="chiefOfficerTel" jdbcType="VARCHAR" />
+    <result column="officer_tel" property="officerTel" jdbcType="VARCHAR" />
+    <result column="p_on_duty" property="pOnDuty" jdbcType="VARCHAR" />
+    <result column="p_in_station" property="pInStation" jdbcType="VARCHAR" />
+    <result column="p_in_command_center" property="pInCommandCenter" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, p_quantity, p_real_quantity, police_quantity, police_on_duty_quantity, chief_officer, 
+    officer, chief_officer_tel, officer_tel, p_on_duty, p_in_station, p_in_command_center
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from duty_info
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from duty_info
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="DutyInfo" >
+    insert into duty_info (id, p_quantity, p_real_quantity,
+      police_quantity, police_on_duty_quantity, chief_officer, 
+      officer, chief_officer_tel, officer_tel, 
+      p_on_duty, p_in_station, p_in_command_center
+      )
+    values (#{id,jdbcType=CHAR}, #{pQuantity,jdbcType=INTEGER}, #{pRealQuantity,jdbcType=INTEGER},
+      #{policeQuantity,jdbcType=INTEGER}, #{policeOnDutyQuantity,jdbcType=INTEGER}, #{chiefOfficer,jdbcType=VARCHAR},
+      #{officer,jdbcType=VARCHAR}, #{chiefOfficerTel,jdbcType=VARCHAR}, #{officerTel,jdbcType=VARCHAR}, 
+      #{pOnDuty,jdbcType=VARCHAR}, #{pInStation,jdbcType=VARCHAR}, #{pInCommandCenter,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="DutyInfo" >
+    insert into duty_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pQuantity != null" >
+        p_quantity,
+      </if>
+      <if test="pRealQuantity != null" >
+        p_real_quantity,
+      </if>
+      <if test="policeQuantity != null" >
+        police_quantity,
+      </if>
+      <if test="policeOnDutyQuantity != null" >
+        police_on_duty_quantity,
+      </if>
+      <if test="chiefOfficer != null" >
+        chief_officer,
+      </if>
+      <if test="officer != null" >
+        officer,
+      </if>
+      <if test="chiefOfficerTel != null" >
+        chief_officer_tel,
+      </if>
+      <if test="officerTel != null" >
+        officer_tel,
+      </if>
+      <if test="pOnDuty != null" >
+        p_on_duty,
+      </if>
+      <if test="pInStation != null" >
+        p_in_station,
+      </if>
+      <if test="pInCommandCenter != null" >
+        p_in_command_center,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="pQuantity != null" >
+        #{pQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="pRealQuantity != null" >
+        #{pRealQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="policeQuantity != null" >
+        #{policeQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="policeOnDutyQuantity != null" >
+        #{policeOnDutyQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="chiefOfficer != null" >
+        #{chiefOfficer,jdbcType=VARCHAR},
+      </if>
+      <if test="officer != null" >
+        #{officer,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefOfficerTel != null" >
+        #{chiefOfficerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="officerTel != null" >
+        #{officerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="pOnDuty != null" >
+        #{pOnDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="pInStation != null" >
+        #{pInStation,jdbcType=VARCHAR},
+      </if>
+      <if test="pInCommandCenter != null" >
+        #{pInCommandCenter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="DutyInfo" >
+    update duty_info
+    <set >
+      <if test="pQuantity != null" >
+        p_quantity = #{pQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="pRealQuantity != null" >
+        p_real_quantity = #{pRealQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="policeQuantity != null" >
+        police_quantity = #{policeQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="policeOnDutyQuantity != null" >
+        police_on_duty_quantity = #{policeOnDutyQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="chiefOfficer != null" >
+        chief_officer = #{chiefOfficer,jdbcType=VARCHAR},
+      </if>
+      <if test="officer != null" >
+        officer = #{officer,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefOfficerTel != null" >
+        chief_officer_tel = #{chiefOfficerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="officerTel != null" >
+        officer_tel = #{officerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="pOnDuty != null" >
+        p_on_duty = #{pOnDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="pInStation != null" >
+        p_in_station = #{pInStation,jdbcType=VARCHAR},
+      </if>
+      <if test="pInCommandCenter != null" >
+        p_in_command_center = #{pInCommandCenter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="DutyInfo" >
+    update duty_info
+    set p_quantity = #{pQuantity,jdbcType=INTEGER},
+      p_real_quantity = #{pRealQuantity,jdbcType=INTEGER},
+      police_quantity = #{policeQuantity,jdbcType=INTEGER},
+      police_on_duty_quantity = #{policeOnDutyQuantity,jdbcType=INTEGER},
+      chief_officer = #{chiefOfficer,jdbcType=VARCHAR},
+      officer = #{officer,jdbcType=VARCHAR},
+      chief_officer_tel = #{chiefOfficerTel,jdbcType=VARCHAR},
+      officer_tel = #{officerTel,jdbcType=VARCHAR},
+      p_on_duty = #{pOnDuty,jdbcType=VARCHAR},
+      p_in_station = #{pInStation,jdbcType=VARCHAR},
+      p_in_command_center = #{pInCommandCenter,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

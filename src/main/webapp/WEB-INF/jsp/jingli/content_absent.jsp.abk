@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>警力分布</title>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/style/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/style/js/easyui/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/style/js/easyui/themes/icon.css"/>
+
+    <script type="text/javascript" src="<%=request.getContextPath()%>/style/js/echart3/jquery-2.0.3.min.js"></script>
+
+    <script type="text/javascript" src="<%=request.getContextPath()%>/style/js/easyui/jquery.easyui.min.js"></script>
+
+
+</head>
+<body class="body01">
+<c:if test="${data != null && !data.isEmpty()}">
+    <table class="easyui-datagrid" style="width:auto;height:auto" data-options="rownumbers:true,singleSelect:true,collapsible:true,url:'',method:'post'">
+        <thead>
+        <tr>
+            <th data-options="field:'itemid',width:80">姓名</th>
+            <th data-options="field:'productid',width:100">人员类型</th>
+        </tr>
+        </thead>
+        <c:forEach  items="${data}" var="emp">
+            <tr>
+                <input type="hidden" name="empId" value="${emp.empId}">
+                <td data-options="field:'itemid',width:80">${emp.empName}</td>
+                <td data-options="field:'productid',width:100">${emp.typeName}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+</body>
+</html>
+<script type="text/javascript">
+
+
+    //alert(data);
+    $(function(){
+        alert("ssssss");
+        //var data =
+        //alert(data);
+        //$('#dg').datagrid({data:getData()}).datagrid('clientPaging');
+    });
+
+</script>
