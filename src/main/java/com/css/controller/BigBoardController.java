@@ -43,29 +43,10 @@ public class BigBoardController {
         return "bigBoard/manageInfoHL";
     }
 
-    @RequestMapping("/login")
-    public String login(){
-        return "bigBoard/login";
-    }
-
-    @RequestMapping(value = "/doLogin", method = RequestMethod.POST)
-    @ResponseBody
-    public JSONObject doLogin(HttpServletRequest request, @RequestBody JSONObject json){
-        String userName = json.getString("userName");
-        String passwd = json.getString("password");
-        if(bigBoardService.verifyAdmin(userName, passwd)) {
-            request.getSession().setAttribute("userInfo", "admin");
-            json.put("msg","success");
-        } else {
-            json.put("msg","error");
-        }
-        return json;
-    }
-
     @RequestMapping(value = "/editDutyInfo", method = RequestMethod.GET)
     public String editDutyInfo(HttpServletRequest request){
         if(request.getSession().getAttribute("userInfo")==null) {
-            return "bigBoard/login";
+            return "login";
         }
         DutyInfo dutyInfo = bigBoardService.getDutyInfo();
         if(null!= dutyInfo) {
@@ -90,7 +71,7 @@ public class BigBoardController {
     @RequestMapping(value = "/editManageInfo", method = RequestMethod.GET)
     public String editManageInfo(HttpServletRequest request){
         if(request.getSession().getAttribute("userInfo")==null) {
-            return "bigBoard/login";
+            return "login";
         }
         DutyInfo dutyInfo = bigBoardService.getDutyInfo();
         if(null!= dutyInfo) {
@@ -124,6 +105,6 @@ public class BigBoardController {
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("userInfo");
-        return "bigBoard/login";
+        return "login";
     }
 }

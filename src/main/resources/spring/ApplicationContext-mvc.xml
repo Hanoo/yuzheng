@@ -13,7 +13,7 @@
 	
 	<mvc:interceptors>
 		<!---->
-		<bean class="com.css.interceptors.loginHandlerInterceptor"/>
+		<bean class="com.css.interceptors.LoginHandlerInterceptor"/>
 		<!--<mvc:interceptor>
 			<mvc:mapping path="/**.jsp"/>
 			<bean class="com.css.interceptors.loginHandlerInterceptor"/>

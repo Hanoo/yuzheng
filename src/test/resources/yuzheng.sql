@@ -66,8 +66,8 @@ create table bulletin (
 /**
     系统用户表
  */
-create table sys_user (
-  id                      char(32)    not NULL comment '主键',
+create table yuzheng_user (
+  id                      char(2)    not NULL comment '主键',
   user_name               VARCHAR(20) not null comment '用户登录名',
   user_password           varchar(12) not null comment '登录密码',
   display_name            varchar(20)          comment '展示名称',
@@ -80,3 +80,39 @@ create table sys_user (
  */
 INSERT INTO `db_jianyu`.`duty_info` (`id`) VALUES ('theOnlyRec');
 INSERT INTO `db_jianyu`.`manage_info` (`id`) VALUES ('theOnlyRec');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('01', 'pa01', '49', '一监区管理员', '01');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('02', 'pa02', '49', '二监区管理员', '02');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('03', 'pa03', '49', '三监区管理员', '03');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('04', 'pa04', '49', '四监区管理员', '04');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('05', 'pa05', '49', '五监区管理员', '05');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('06', 'pa06', '49', '六监区管理员', '06');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('07', 'pa07', '49', '七监区管理员', '07');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('08', 'pa08', '49', '八监区管理员', '08');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('09', 'pa09', '49', '九监区管理员', '09');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('10', 'pa10', '49', '十监区管理员', '10');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('11', 'pa11', '49', '十一监区管理员', '11');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('12', 'pa12', '49', '十二监区管理员', '12');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('13', 'pa13', '49', '十三监区管理员', '13');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('14', 'pa14', '49', '十四监区管理员', '14');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('15', 'pa15', '49', '十五监区管理员', '15');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('16', 'pa16', '49', '十六监区管理员', '16');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('17', 'pa17', '49', '十七监区管理员', '17');
+INSERT INTO `db_jianyu`.`yuzheng_user` (`id`, `user_name`, `user_password`, `display_name`, `prison_area`)
+    VALUES ('99', 'admin', '49', '监管员', '99');

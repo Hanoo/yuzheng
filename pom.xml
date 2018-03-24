@@ -17,7 +17,6 @@
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.14</slf4j.version>
         <mysql-connector-java.version>5.1.6</mysql-connector-java.version>
-        <jackson.version>1.9.13</jackson.version>
     </properties>
 
     <dependencies>
@@ -316,12 +315,6 @@
             <groupId>wsdl4j</groupId>
             <artifactId>wsdl4j</artifactId>
             <version>1.6.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>${jackson.version}</version>
         </dependency>
 
         <dependency>

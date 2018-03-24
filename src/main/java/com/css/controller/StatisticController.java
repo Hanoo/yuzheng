@@ -1,14 +1,22 @@
 package com.css.controller;
 
+import com.css.entity.YuzhengUser;
 import com.css.service.StatisticService;
 import com.css.service.IDianMingService;
 import com.css.service.XunGengService;
+import com.css.service.YuzhengUserService;
+import com.css.util.IConstant;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +32,30 @@ public class StatisticController {
 
     @Resource
     private XunGengService xunGengService;
+
+    @Resource
+    private YuzhengUserService yuzhengUserService;
+
+
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @RequestMapping(value = "/doLogin", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject doLogin(HttpSession session, @RequestBody JSONObject json) {
+
+        try {
+            YuzhengUser yuzhengUser = yuzhengUserService.verifyLogin(json);
+            if (null!=yuzhengUser) {
+                session.setAttribute(IConstant.SESSION_ATTRIBUTE_USER, yuzhengUser);
+            }
+        } catch (Exception e) {
+            json.put("msg", "error");
+        }
+        return json;
+    }
 
     @RequestMapping("/getAgeGroups")
     @ResponseBody

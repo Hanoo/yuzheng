@@ -1,5 +1,6 @@
 package com.css.interceptors;
 
+import com.css.util.IConstant;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -8,10 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-/**
- * Created by wang on 4/25 0025.
- */
-public class loginHandlerInterceptor implements HandlerInterceptor {
+public class LoginHandlerInterceptor implements HandlerInterceptor {
 
     /**
      * preHandle方法是进行处理器拦截用的，顾名思义，该方法将在Controller处理之前进行调用，SpringMVC中的Interceptor拦截器是链式的，可以同时存在
@@ -19,14 +17,24 @@ public class loginHandlerInterceptor implements HandlerInterceptor {
      * Controller方法调用之前调用。SpringMVC的这种Interceptor链式结构也是可以进行中断的，这种中断方式是令preHandle的返
      * 回值为false，当preHandle的返回值为false的时候整个请求就结束了。
      */
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws Exception {
-        String addr = getIpAddr(httpServletRequest);
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        String addr = getIpAddr(request);
         boolean flag = false;
 
         // 非10.11 网段不能访问应用
         if (addr.contains("10.11")) {
 
             flag = true;
+        }
+        String uri = request.getRequestURI().replace(request.getContextPath(), "");
+
+        if(IConstant.LOGIN_PAGE.endsWith(uri) || IConstant.LOGIN_ACTION.endsWith(uri)) {
+            return true;
+        }
+        Object user = request.getSession().getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
+        if(null==user) {
+            request.getRequestDispatcher(IConstant.LOGIN_PAGE).forward(request, response);
         }
         return true;
     }

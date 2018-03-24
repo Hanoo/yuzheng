@@ -21,7 +21,7 @@
     <div class="text-center">
         <a href="index.html" class="logo-lg">
             <i class="mdi mdi-radar"></i>
-            <span>狱政系统维护</span>
+            <span>狱政系统登陆</span>
         </a>
     </div>
 
@@ -51,6 +51,7 @@
 </div>
 <!-- Plugins  -->
 <script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/prison.js"></script>
 <script>
     $(document).ready(function(){
         $("button.btn").on("click",function(){
@@ -58,15 +59,17 @@
             var password = $("#password").val();
             $.ajax({
                 type:"post",
-                url:"bigBoard/doLogin",
+                url:"statistic/doLogin",
                 contentType: 'application/json;charset=UTF-8',
-                data: JSON.stringify({"userName":userName,"password":password}),
+                data: JSON.stringify({"userName":userName,"password":hashCode(password)}),
                 dataType: 'json',
                 success:function(data){
-                    if(data.msg=="error"){
+                    if(data.msg=="failed"){
                         alert("用户名或密码错误！");
-                    }else{
-                        window.location.href= "bigBoard/editManageInfo";
+                    } else if (data.msg=="error") {
+                        alert("服务器内部错误！")
+                    } else {
+                        window.location.href= "statistic/index";
                     }
                 }
 

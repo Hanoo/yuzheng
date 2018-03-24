@@ -6,8 +6,6 @@ import net.sf.json.JSONObject;
 
 public interface BigBoardService {
 
-    boolean verifyAdmin(String userName, String passwordHash);
-
     /**
      * 查询值班信息
      * @return

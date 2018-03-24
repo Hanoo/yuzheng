@@ -19,16 +19,6 @@ public class BigBoardServiceImpl implements BigBoardService {
 
     public static final String onlyRecordId = "theOnlyRec";
 
-    @Value("${admin.userName}")
-    private String userName;
-
-    @Value("${admin.passWordHash}")
-    private String passWordHash;
-
-    public boolean verifyAdmin(String userName, String passwordHash) {
-        return this.userName.equals(userName)&&this.passWordHash.equals(passwordHash);
-    }
-
     public DutyInfo getDutyInfo() {
         DataSourceTypeManager.set(DataSources.JIANYU);
         Object i = null;

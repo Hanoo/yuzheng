@@ -69,7 +69,34 @@
                        aria-haspopup="false" aria-expanded="false">
                         <img src="assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
                     </a>
+                    <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview">
+                        <!-- item-->
+                        <div class="dropdown-item noti-title">
+                            <h5 class="text-overflow"><small>Welcome ! John</small> </h5>
+                        </div>
 
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="mdi mdi-account-star-variant"></i> <span>Profile</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="mdi mdi-settings"></i> <span>Settings</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="mdi mdi-lock-open"></i> <span>Lock Screen</span>
+                        </a>
+
+                        <!-- item-->
+                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <i class="mdi mdi-logout"></i>
+                            <span>登出</span>
+                        </a>
+
+                    </div>
                 </li>
 
             </ul>
