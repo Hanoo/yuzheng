@@ -101,10 +101,4 @@ public class BigBoardController {
             return String.valueOf(result);
         }
     }
-
-    @RequestMapping("/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("userInfo");
-        return "login";
-    }
 }

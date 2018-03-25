@@ -86,9 +86,9 @@ public class StatisticController {
 
     @RequestMapping("/getWarningInfo")
     @ResponseBody
-    public JSONArray getWarningInfo() throws Exception {
+    public JSONArray getWarningInfo(HttpSession session) throws Exception {
         Map reqmap = dianMingService.getHzsj();
-        List resList = dianMingService.getAllDianMingReduceInfo(reqmap);
+        List resList = dianMingService.getAllDianMingReduceInfoByPArea(reqmap, getUserPArea(session));
         List xgList = xunGengService.getWXGtongjiReduceInfo(reqmap);
         resList.addAll(xgList);
         return JSONArray.fromObject(resList);
@@ -126,5 +126,16 @@ public class StatisticController {
         List result = ageGroupsService.getPCountByCrimeType();
 
         return JSONArray.fromObject(result);
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute(IConstant.SESSION_ATTRIBUTE_USER);
+        return "login";
+    }
+
+    private String getUserPArea(HttpSession session) {
+        YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
+        return user.getPrisonArea();
     }
 }

@@ -1,4 +1,9 @@
+<%@ page import="com.css.entity.YuzhengUser" %>
+<%@ page import="com.css.util.IConstant" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +12,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
     <meta name="author" content="Coderthemes">
-
     <link rel="shortcut icon" href="assets/images/favicon_1.ico">
 
     <title>首页</title>
 
     <link href="plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
-
     <link href="plugins/switchery/switchery.min.css" rel="stylesheet" />
-
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
@@ -72,26 +74,17 @@
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview">
                         <!-- item-->
                         <div class="dropdown-item noti-title">
-                            <h5 class="text-overflow"><small>Welcome ! John</small> </h5>
+                            <h5 class="text-overflow"><small>欢迎您：<%=user.getDisplayName()%></small> </h5>
                         </div>
 
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <i class="mdi mdi-account-star-variant"></i> <span>Profile</span>
+                            <i class="mdi mdi-settings"></i>
+                            <span>修改密码</span>
                         </a>
 
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <i class="mdi mdi-settings"></i> <span>Settings</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <i class="mdi mdi-lock-open"></i> <span>Lock Screen</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <a href="/statistic/logout" class="dropdown-item notify-item">
                             <i class="mdi mdi-logout"></i>
                             <span>登出</span>
                         </a>

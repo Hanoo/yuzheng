@@ -618,16 +618,17 @@ public class DianMingServiceImpl implements IDianMingService {
 
     }
 
-    public List getAllDianMingReduceInfo(Map reqMap) throws Exception {
+    public List getAllDianMingReduceInfoByPArea(Map reqMap, String pArea) throws Exception {
         DataSourceTypeManager.set(DataSources.ZKESERVER);
         //实例化一个List用来存放结果集
         List resList = new ArrayList();
         String cxTime = reqMap.get("stTime").toString();
         String nowTime = reqMap.get("endTime").toString();
-        String params = " AND endtime >='" + cxTime + "' AND endtime <='" + nowTime + "'";
+        String timeParam = " AND endtime >='" + cxTime + "' AND endtime <='" + nowTime + "' AND aid=" + pArea;
         Map param = new HashMap();
-        param.put("params", params);
-        List dianMingList = (List) dao.findForList("DianMingMapper.getAllDMInfo", param);
+        param.put("timeParam", timeParam);
+        param.put("areaParam", pArea);
+        List dianMingList = (List) dao.findForList("DianMingMapper.getAllDMInfoByPArea", param);
 
         SimpleDateFormat sformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date cxDate = sformat.parse(cxTime);

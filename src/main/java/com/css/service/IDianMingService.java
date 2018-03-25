@@ -39,7 +39,7 @@ public interface IDianMingService {
     public List getAllJkInfo(Map reqMap) throws Exception;
 
     // 获取简化的预警信息
-    List getAllDianMingReduceInfo(Map reqMap) throws Exception;
+    List getAllDianMingReduceInfoByPArea(Map reqMap, String pArea) throws Exception;
 
     /**
      * 获取各监区犯人总数的列表

@@ -120,6 +120,25 @@
         CONVERT(INT,a.aid)
     </select>
 
+    <!-- 获取当前时间前一小时当前用户所属监区的点名情况-->
+    <select id="getAllDMInfoByPArea" parameterType="java.util.Map" resultMap="dianMingResultMap">
+        select
+        a.aname as name,
+        (CASE WHEN z.xh IS null THEN 0 ELSE z.xh END ) as xh ,
+        (CASE WHEN z.pcountsum IS null THEN 0 ELSE z.pcountsum END) as value,
+        (CASE WHEN   z.pcount IS null THEN 0 ELSE   z.pcount END) as pcount
+        from
+        zte_AreaDetail a
+        LEFT JOIN
+        (
+        SELECT * from zte_AreaQd_Log where 1=1 ${timeParam}
+        )z
+        ON
+        a.aid=z.aid and a.aid = ${areaParam}
+        ORDER BY
+        CONVERT(INT,a.aid)
+    </select>
+
     <!-- 获取当前时间前一小时每个监区的点名未到人员情况-->
     <select id="getWdDMInfo" parameterType="java.util.Map" resultMap="dmqx">
         select q.qxyy as qxyy,u.uname as  name from zte_AreaQd_qxLog q
