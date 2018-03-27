@@ -5,6 +5,7 @@ import com.css.datasource.DataSourceTypeManager;
 import com.css.datasource.DataSources;
 import com.css.entity.DMinfo;
 import com.css.entity.DeptJL;
+import com.css.util.IConstant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailParseException;
 import org.springframework.stereotype.Service;
@@ -624,17 +625,20 @@ public class DianMingServiceImpl implements IDianMingService {
         List resList = new ArrayList();
         String cxTime = reqMap.get("stTime").toString();
         String nowTime = reqMap.get("endTime").toString();
-        String timeParam = " AND endtime >='" + cxTime + "' AND endtime <='" + nowTime + "' AND aid=" + pArea;
+        String timeParam = " AND endtime >='" + cxTime + "' AND endtime <='" + nowTime + "'";
         Map param = new HashMap();
         param.put("timeParam", timeParam);
-        param.put("areaParam", pArea);
+
+        if(!IConstant.ADMIN_AREA.equals(pArea)) { // 中心监管员可查看所有监区预警
+            param.put("areaParam", "where a.aid = " + pArea);
+        }
+
         List dianMingList = (List) dao.findForList("DianMingMapper.getAllDMInfoByPArea", param);
 
         SimpleDateFormat sformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date cxDate = sformat.parse(cxTime);
         Date now = sformat.parse(nowTime);
-        Calendar calNow = Calendar.getInstance();
-        calNow.setTime(now);
+        SimpleDateFormat displayEndTimeFormate = new SimpleDateFormat("HH:mm");
         SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         //获取警力分布情况
@@ -649,8 +653,7 @@ public class DianMingServiceImpl implements IDianMingService {
             String jqmc = dmInfo.getName();
             if (fx != null && fx.equals("0")) {
                 resMap.put("name", "点名预警");
-                resMap.put("info", jqmc + dformat.format(cxDate) + "到" +
-                        calNow.get(Calendar.HOUR_OF_DAY) + ":" + calNow.get(Calendar.MINUTE) + "未按要求点名");
+                resMap.put("info", jqmc + dformat.format(cxDate) + "到" + displayEndTimeFormate.format(now) + "未按要求点名");
                 resMap.put("time", nowTime);
                 resList.add(resMap);
             }
@@ -670,8 +673,7 @@ public class DianMingServiceImpl implements IDianMingService {
                     if (dmInfo.getValue() == 0) {
                         perc = "0%";
                         jlMap.put("name", "警力预警");
-                        jlMap.put("info", deptName + dformat.format(cxDate) + "到"
-                                + calNow.get(Calendar.HOUR_OF_DAY) + ":" + calNow.get(Calendar.MINUTE) + "警力预警");
+                        jlMap.put("info", deptName + dformat.format(cxDate) + "到" + displayEndTimeFormate.format(now) + "警力预警");
                         jlMap.put("time", nowTime);
                         resList.add(jlMap);
                     } else {
@@ -685,7 +687,7 @@ public class DianMingServiceImpl implements IDianMingService {
 
                         if (percent < 0.1) {
                             jlMap.put("name", "警力预警");
-                            jlMap.put("info", deptName + dformat.format(cxDate) + "到" + calNow.get(Calendar.HOUR_OF_DAY) + "警力预警");
+                            jlMap.put("info", deptName + dformat.format(cxDate) + "到" + displayEndTimeFormate.format(now) + "警力预警");
                             jlMap.put("time", nowTime);
                             resList.add(jlMap);
                         }

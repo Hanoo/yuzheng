@@ -1,7 +1,6 @@
 $(function() {
     $(".knob").knob();
     $('.circliful-chart').circliful();
-    //犯罪数量统计
 
     // 加载罪犯年龄统计
     $.ajax({
@@ -627,9 +626,6 @@ function getSeries_data_dianming(json) {
     return series_data;
 }
 
-function refXunGeng() {
-
-}
 setInterval(console.log('log'), 1000 * 60 * 5);// 每隔五分钟重新读取数据
 refData();
 

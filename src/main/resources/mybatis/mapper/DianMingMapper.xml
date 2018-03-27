@@ -134,7 +134,8 @@
         SELECT * from zte_AreaQd_Log where 1=1 ${timeParam}
         )z
         ON
-        a.aid=z.aid and a.aid = ${areaParam}
+        a.aid=z.aid
+        ${areaParam}
         ORDER BY
         CONVERT(INT,a.aid)
     </select>

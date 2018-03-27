@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JingliMapper">
+    <resultMap id="BaseResultMap" type="Jingli">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="dept_id" jdbcType="VARCHAR" property="deptId"/>
+        <result column="dept_no" jdbcType="VARCHAR" property="deptNo"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+        <result column="plan_count" jdbcType="INTEGER" property="planCount"/>
+        <result column="real_count" jdbcType="INTEGER" property="realCount"/>
+        <result column="percent" jdbcType="VARCHAR" property="percent"/>
+        <result column="record_time" jdbcType="DATE" property="recordTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, dept_id, dept_no, dept_name, plan_count, real_count, percent, record_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jingli_history
+        where id = #{id,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from jingli_history
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+    <insert id="insert" parameterType="Jingli">
+    insert into jingli_history (id, dept_id, dept_no, 
+      dept_name, plan_count, real_count, 
+      percent, record_time)
+    values (#{id,jdbcType=CHAR}, #{deptId,jdbcType=VARCHAR}, #{deptNo,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR}, #{planCount,jdbcType=INTEGER}, #{realCount,jdbcType=INTEGER}, 
+      #{percent,jdbcType=VARCHAR}, #{recordTime,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" parameterType="Jingli">
+        insert into jingli_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="deptId != null">
+                dept_id,
+            </if>
+            <if test="deptNo != null">
+                dept_no,
+            </if>
+            <if test="deptName != null">
+                dept_name,
+            </if>
+            <if test="planCount != null">
+                plan_count,
+            </if>
+            <if test="realCount != null">
+                real_count,
+            </if>
+            <if test="percent != null">
+                percent,
+            </if>
+            <if test="recordTime != null">
+                record_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=CHAR},
+            </if>
+            <if test="deptId != null">
+                #{deptId,jdbcType=VARCHAR},
+            </if>
+            <if test="deptNo != null">
+                #{deptNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deptName != null">
+                #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="planCount != null">
+                #{planCount,jdbcType=INTEGER},
+            </if>
+            <if test="realCount != null">
+                #{realCount,jdbcType=INTEGER},
+            </if>
+            <if test="percent != null">
+                #{percent,jdbcType=VARCHAR},
+            </if>
+            <if test="recordTime != null">
+                #{recordTime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="Jingli">
+        update jingli_history
+        <set>
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=VARCHAR},
+            </if>
+            <if test="deptNo != null">
+                dept_no = #{deptNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deptName != null">
+                dept_name = #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="planCount != null">
+                plan_count = #{planCount,jdbcType=INTEGER},
+            </if>
+            <if test="realCount != null">
+                real_count = #{realCount,jdbcType=INTEGER},
+            </if>
+            <if test="percent != null">
+                percent = #{percent,jdbcType=VARCHAR},
+            </if>
+            <if test="recordTime != null">
+                record_time = #{recordTime,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="Jingli">
+    update jingli_history
+    set dept_id = #{deptId,jdbcType=VARCHAR},
+      dept_no = #{deptNo,jdbcType=VARCHAR},
+      dept_name = #{deptName,jdbcType=VARCHAR},
+      plan_count = #{planCount,jdbcType=INTEGER},
+      real_count = #{realCount,jdbcType=INTEGER},
+      percent = #{percent,jdbcType=VARCHAR},
+      record_time = #{recordTime,jdbcType=DATE}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+    <resultMap id="BaseResultMap" type="Jingli">
+        <id column="id" jdbcType="CHAR" property="id"/>
+        <result column="dept_id" jdbcType="VARCHAR" property="deptId"/>
+        <result column="dept_no" jdbcType="VARCHAR" property="deptNo"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+        <result column="plan_count" jdbcType="INTEGER" property="planCount"/>
+        <result column="real_count" jdbcType="INTEGER" property="realCount"/>
+        <result column="percent" jdbcType="VARCHAR" property="percent"/>
+        <result column="record_time" jdbcType="DATE" property="recordTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, dept_id, dept_no, dept_name, plan_count, real_count, percent, record_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jingli_history
+        where id = #{id,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from jingli_history
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+    <insert id="insert" parameterType="Jingli">
+    insert into jingli_history (id, dept_id, dept_no, 
+      dept_name, plan_count, real_count, 
+      percent, record_time)
+    values (#{id,jdbcType=CHAR}, #{deptId,jdbcType=VARCHAR}, #{deptNo,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR}, #{planCount,jdbcType=INTEGER}, #{realCount,jdbcType=INTEGER}, 
+      #{percent,jdbcType=VARCHAR}, #{recordTime,jdbcType=DATE})
+  </insert>
+    <insert id="insertSelective" parameterType="Jingli">
+        insert into jingli_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="deptId != null">
+                dept_id,
+            </if>
+            <if test="deptNo != null">
+                dept_no,
+            </if>
+            <if test="deptName != null">
+                dept_name,
+            </if>
+            <if test="planCount != null">
+                plan_count,
+            </if>
+            <if test="realCount != null">
+                real_count,
+            </if>
+            <if test="percent != null">
+                percent,
+            </if>
+            <if test="recordTime != null">
+                record_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=CHAR},
+            </if>
+            <if test="deptId != null">
+                #{deptId,jdbcType=VARCHAR},
+            </if>
+            <if test="deptNo != null">
+                #{deptNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deptName != null">
+                #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="planCount != null">
+                #{planCount,jdbcType=INTEGER},
+            </if>
+            <if test="realCount != null">
+                #{realCount,jdbcType=INTEGER},
+            </if>
+            <if test="percent != null">
+                #{percent,jdbcType=VARCHAR},
+            </if>
+            <if test="recordTime != null">
+                #{recordTime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="Jingli">
+        update jingli_history
+        <set>
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=VARCHAR},
+            </if>
+            <if test="deptNo != null">
+                dept_no = #{deptNo,jdbcType=VARCHAR},
+            </if>
+            <if test="deptName != null">
+                dept_name = #{deptName,jdbcType=VARCHAR},
+            </if>
+            <if test="planCount != null">
+                plan_count = #{planCount,jdbcType=INTEGER},
+            </if>
+            <if test="realCount != null">
+                real_count = #{realCount,jdbcType=INTEGER},
+            </if>
+            <if test="percent != null">
+                percent = #{percent,jdbcType=VARCHAR},
+            </if>
+            <if test="recordTime != null">
+                record_time = #{recordTime,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=CHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="Jingli">
+    update jingli_history
+    set dept_id = #{deptId,jdbcType=VARCHAR},
+      dept_no = #{deptNo,jdbcType=VARCHAR},
+      dept_name = #{deptName,jdbcType=VARCHAR},
+      plan_count = #{planCount,jdbcType=INTEGER},
+      real_count = #{realCount,jdbcType=INTEGER},
+      percent = #{percent,jdbcType=VARCHAR},
+      record_time = #{recordTime,jdbcType=DATE}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

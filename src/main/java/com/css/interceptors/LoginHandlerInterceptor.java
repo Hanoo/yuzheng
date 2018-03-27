@@ -35,6 +35,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
         Object user = request.getSession().getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
         if(null==user) {
             request.getRequestDispatcher(IConstant.LOGIN_PAGE).forward(request, response);
+            return false;
         }
         return true;
     }
