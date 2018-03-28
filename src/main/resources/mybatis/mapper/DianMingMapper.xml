@@ -122,22 +122,27 @@
 
     <!-- 获取当前时间前一小时当前用户所属监区的点名情况-->
     <select id="getAllDMInfoByPArea" parameterType="java.util.Map" resultMap="dianMingResultMap">
+        select alarm.xh, alarm.name, alarm.value, alarm.pcount, alarm.area_id from (
         select
-        a.aname as name,
-        (CASE WHEN z.xh IS null THEN 0 ELSE z.xh END ) as xh ,
-        (CASE WHEN z.pcountsum IS null THEN 0 ELSE z.pcountsum END) as value,
-        (CASE WHEN   z.pcount IS null THEN 0 ELSE   z.pcount END) as pcount
-        from
-        zte_AreaDetail a
-        LEFT JOIN
-        (
-        SELECT * from zte_AreaQd_Log where 1=1 ${timeParam}
-        )z
-        ON
-        a.aid=z.aid
-        ${areaParam}
-        ORDER BY
-        CONVERT(INT,a.aid)
+                a.aname as name,
+                a.aid   as area_id,
+                (CASE WHEN z.xh IS null THEN 0 ELSE z.xh END ) as xh ,
+                (CASE WHEN z.pcountsum IS null THEN 0 ELSE z.pcountsum END) as value,
+                (CASE WHEN   z.pcount IS null THEN 0 ELSE   z.pcount END) as pcount
+                from
+                zte_AreaDetail a
+                LEFT JOIN
+                (
+                SELECT * from zte_AreaQd_Log where 1=1 ${timeParam}
+                )z
+                ON
+                a.aid=z.aid
+                ${areaParam}
+        ) alarm
+        LEFT JOIN disarm_alarm
+        ON alarm.xh=disarm_alarm.xh
+        where disarm_alarm.operator is NULL
+        ORDER BY CONVERT(INT, alarm.area_id)
     </select>
 
     <!-- 获取当前时间前一小时每个监区的点名未到人员情况-->
