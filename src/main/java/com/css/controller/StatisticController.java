@@ -128,6 +128,21 @@ public class StatisticController {
         return JSONArray.fromObject(result);
     }
 
+    @RequestMapping("/dianMing")
+    public String dianMing() {
+        return "statistic/dianMing";
+    }
+
+    @RequestMapping("/jingLi")
+    public String jingLi() {
+        return "statistic/jingLi";
+    }
+
+    @RequestMapping("/xunGeng")
+    public String xunGeng() {
+        return "statistic/xunGeng";
+    }
+
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute(IConstant.SESSION_ATTRIBUTE_USER);

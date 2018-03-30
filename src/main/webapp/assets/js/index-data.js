@@ -357,7 +357,7 @@ var labelFromatter = {
         }
 
     }
-}
+};
 
 var labelBottom = {
     normal: {
