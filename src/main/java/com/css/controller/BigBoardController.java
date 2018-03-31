@@ -2,7 +2,9 @@ package com.css.controller;
 
 import com.css.entity.DutyInfo;
 import com.css.entity.ManageInfo;
+import com.css.entity.YuzhengUser;
 import com.css.service.BigBoardService;
+import com.css.util.IConstant;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,8 +72,11 @@ public class BigBoardController {
 
     @RequestMapping(value = "/editManageInfo", method = RequestMethod.GET)
     public String editManageInfo(HttpServletRequest request){
-        if(request.getSession().getAttribute("userInfo")==null) {
-            return "login";
+        YuzhengUser user = (YuzhengUser) request.getSession().getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
+        if (!IConstant.ADMIN_AREA.equals(user.getPrisonArea())) {
+            request.setAttribute("errorCode", "503");
+            request.setAttribute("eMsg", "您没有权限访问这个页面！");
+            return "innerError";
         }
         DutyInfo dutyInfo = bigBoardService.getDutyInfo();
         if(null!= dutyInfo) {

@@ -134,19 +134,21 @@
                                     <hr style="border-color:#656565;">
                                     <div class="row" id="empTypeHJ2">
                                         <div class="itemwrap01 col-lg-3 text-center">
-                                            <div class="tit02">巡更总点数：<b class="greens" id="sdNumAll">46</b></div>
+                                            <div class="tit02">
+                                                巡更总点数：<b class="greens" id="xgPointNum">46</b>
+                                            </div>
                                         </div>
                                         <div class="itemwrap01 col-lg-5 text-center" >
-                                            <div class="tit02">巡更时间段：<b class="greens" id="sdNumAll">15:00</b><b class="greens" id="sdNumAll">－</b><b class="greens" id="sdNumAll">16:00</b></div>
+                                            <div class="tit02">
+                                                巡更时间段：<b class="greens" id="xgTime"></b>
+                                            </div>
                                         </div>
-
-
                                     </div>
                                     <div class="widget-chart text-left">
                                         <div class="row">
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp001">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>1</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -155,9 +157,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp002">
                                                 <div class="widget-bg-color-icon card-box fadeInDown animated">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>2</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -167,9 +169,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp003">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>3</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -179,9 +181,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp004">
                                                 <div class="widget-bg-color-icon card-box">
-
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>4</span>
                                                     </div>
@@ -191,9 +192,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp005">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>5</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -202,9 +203,8 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp006">
                                                 <div class="widget-bg-color-icon card-box">
-
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>6</span>
                                                     </div>
@@ -216,9 +216,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp007">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>7</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -227,9 +227,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp008">
                                                 <div class="widget-bg-color-icon card-box fadeInDown animated">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>8</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -239,9 +239,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp009">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>9</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -251,7 +251,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp010">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -263,9 +263,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp011">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>11</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -274,7 +274,7 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp012">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -288,9 +288,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp013">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>13</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -299,9 +299,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp014">
                                                 <div class="widget-bg-color-icon card-box fadeInDown animated">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>14</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -311,9 +311,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp015">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>15</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -323,7 +323,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp016">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -335,9 +335,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp017">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>17</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -346,7 +346,7 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp018">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -360,9 +360,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp019">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>19</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -371,9 +371,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp020">
                                                 <div class="widget-bg-color-icon card-box fadeInDown animated">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>20</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -383,9 +383,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp021">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>21</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -395,7 +395,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp022">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -407,9 +407,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp023">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>23</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -418,9 +418,8 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp024">
                                                 <div class="widget-bg-color-icon card-box">
-
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>24</span>
                                                     </div>
@@ -432,9 +431,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp025">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>25</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -443,9 +442,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp026">
                                                 <div class="widget-bg-color-icon card-box fadeInDown animated">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>26</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -455,9 +454,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp027">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>27</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -467,7 +466,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp028">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -479,9 +478,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp029">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>29</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -490,7 +489,7 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp030">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -504,9 +503,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp031">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>31</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -515,9 +514,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp032">
                                                 <div class="widget-bg-color-icon card-box fadeInDown animated">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>32</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -527,9 +526,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp033">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>33</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -539,7 +538,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp034">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -551,9 +550,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp035">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>35</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -562,7 +561,7 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp036">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -576,9 +575,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp037">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>37</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -587,9 +586,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp038">
                                                 <div class="widget-bg-color-icon card-box fadeInDown animated">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>38</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -599,9 +598,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp039">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>39</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -611,7 +610,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp040">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -623,9 +622,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp041">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>41</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -634,7 +633,7 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp042">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -648,9 +647,9 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp043">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>43</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -659,9 +658,9 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp044">
                                                 <div class="widget-bg-color-icon card-box fadeInDown animated">
-                                                    <div class="bg-icon bg-icon-success pull-left " >
+                                                    <div class="bg-icon bg-icon-inverse pull-left " >
                                                         <span>44</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -671,9 +670,9 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp045">
                                                 <div class="widget-bg-color-icon card-box">
-                                                    <div class="bg-icon bg-icon-danger pull-left" >
+                                                    <div class="bg-icon bg-icon-inverse pull-left" >
                                                         <span>45</span>
                                                     </div>
                                                     <div class="text-right prompt">
@@ -683,7 +682,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-lg-2 col-md-6" id="xgp046">
                                                 <div class="widget-bg-color-icon card-box">
 
                                                     <div class="bg-icon bg-icon-inverse pull-left" >
@@ -695,7 +694,6 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>
-
 
                                         </div>
                                     </div>
@@ -755,5 +753,12 @@
 <script src="assets/js/jquery.core.js"></script>
 <script src="assets/js/jquery.app.js"></script>
 <script src="style/js/echart3/echarts.min.js"></script>
+<script src="assets/js/xunGeng-data.js"></script>
+<script>
+    $(document).ready(function(){
+        refXunGeng();
+        setInterval(refXunGeng, 1000 * 60 * 5);
+    });
+</script>
 </body>
 </html>

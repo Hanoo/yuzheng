@@ -1,9 +1,4 @@
-<%@ page import="com.css.entity.YuzhengUser" %>
-<%@ page import="com.css.util.IConstant" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
-%>
 <!DOCTYPE html>
 <html>
 <head>
