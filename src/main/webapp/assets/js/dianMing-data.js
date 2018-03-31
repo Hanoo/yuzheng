@@ -1,5 +1,7 @@
 var dianming_radius = [47, 57];//pie内外半径
 var legend_data = [];//pie图例
+var dianming_pie = echarts.init(document.getElementById('dianmingPie'));
+
 var labelTop = {
     normal: {
         label: {
@@ -28,7 +30,6 @@ var labelFromatter = {
                 fontWeight: '900'
             }
         }
-
     }
 };
 
@@ -102,7 +103,6 @@ var dianming_option = {
     series: []
 };
 
-var dianming_pie = echarts.init(document.getElementById('dianmingPie'));
 dianming_pie.setOption(dianming_option);
 
 /*获取pie-option-series 所需数据*/
@@ -138,33 +138,35 @@ function getSeries_data_dianming(json) {
     return series_data;
 }
 
-// 读取监区点名数据
-$.ajax({
-    type: 'POST',
-    url: '/getFxryInfo',
-    success: function (data) {
-        var d = eval("(" + data + ")");
-        $("#jfyd").text(d['ydNum']);
-        $("#jfsd").text(d['sdNum']);
-        $("#jfwd").text(d['wdNum']);
-    },
-    error: function () {
-        alert("获取数据失败，请保证网络畅通!");
-    }
-});
+function refDianming() {
+    // 读取监区点名数据
+    $.ajax({
+        type: 'POST',
+        url: '/getFxryInfo',
+        success: function (data) {
+            var d = eval("(" + data + ")");
+            $("#jfyd").text(d['ydNum']);
+            $("#jfsd").text(d['sdNum']);
+            $("#jfwd").text(d['wdNum']);
+        },
+        error: function () {
+            alert("获取数据失败，请保证网络畅通!");
+        }
+    });
 
 // 异步获取各监区出工数据并显示饼图
-$.ajax({
-    type: 'GET',
-    url: '/statistic/getCGInfo',
-    success: function (data) {
-        var optionNew2 = dianming_pie.getOption();
-        optionNew2.series = getSeries_data_dianming(data);
-        optionNew2.legend.data = legend_data;
-        dianming_pie.setOption(optionNew2);
-        dianming_pie.hideLoading();
-    },
-    error: function () {
-        alert("获取数据失败，请保证网络畅通!");
-    }
-});
+    $.ajax({
+        type: 'GET',
+        url: '/statistic/getCGInfo',
+        success: function (data) {
+            var optionNew2 = dianming_pie.getOption();
+            optionNew2.series = getSeries_data_dianming(data);
+            optionNew2.legend.data = legend_data;
+            dianming_pie.setOption(optionNew2);
+            dianming_pie.hideLoading();
+        },
+        error: function () {
+            alert("获取数据失败，请保证网络畅通!");
+        }
+    });
+}

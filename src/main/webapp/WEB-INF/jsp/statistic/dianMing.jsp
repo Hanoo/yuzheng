@@ -131,5 +131,11 @@
 <script src="style/js/echart3/echarts.min.js"></script>
 <script src="assets/js/modernizr.min.js"></script>
 <script src="assets/js/dianMing-data.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function(){
+        refDianming();
+        setInterval(refDianming, 1000 * 60 * 10);
+    });
+</script>
 </body>
 </html>

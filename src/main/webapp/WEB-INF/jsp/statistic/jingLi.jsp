@@ -113,7 +113,7 @@
                                         <hr style="border-color:#656565;">
                                         <div class="row" id="empTypeCount"></div>
                                         <div class="widget-chart text-left">
-                                            <div  style="background:#EFF0EC; height:340px;" id="jlPie"></div>
+                                            <div style="background:#EFF0EC; height:550px;" id="jlPie"></div>
                                         </div>
                                     </div>
                                 </div>

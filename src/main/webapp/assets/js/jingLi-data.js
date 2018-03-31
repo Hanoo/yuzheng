@@ -1,4 +1,4 @@
-var radius = [25, 35];//pie内外半径
+var radius = [47, 57];//pie内外半径
 var legend_data = [];//pie图例
 var pie = echarts.init(document.getElementById('jlPie'));
 
@@ -30,7 +30,6 @@ var labelFromatter = {
                 fontWeight: '900'
             }
         }
-
     }
 };
 
