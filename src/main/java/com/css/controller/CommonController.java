@@ -68,4 +68,9 @@ public class CommonController {
 
         return json.toString();
     }
+
+    @RequestMapping("/entrance")
+    public String  entrance (){
+        return "entrance";
+    }
 }

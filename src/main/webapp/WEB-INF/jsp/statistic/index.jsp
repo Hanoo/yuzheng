@@ -204,7 +204,6 @@
 
 <!-- Plugins  -->
 <script src="assets/js/modernizr.min.js"></script>
-<script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/popper.min.js"></script><!-- Popper for Bootstrap -->
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/detect.js"></script>
@@ -216,11 +215,6 @@
 <script src="assets/js/jquery.nicescroll.js"></script>
 <script src="assets/js/jquery.scrollTo.min.js"></script>
 <script src="plugins/switchery/switchery.min.js"></script>
-
-<!-- EASY PIE CHART JS -->
-<script src="plugins/jquery.easy-pie-chart/dist/easypiechart.min.js"></script>
-<script src="plugins/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
-<script src="assets/pages/easy-pie-chart.init.js"></script>
 
 <!-- KNOB JS -->
 <!--[if IE]>
@@ -234,7 +228,6 @@
 <script src="assets/js/jquery.core.js"></script>
 <script src="assets/js/jquery.app.js"></script>
 <script src="style/js/echart3/echarts.min.js"></script>
-<script src="assets/js/index-data.js" type="text/javascript"></script>
 <script>
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';

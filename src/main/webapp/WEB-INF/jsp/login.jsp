@@ -69,7 +69,7 @@
                     } else if (data.msg=="error") {
                         alert("服务器内部错误！")
                     } else {
-                        window.location.href= "statistic/index";
+                        window.location.href= "entrance";
                     }
                 }
 

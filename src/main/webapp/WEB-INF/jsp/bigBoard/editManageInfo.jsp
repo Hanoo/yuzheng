@@ -470,7 +470,6 @@
                     contentType: 'application/json;charset=UTF-8',
                     data: manageInfo,
                     dataType: 'json',
-                    async: false,
                     success:function(msg){
                         if(msg=="InvalidSession"){
                             alert("会话超时！");

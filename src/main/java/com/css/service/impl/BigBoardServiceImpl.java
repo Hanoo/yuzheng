@@ -31,7 +31,6 @@ public class BigBoardServiceImpl implements BigBoardService {
     }
 
     public boolean updateDutyInfo(DutyInfo dutyInfo) {
-        DataSourceTypeManager.set(DataSources.JIANYU);
         Object i;
         try {
             i = dao.save("DutyInfoMapper.updateByPrimaryKeySelective", dutyInfo);
@@ -60,12 +59,12 @@ public class BigBoardServiceImpl implements BigBoardService {
     }
 
     public boolean saveManageInfo(JSONObject manageInfoJSON) {
+
         ManageInfo manageInfo = (ManageInfo) JSONObject.toBean(manageInfoJSON, ManageInfo.class);
         manageInfo.setId(onlyRecordId);
-        DataSourceTypeManager.set(DataSources.JIANYU);
         Object i;
         try {
-            i = dao.save("ManageInfoMapper.updateByPrimaryKeySelective", manageInfo);
+            i = dao.update("ManageInfoMapper.updateByPrimaryKeySelective", manageInfo);
         } catch (Exception e) {
             e.printStackTrace();
             i = 0;

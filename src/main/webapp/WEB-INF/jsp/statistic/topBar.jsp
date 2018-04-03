@@ -10,7 +10,7 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <div class="text-center">
-            <a href="index.html" class="logo"><i class="mdi mdi-radar"></i> <span></span></a>
+            <a href="javascript:void(0);" class="logo"><i class="mdi mdi-radar"></i> <span></span></a>
         </div>
     </div>
 
@@ -52,7 +52,7 @@
                     </div>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="javascript:void(0);" class="dropdown-item notify-item" data-toggle="modal" data-target="#con-close-modal">
                         <i class="mdi mdi-settings"></i>
                         <span>修改密码</span>
                     </a>
@@ -83,6 +83,48 @@
         </ul>
     </nav>
 
+</div>
+<div id="con-close-modal" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">密码修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="oldPasswd" class="control-label">旧密码</label>
+                            <input type="password" class="form-control" id="oldPasswd" placeholder="旧密码">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="newPasswd" class="control-label">新密码</label>
+                            <input type="password" class="form-control" id="newPasswd" placeholder="新密码">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="conPasswd" class="control-label">重复新密码</label>
+                            <input type="password" class="form-control" id="conPasswd" placeholder="再次输入">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div id="chgPwdMsg"></div>
+                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">关闭</button>
+                <button type="button" id="saveButton" class="btn btn-info waves-effect waves-light">保存</button>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Top Bar End -->
 <!-- ========== Left Sidebar Start ========== -->
@@ -124,3 +166,6 @@
     </div>
 </div>
 <!-- Left Sidebar End -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/prison.js"></script>
+<script src="assets/js/changePassword.js" type="text/javascript"></script>

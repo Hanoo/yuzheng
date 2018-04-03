@@ -30,14 +30,13 @@ public class YuzhengServiceImpl implements YuzhengUserService {
     }
 
     public int updateUserPassword(String userName, String oPwd, String nPwd) throws Exception {
-        DataSourceTypeManager.set(DataSources.JIANYU);
         YuzhengUser user = (YuzhengUser) dao.findForObject("YuzhengUserMapper.getByUserName", userName);
         if(oPwd.equals(user.getUserPassword())) {
             user.setUserPassword(nPwd);
             Integer i = (Integer) dao.save("YuzhengUserMapper.updateByPrimaryKeySelective", user);
             return i;
         } else {
-            return -1;
+            return -2;
         }
     }
 }

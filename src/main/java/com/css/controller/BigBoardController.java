@@ -1,5 +1,7 @@
 package com.css.controller;
 
+import com.css.datasource.DataSourceTypeManager;
+import com.css.datasource.DataSources;
 import com.css.entity.DutyInfo;
 import com.css.entity.ManageInfo;
 import com.css.entity.YuzhengUser;
@@ -47,9 +49,6 @@ public class BigBoardController {
 
     @RequestMapping(value = "/editDutyInfo", method = RequestMethod.GET)
     public String editDutyInfo(HttpServletRequest request){
-        if(request.getSession().getAttribute("userInfo")==null) {
-            return "login";
-        }
         DutyInfo dutyInfo = bigBoardService.getDutyInfo();
         if(null!= dutyInfo) {
             request.setAttribute("dutyInfo", JSONObject.fromObject(dutyInfo));
@@ -61,13 +60,10 @@ public class BigBoardController {
 
     @RequestMapping(value = "/editDutyInfo", method = RequestMethod.POST)
     @ResponseBody
-    public String editDutyInfo(@RequestBody JSONObject dutyInfo, HttpSession session){
-        if(session.getAttribute("userInfo")==null) {
-            return "InvalidSession";
-        } else {
-            boolean result = bigBoardService.saveDutyInfo(dutyInfo);
-            return String.valueOf(result);
-        }
+    public String editDutyInfo(@RequestBody JSONObject dutyInfo){
+        DataSourceTypeManager.set(DataSources.JIANYU);
+        boolean result = bigBoardService.saveDutyInfo(dutyInfo);
+        return String.valueOf(result);
     }
 
     @RequestMapping(value = "/editManageInfo", method = RequestMethod.GET)
@@ -98,12 +94,9 @@ public class BigBoardController {
 
     @RequestMapping(value = "/editManageInfo", method = RequestMethod.POST)
     @ResponseBody
-    public String editManage(@RequestBody JSONObject manageInfo, HttpSession session){
-        if(session.getAttribute("userInfo")==null) {
-            return "InvalidSession";
-        } else {
-            boolean result = bigBoardService.saveManageInfo(manageInfo);
-            return String.valueOf(result);
-        }
+    public String editManage(@RequestBody JSONObject manageInfo){
+        DataSourceTypeManager.set(DataSources.JIANYU);
+        boolean result = bigBoardService.saveManageInfo(manageInfo);
+        return String.valueOf(result);
     }
 }
