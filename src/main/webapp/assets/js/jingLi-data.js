@@ -124,10 +124,10 @@ function getSeries_data(json) {
             itemStyle: labelFromatter,
             clickable: true,
             data: [
-                {key: 0, deptId: m.deptID, name: m.deptName, value: m.realCount, planValue: m.planCount, itemStyle: labelTop, realValue: m.realCount},
-                {key: 1, deptId: m.deptID, name: m.deptName, value: m.planCount - m.realCount, planValue: m.planCount, itemStyle: labelBottom, realValue: m.realCount}
+                {key: 1, deptId: m.deptID, name: m.deptName, value: m.realCount, planValue: m.planCount, itemStyle: labelTop, realValue: m.realCount},
+                {key: 0, deptId: m.deptID, name: m.deptName, value: m.planCount - m.realCount, planValue: m.planCount, itemStyle: labelBottom, realValue: m.realCount}
             ]
-        }
+        };
         series_data[i] = s;
     }
     return series_data;
@@ -162,6 +162,36 @@ $.ajax({
                 '<div class="itemwrap01 col-lg-3 text-center">' +
                 '<div class="tit02">' + val.typeName + '：' + '<b class="greens">' + val.realCount +
                 '</b></div></div>');
+        });
+    }
+});
+
+pie.on('click', function (params) {
+
+    var key = params.data.key;
+    var name = params.data.name;
+    var deptId = params.data.deptId;
+
+    if (key == 0) {
+        $('#dlg').dialog({
+            title: '未出勤人员列表' + '（' + name + ')',
+            width: 800,
+            height: 600,
+            closed: false,
+            cache: false,
+            href: '/toJlAbsentPage?deptId=' + deptId,
+            modal: true
+        });
+
+    } else if (key == 1) {
+        $('#dlg').dialog({
+            title: '出勤人员列表' + '（' + name + ')',
+            width: 800,
+            height: 600,
+            closed: false,
+            cache: false,
+            href: '/toJlWorkPage?deptId=' + deptId,
+            modal: true
         });
     }
 });

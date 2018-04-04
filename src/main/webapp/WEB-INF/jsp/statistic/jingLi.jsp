@@ -11,7 +11,9 @@
     <link href="assets/images/favicon_1.ico" rel="shortcut icon">
 
     <title>警力</title>
-
+    <link href="style/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="style/js/easyui/themes/black/easyui.css" rel="stylesheet" type="text/css"/>
+    <link href="style/js/easyui/themes/icon.css" rel="stylesheet" type="text/css"/>
     <link href="plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
     <link href="plugins/switchery/switchery.min.css" rel="stylesheet" />
 
@@ -93,6 +95,7 @@
                                                         <h4 class="col-2 header-title m-t-0 " style="margin-bottom: 0;padding: 14px 10px 10px 0;">
                                                             警力分布汇总
                                                         </h4>
+                                                        <!--
                                                         <label class="col-3 col-form-label text-right" style="line-height: 30px">请输入查询日期：</label>
                                                         <div class="col-3">
                                                             <input class="form-control" type="date" name="date">
@@ -106,6 +109,7 @@
                                                         <button type="submit" class="btn btn-primary waves-effect waves-light btn-md">
                                                             搜索
                                                         </button>
+                                                        -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -122,6 +126,7 @@
 
                     </div>
                 </div>
+                <div id="dlg"></div>
             </div>
         </div>
         <!-- end container -->
@@ -143,7 +148,6 @@
 </script>
 
 <!-- Plugins  -->
-<script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/popper.min.js"></script><!-- Popper for Bootstrap -->
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/detect.js"></script>
@@ -167,6 +171,7 @@
 <script src="assets/js/jquery.core.js"></script>
 <script src="assets/js/jquery.app.js"></script>
 <script src="style/js/echart3/echarts.min.js"></script>
+<script src="style/js/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <script src="assets/js/jingLi-data.js" type="text/javascript"></script>
 </body>
 </html>

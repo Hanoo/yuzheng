@@ -188,6 +188,17 @@ public class StatisticController {
         return data;
     }
 
+    @RequestMapping(value = "eliminateWarning", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject eliminateWarning(HttpSession session, @RequestBody JSONObject data ) {
+        YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
+        String wInfoId = data.getString("wInfoId");
+        String description = data.getString("description");
+        logger.info("Eliminate warning successfully, wInfoId:" + wInfoId + ", operator is " + user.getDisplayName() + ", description is " + description);
+        data.put("msg", "success");
+        return data;
+    }
+
     private String getUserPArea(HttpSession session) {
         YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
         return user.getPrisonArea();

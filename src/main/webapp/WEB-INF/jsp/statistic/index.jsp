@@ -154,6 +154,41 @@
 
                                         </div>
                                     </div>
+                                    <div id="warning-modal" class="modal fade" tabindex="-1"
+                                         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    <h4 class="modal-title">预警消除</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label for="field-5" class="control-label">操作人</label>
+                                                                <input type="text" class="form-control" id="field-5" value="监区管理员">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group no-margin">
+                                                                <label for="description" class="control-label">消除说明</label>
+                                                                <textarea class="form-control" id="description" placeholder="请填写消除说明"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <div id="eliminateMsg"></div>
+                                                    <input type="hidden" id="wInfoId" value="" />
+                                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">关闭</button>
+                                                    <button type="button" id="eliminate" class="btn btn-info waves-effect waves-light">保存</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div style="width: 100%"  >
                                     <div class="card-box">
@@ -231,6 +266,42 @@
 <script>
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';
+    $(document).on("click", ".warning-li", function(){
+        console.log(this);
+    });
+    $(document).ready(function(){
+        $("#eliminate").on("click", function(){
+            var description = $("#description").val();
+            if(!description) {
+                showFdBkInfo("请填写消除预警的描述", "error");
+                return false;
+            }
+            $.ajax({
+                type:"post",
+                url:"statistic/eliminateWarning",
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({"wInfoId":$("#wInfoId").val(), "description":description}),
+                dataType: 'json',
+                success:function(data){
+                    if(data.msg=="failed"){
+                        showFdBkInfo("用户名或密码错误！", "error");
+                    } else if (data.msg=="error") {
+                        showFdBkInfo("服务器内部错误！", "error");
+                    } else {
+                        showFdBkInfo("消除预警成功。", "success");
+                    }
+                }
+
+            });
+        });
+    });
+    function showFdBkInfo(msg, type){
+        var fontColor = "green";
+        if("error"==type) {
+            fontColor = "red";
+        }
+        $("#eliminateMsg").css("color", fontColor).html(msg);
+    }
 </script>
 <script src="assets/js/index-data.js" type="text/javascript"></script>
 </body>

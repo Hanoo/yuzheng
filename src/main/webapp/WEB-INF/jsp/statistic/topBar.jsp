@@ -144,7 +144,6 @@
                         <i class=" ti-user"></i>
                         <span>警力分布</span>
                     </a>
-
                 </li>
                 <li>
                     <a href="/statistic/dianMing" class="waves-effect waves-primary">
@@ -159,7 +158,6 @@
                     </a>
                 </li>
             </ul>
-
             <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>

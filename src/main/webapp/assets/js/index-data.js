@@ -162,7 +162,7 @@ $(function() {
                 var nameList = [];
                 var countList = [];
                 for (var i = 0; i < dmInfoList.length; i++) {
-                    nameList[i] = dmInfoList[i].name;
+                    nameList[i] = dmInfoList[i].name.replace("点名","");
                     countList[i] = dmInfoList[i].pcount;
                 }
                 var jqNum_option = {
@@ -639,7 +639,7 @@ $.ajax({
         var displayDiv = $('#yjMsg');
         for(var i=0;i<10;i++) {
             var dataMap = data[i];
-            displayDiv.append("<h4>["+dataMap.name+"]"+dataMap.info+"</h4>");
+            displayDiv.append("<h4 class='warning-li' wInfoId=''><a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>["+dataMap.name+"]"+dataMap.info+"</a></h4>");
         }
         if($('#yjMsg').children().length>5){
             function showMsg(){
