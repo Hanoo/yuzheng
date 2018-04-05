@@ -30,7 +30,7 @@ import java.util.Map;
 public class StatisticController {
 
     @Resource
-    StatisticService ageGroupsService;
+    StatisticService stService;
 
     @Resource
     private IDianMingService dianMingService;
@@ -56,6 +56,8 @@ public class StatisticController {
             if (null!=yuzhengUser) {
                 session.setAttribute(IConstant.SESSION_ATTRIBUTE_USER, yuzhengUser);
                 logger.info("用户" + yuzhengUser.getDisplayName() + "登陆成功。");
+                Map<String, String> config = stService.getIntervalConfig();
+                session.setAttribute(IConstant.IntervalConfig, config);
             } else {
                 json.put("msg", "failed");
                 logger.info("用户" + json.getString("userName") + "登陆失败。");
@@ -70,7 +72,7 @@ public class StatisticController {
     @RequestMapping("/getAgeGroups")
     @ResponseBody
     public JSONArray getAgeGroups() throws Exception {
-        List list = ageGroupsService.getAgeGroups();
+        List list = stService.getAgeGroups();
         if(null!=list && list.size()>0) {
             return JSONArray.fromObject(list);
         } else {
@@ -81,7 +83,7 @@ public class StatisticController {
     @RequestMapping("/getSentenceLength")
     @ResponseBody
     public JSONArray getSentenceLength() throws Exception {
-        List list = ageGroupsService.getSentenceLength();
+        List list = stService.getSentenceLength();
         if(null!=list && list.size()>0) {
             return JSONArray.fromObject(list);
         } else {
@@ -125,7 +127,7 @@ public class StatisticController {
     @RequestMapping("/getPCountInNation")
     @ResponseBody
     public JSONArray getPCountInNation() throws Exception {
-        List result = ageGroupsService.getPCountInNation();
+        List result = stService.getPCountInNation();
 
         return JSONArray.fromObject(result);
     }
@@ -133,7 +135,7 @@ public class StatisticController {
     @RequestMapping("/getPCountByCrimeType")
     @ResponseBody
     public JSONArray getPCountByCrimeType() throws Exception {
-        List result = ageGroupsService.getPCountByCrimeType();
+        List result = stService.getPCountByCrimeType();
 
         return JSONArray.fromObject(result);
     }

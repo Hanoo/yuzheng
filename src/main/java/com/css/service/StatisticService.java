@@ -33,4 +33,10 @@ public interface StatisticService {
      * @throws Exception
      */
     List<Map> getPCountByCrimeType() throws Exception;
+
+    /**
+     * 获取各种定时更新数据的时间间隔配置信息
+     * @return
+     */
+    Map<String, String> getIntervalConfig();
 }

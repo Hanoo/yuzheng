@@ -115,8 +115,9 @@ function getSeries_data_dianming(json) {
         var y = (0.22 + Math.floor(i / 6) * 0.26) * 100 + '%';
 
         var a = Math.random() * 100;
+        var deptName = m.name.replace("点名","");
         //全局变量legend_data赋值
-        legend_data[i] = m.deptName;
+        legend_data[i] = deptName;
 
         var s = {
             type: 'pie',
@@ -129,8 +130,8 @@ function getSeries_data_dianming(json) {
                 // {key: 1, deptId: m.deptID, name: m.name, value: m.realCount, planValue: m.pcount, itemStyle: labelBottom, realValue: m.realCount},
                 // {key: 0, deptId: m.deptID, name: m.name, value: m.pcount - m.realCount, itemStyle: labelTop}
 
-                {key: 0, deptId: m.deptID, name: m.name, value: m.realCount, planValue: m.pcount, itemStyle: labelTop, realValue: m.realCount},
-                {key: 1, deptId: m.deptID, name: m.name, value: m.pcount - m.realCount, planValue: m.pcount, itemStyle: labelBottom,realValue: m.realCount}
+                {key: 0, deptId: m.deptID, name: deptName, value: m.realCount, planValue: m.pcount, itemStyle: labelTop, realValue: m.realCount},
+                {key: 1, deptId: m.deptID, name: deptName, value: m.pcount - m.realCount, planValue: m.pcount, itemStyle: labelBottom,realValue: m.realCount}
             ]
         }
         series_data[i] = s;
@@ -141,16 +142,72 @@ function getSeries_data_dianming(json) {
 function refDianming() {
     // 读取监区点名数据
     $.ajax({
+
         type: 'POST',
-        url: '/getFxryInfo',
+        url: '/toDmAjax',
+
         success: function (data) {
-            var d = eval("(" + data + ")");
-            $("#jfyd").text(d['ydNum']);
-            $("#jfsd").text(d['sdNum']);
-            $("#jfwd").text(d['wdNum']);
+
+            var list = data["list"];
+            var jsons = JSON.parse(list);
+            var sdNumAll = data["sdNum"];
+            var ydNumAll = data["ydNum"];
+            var realCountAll = data["realCount"];
+            var planCountAll = data["planCount"];
+            var percAll = data["perc"];
+            var wdjlCountAll = planCountAll - realCountAll;
+
+
+            var wdNumAll = ydNumAll - sdNumAll;
+
+            $("#sdNumAll").html(sdNumAll);
+            $("#wdNumAll").html(wdNumAll);
+            $("#wdjlCountAll").html(wdjlCountAll);
+            $("#ydNumAll").html(ydNumAll);
+            $("#realCountAll").html(realCountAll);
+            $("#planCountAll").html(planCountAll);
+            $("#percAll").html(percAll);
+
+
+            dianming_pie.on('click', function (params) {
+                console.log("Pie on click");
+                var str = '0';
+                var str1 = '0';
+                var realCount = '0';
+                var planCount = '0';
+                var perc = '0';
+                //未到人员
+                var wdNum = '0';
+                //未到警力
+                var wdjlNum = '0';
+                jqmc = params.name;
+                for (var i = 0; i < jsons.length; i++) {
+
+                    if (params.name == jsons[i].name) {
+                        str = jsons[i].value;
+                        str1 = jsons[i].pcount;
+                        realCount = jsons[i].realCount;
+                        planCount = jsons[i].planCount;
+                        perc = jsons[i].perc;
+                        xh = jsons[i].xh;
+                        wdNum = str1 - str;
+                        wdjlNum = planCount - realCount;
+                    }
+                }
+                $("#sdNum").html(str);
+                $("#wdjlNum").html(wdjlNum);
+                $("#wdNum").html(wdNum);
+                $("#ydNum").html(str1);
+                $("#realCount").html(realCount);
+                $("#planCount").html(planCount);
+                $("#perc").html(perc);
+
+                $("#jqname").text(jqmc);
+            });
+
         },
         error: function () {
-            alert("获取数据失败，请保证网络畅通!");
+            alert("获取数据失败，请检查网络是否畅通！");
         }
     });
 

@@ -196,10 +196,10 @@ end
         as realCount from zte_AreaQdPlanDetail a
         LEFT JOIN
         (
-        SELECT pid, pcountsum as num from zte_AreaQd_Log  where  1=1 ${params}
+        SELECT aid, pcountsum as num from zte_AreaQd_Log  where  1=1 ${params}
         ) p
         ON
-        p.pid=a.aid
+        p.aid=a.aid
         ORDER BY  convert(int,a.aid)
     </select>
 

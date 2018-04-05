@@ -6,6 +6,7 @@ import com.css.datasource.DataSources;
 import com.css.entity.AgeGroup;
 import com.css.service.StatisticService;
 import com.css.util.NationCodeMapping;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,6 +20,14 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Resource
     private DAO dao;
+
+    @Value("${refData.interval.jingLi}")
+    private String refDataIntervalJingLi;
+
+    @Value("${refData.interval.dianMing}")
+    private String refDataIntervalDianMing;
+
+    private Map<String, String> config;
 
     public List<AgeGroup> getAgeGroups() throws Exception {
         DataSourceTypeManager.set(DataSources.JGXT);
@@ -58,5 +67,14 @@ public class StatisticServiceImpl implements StatisticService {
         DataSourceTypeManager.set(DataSources.JGXT);
         List<Map> list = (List) dao.findForList("AgeGroup.getPCountByCrimeType",null);
         return list;
+    }
+
+    public Map<String, String> getIntervalConfig() {
+        if(null == config) {
+            config = new HashMap<String, String>();
+            config.put("refDataIntervalJingLi", refDataIntervalJingLi);
+            config.put("refDataIntervalDianMing", refDataIntervalDianMing);
+        }
+        return config;
     }
 }

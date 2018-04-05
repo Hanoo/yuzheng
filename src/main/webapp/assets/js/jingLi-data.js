@@ -133,38 +133,6 @@ function getSeries_data(json) {
     return series_data;
 }
 pie.setOption(option);
-// 异步获取各监区警力数据并显示饼图
-$.ajax({
-    type: 'GET',
-    url: '/toJlSync',
-    success: function (data) {
-        var optionNew = pie.getOption();
-        optionNew.series = getSeries_data(data);
-        optionNew.legend.data = legend_data;
-        pie.setOption(optionNew);
-        pie.hideLoading();
-
-    }
-});
-// 读取警力分布数据
-$.ajax({
-    type: 'post',
-    url: '/toJlEmpTypeHJ',
-    cache: false,
-    dataType: 'json',
-    success: function (data) {
-
-        $("#empTypeCount").empty();
-
-        data.forEach(function (val, index) {
-
-            $("#empTypeCount").append(
-                '<div class="itemwrap01 col-lg-3 text-center">' +
-                '<div class="tit02">' + val.typeName + '：' + '<b class="greens">' + val.realCount +
-                '</b></div></div>');
-        });
-    }
-});
 
 pie.on('click', function (params) {
 
@@ -195,3 +163,38 @@ pie.on('click', function (params) {
         });
     }
 });
+
+function refData() {
+    // 异步获取各监区警力数据并显示饼图
+    $.ajax({
+        type: 'GET',
+        url: '/toJlSync',
+        success: function (data) {
+            var optionNew = pie.getOption();
+            optionNew.series = getSeries_data(data);
+            optionNew.legend.data = legend_data;
+            pie.setOption(optionNew);
+            pie.hideLoading();
+
+        }
+    });
+    // 读取警力分布数据
+    $.ajax({
+        type: 'post',
+        url: '/toJlEmpTypeHJ',
+        cache: false,
+        dataType: 'json',
+        success: function (data) {
+
+            $("#empTypeCount").empty();
+
+            data.forEach(function (val, index) {
+
+                $("#empTypeCount").append(
+                    '<div class="itemwrap01 col-lg-3 text-center">' +
+                    '<div class="tit02">' + val.typeName + '：' + '<b class="greens">' + val.realCount +
+                    '</b></div></div>');
+            });
+        }
+    });
+}

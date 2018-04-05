@@ -1,4 +1,9 @@
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Map<String, String> inConfig = (Map<String, String>) session.getAttribute(IConstant.IntervalConfig);
+    String refDataIntervalDianMing = inConfig.get("refDataIntervalDianMing")==null?"5":inConfig.get("refDataIntervalDianMing");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +22,65 @@
     <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     <link href="assets/css/statistic.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .card-box {
+            padding: 20px;
+            border: 1px solid rgba(54, 64, 74, 0.08);
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            background-clip: padding-box;
+            margin-bottom: 20px;
+            background-color: #36404a;
+            width: 100%;
+        }
+        .header-title {
+            text-transform: uppercase;
+            font-size: 21px;
+            font-weight: 700;
+            line-height: 16px;
+            margin-bottom: 8px;
+            margin-top: 0;
+        }
+        .tborder3 {
+            clear: both;
+            font-size: 1px;
+            height: 3px;
+            line-height: 3px;
+            background: #fff;
+            -moz-opacity: 0.4;
+            -khtml-opacity: 0.4;
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+        }
+        .tit02 {
+            font-size: 21px;
+            color: #fff;
+            font-weight: bold;
+            height: 44px;
+            line-height: 44px;
+        }
+        .greens {
+            color: #00ff00;
+        }
+        .s-left{
+            margin-right: 15px;
+            color:#98a6ad;
+        }
+        .hz-right{
+            margin-top: 60px;
+            padding: 30px 5px;
+            background-color: #3c4652;
+            border-radius: 8px;
+        }
+        .hz-r-bj{
+            background-color: #3c4652;
+            margin-bottom: 0;
+        }
+        .line-2{
+            border-color:#55616d;
+        }
+    </style>
 </head>
 
 
@@ -67,18 +131,71 @@
 
                                     <hr style="border-color:#656565;">
                                     <div class="row" id="empTypeHJ2">
-                                        <div class="itemwrap01 col-lg-3 text-center">
-                                            <div class="tit02">全部：<b class="cyans" id="jfyd">561</b></div>
+                                        <div class="itemwrap01 col-lg-4 text-center ">
+                                            <div class="tit02">
+                                                <h4>服刑人员出工汇总</h4>
+                                                <hr>
+                                                <h5>
+                                                    <span class="s-left">出工：<b class="greens" id="sdNumAll">586</b></span>
+                                                    <span class="s-left">全部：<b class="text-white" id="ydNumAll">2831</b></span>
+                                                    <span class="s-left">未出工：<b class="text-danger" id="wdNumAll">2245</b></span>
+                                                </h5>
+                                            </div>
                                         </div>
-                                        <div class="itemwrap01 col-lg-3 text-center" >
-                                            <div class="tit02">出工：<b class="greens" id="jfsd">166</b></div>
+                                        <div class="itemwrap01 col-lg-4 text-center">
+                                            <div class="tit02">
+                                                <h4>警力汇总</h4>
+                                                <hr>
+                                                <h5>
+                                                    <span class="s-left">执勤：<b class="greens" id="realCountAll">561</b></span>
+                                                    <span class="s-left">全部：<b class="text-white" id="planCountAll">561</b></span>
+                                                    <span class="s-left">未执勤：<b class="text-danger" id="wdjlCountAll">0</b></span>
+                                                </h5>
+                                            </div>
                                         </div>
-                                        <div class="itemwrap01 col-lg-3 text-center" >
-                                            <div class="tit02">未出工：<b class="reds" id="jfwd">235</b></div>
+                                        <div class="itemwrap01 col-lg-4 text-center">
+                                            <div class="tit02">
+                                                <h4>警力匹配度</h4>
+                                                <hr>
+                                                <h5>
+                                                    <span class="s-left">匹配度：<b class="greens" id="percAll">95.73%</b></span>
+                                                </h5>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="widget-chart text-left">
-                                        <div style="background:#EFF0EC; height:550px;" id="dianmingPie"></div>
+                                    <div class="row col-sm-12">
+                                        <div class="col-lg-8 ">
+                                            <div class="widget-chart ">
+                                                <div style="background:#EFF0EC; height:550px;" id="dianmingPie"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 hz-right">
+                                            <div class="card-box hz-r-bj">
+                                                <h4><span id="jqname"></span>统计汇总</h4>
+                                                <hr class="line-2">
+                                                <p>
+                                                    <span class="s-left">出工：<b class="greens" id="sdNum">-</b></span>
+                                                    <span class="s-left">全部：<b class="text-white" id="ydNum">-</b></span>
+                                                    <span class="s-left">未出工：<b class="text-danger" id="wdNum">-</b></span>
+                                                </p>
+                                            </div>
+                                            <div class="card-box hz-r-bj">
+                                                <h4>警力汇总</h4>
+                                                <hr class="line-2">
+                                                <p>
+                                                    <span class="s-left">执勤：<b class="greens" id="realCount">-</b></span>
+                                                    <span class="s-left">全部：<b class="text-white" id="planCount">-</b></span>
+                                                    <span class="s-left">未执勤：<b class="text-danger" id="wdjlNum">-</b></span>
+                                                </p>
+                                            </div>
+                                            <div class="card-box hz-r-bj">
+                                                <h4>警力匹配度</h4>
+                                                <hr class="line-2">
+                                                <p>
+                                                    <span class="s-left">匹配度：<b class="greens" id="perc">--</b></span>
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +250,7 @@
 <script>
     $(document).ready(function(){
         refDianming();
-        setInterval(refDianming, 1000 * 60 * 10);
+        setInterval(refDianming, 1000 * 60 * <%=refDataIntervalDianMing%>);
     });
 </script>
 </body>

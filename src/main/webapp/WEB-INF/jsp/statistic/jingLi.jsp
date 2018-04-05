@@ -1,4 +1,9 @@
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    Map<String, String> inConfig = (Map<String, String>) session.getAttribute(IConstant.IntervalConfig);
+    String refDataIntervalJingLi = inConfig.get("refDataIntervalJingLi")==null?"5":inConfig.get("refDataIntervalJingLi");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -141,8 +146,6 @@
 </div>
 <!-- END wrapper -->
 
-
-
 <script>
     var resizefunc = [];
 </script>
@@ -173,5 +176,11 @@
 <script src="style/js/echart3/echarts.min.js"></script>
 <script src="style/js/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <script src="assets/js/jingLi-data.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+        refData();
+        setInterval(refData, 1000 * 60 * <%=refDataIntervalJingLi%>);
+    });
+</script>
 </body>
 </html>
