@@ -122,27 +122,23 @@
 
     <!-- 获取当前时间前一小时当前用户所属监区的点名情况-->
     <select id="getAllDMInfoByPArea" parameterType="java.util.Map" resultMap="dianMingResultMap">
-        select alarm.xh, alarm.name, alarm.value, alarm.pcount, alarm.area_id from (
-        select
-                a.aname as name,
-                a.aid   as area_id,
-                (CASE WHEN z.xh IS null THEN 0 ELSE z.xh END ) as xh ,
-                (CASE WHEN z.pcountsum IS null THEN 0 ELSE z.pcountsum END) as value,
-                (CASE WHEN   z.pcount IS null THEN 0 ELSE   z.pcount END) as pcount
-                from
-                zte_AreaDetail a
-                LEFT JOIN
+        SELECT
+                detail.aname as name,
+                detail.aid   as area_id,
+                (CASE WHEN log.xh IS null THEN 0 ELSE log.xh END ) as xh ,
+                (CASE WHEN log.pcountsum IS null THEN 0 ELSE log.pcountsum END) as value,
+                (CASE WHEN log.pcount IS null THEN 0 ELSE log.pcount END) as pcount
+        FROM
+                zte_AreaDetail detail
+        LEFT JOIN
                 (
-                SELECT * from zte_AreaQd_Log where 1=1 ${timeParam}
-                )z
-                ON
-                a.aid=z.aid
+                SELECT * FROM zte_AreaQd_Log WHERE 1=1 ${timeParam}
+                UNION ALL
+				SELECT xh, pid, pname, aid, begintime, endtime, pcount, pcountsum, aminute, jkczy from zte_AreaQd_MnuLog where 1=1 ${timeParam}
+                ) log
+        ON
+                detail.aid=log.aid
                 ${areaParam}
-        ) alarm
-        LEFT JOIN disarm_alarm
-        ON alarm.xh=disarm_alarm.xh
-        where disarm_alarm.operator is NULL
-        ORDER BY CONVERT(INT, alarm.area_id)
     </select>
 
     <!-- 获取当前时间前一小时每个监区的点名未到人员情况-->
@@ -206,4 +202,28 @@ end
     <select id="getPCountByArea" resultType="DMinfo">
         select convert(int,a.aid) as xh,a.pname as name ,a.pcount from zte_AreaQdPlanDetail a order by xh
     </select>
+
+    <!-- 手动插入一条点名数据以消除预警 -->
+    <insert id="insertManualDianMingInfo" parameterType="java.util.Map" >
+        insert into zte_AreaQd_MnuLog (
+            xh,
+            pname,
+            aid,
+            begintime,
+            endtime,
+            pcount,
+            pcountsum,
+            aminute,
+            jkczy)
+        values (
+            #{xh,jdbcType=CHAR},
+            #{pname,jdbcType=VARCHAR},
+            #{aid, jdbcType=VARCHAR},
+            #{begintime,jdbcType=TIMESTAMP},
+            #{endtime,jdbcType=TIMESTAMP},
+            #{pcount,jdbcType=INTEGER},
+            #{pcountsum,jdbcType=INTEGER},
+            #{aminute,jdbcType=INTEGER},
+            #{jkczy,jdbcType=VARCHAR})
+    </insert>
 </mapper>

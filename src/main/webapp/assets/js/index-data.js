@@ -635,11 +635,12 @@ $.ajax({
     url: '/statistic/getWarningInfo',
     cache: false,
     dataType: 'json',
-    success: function (data) {
+    success: function (jsonData) {
+        var data = jsonData.resList;
         var displayDiv = $('#yjMsg');
         for(var i=0;i<10;i++) {
             var dataMap = data[i];
-            displayDiv.append("<h4 class='warning-li' wInfoId=''><a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>["+dataMap.name+"]"+dataMap.info+"</a></h4>");
+            displayDiv.append("<h4 class='warning-li' endTime='"+jsonData.endTime+"'><a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>["+dataMap.name+"]"+dataMap.info+"</a></h4>");
         }
         if($('#yjMsg').children().length>5){
             function showMsg(){

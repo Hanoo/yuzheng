@@ -1,5 +1,7 @@
 package com.css.service;
 
+import com.css.entity.DMinfo;
+
 import java.util.List;
 import java.util.Map;
 
@@ -56,5 +58,7 @@ public interface IDianMingService {
      * @throws Exception
      */
     List getPCountByArea(Map reqMap) throws Exception;
+
+    int insertManualDianMingInfo(Map logInfo) throws Exception;
 
 }

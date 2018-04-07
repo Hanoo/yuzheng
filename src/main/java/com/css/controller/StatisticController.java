@@ -2,12 +2,14 @@ package com.css.controller;
 
 import com.css.datasource.DataSourceTypeManager;
 import com.css.datasource.DataSources;
+import com.css.entity.DMinfo;
 import com.css.entity.YuzhengUser;
 import com.css.service.StatisticService;
 import com.css.service.IDianMingService;
 import com.css.service.XunGengService;
 import com.css.service.YuzhengUserService;
 import com.css.util.IConstant;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.jdbc.StringUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -98,12 +100,14 @@ public class StatisticController {
 
     @RequestMapping("/getWarningInfo")
     @ResponseBody
-    public JSONArray getWarningInfo(HttpSession session) throws Exception {
+    public JSONObject getWarningInfo(HttpSession session) throws Exception {
         Map reqmap = dianMingService.getHzsj();
         List resList = dianMingService.getAllDianMingReduceInfoByPArea(reqmap, getUserPArea(session));
         List xgList = xunGengService.getWXGtongjiReduceInfo(reqmap);
         resList.addAll(xgList);
-        return JSONArray.fromObject(resList);
+        JSONObject jsonObject = JSONObject.fromObject(reqmap);
+        jsonObject.put("resList", resList);
+        return jsonObject;
     }
 
     @RequestMapping("/getCGInfo")
@@ -194,10 +198,24 @@ public class StatisticController {
     @ResponseBody
     public JSONObject eliminateWarning(HttpSession session, @RequestBody JSONObject data ) {
         YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
-        String wInfoId = data.getString("wInfoId");
-        String description = data.getString("description");
-        logger.info("Eliminate warning successfully, wInfoId:" + wInfoId + ", operator is " + user.getDisplayName() + ", description is " + description);
-        data.put("msg", "success");
+
+        Map logInfo = (Map) JSONObject.toBean(data, Map.class);
+        logInfo.put("aid", user.getPrisonArea());
+        logInfo.put("jkczy", user.getDisplayName());
+        int result = 0;
+        try {
+            DataSourceTypeManager.set(DataSources.ZKESERVER);
+            result = dianMingService.insertManualDianMingInfo(logInfo);
+        } catch (Exception e) {
+            logger.error("消除预警失败！", e);
+        }
+        if(result>0) {
+            logger.info("预警消除成功，操作人：" + user.getDisplayName());
+            data.put("msg", "success");
+        } else {
+            logger.error("预警消除失败，操作人：" + user.getDisplayName());
+            data.put("msg", "error");
+        }
         return data;
     }
 

@@ -21,6 +21,8 @@ public class GenTest {
         System.out.println(c.get(Calendar.HOUR_OF_DAY));
         System.out.println(c.get(Calendar.MINUTE));
         System.out.println(c.getTime());
+        c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY)-1);
+        System.out.println(c.getTime());
     }
 
 }

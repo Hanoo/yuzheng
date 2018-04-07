@@ -154,41 +154,6 @@
 
                                         </div>
                                     </div>
-                                    <div id="warning-modal" class="modal fade" tabindex="-1"
-                                         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                    <h4 class="modal-title">预警消除</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="form-group">
-                                                                <label for="field-5" class="control-label">操作人</label>
-                                                                <input type="text" class="form-control" id="field-5" value="监区管理员">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="form-group no-margin">
-                                                                <label for="description" class="control-label">消除说明</label>
-                                                                <textarea class="form-control" id="description" placeholder="请填写消除说明"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <div id="eliminateMsg"></div>
-                                                    <input type="hidden" id="wInfoId" value="" />
-                                                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">关闭</button>
-                                                    <button type="button" id="eliminate" class="btn btn-info waves-effect waves-light">保存</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div style="width: 100%"  >
                                     <div class="card-box">
@@ -228,7 +193,55 @@
         <!-- end container -->
     </div>
     <!-- end content -->
-
+    <div id="warning-modal" class="modal fade" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">预警消除</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="operator" class="control-label">操作人</label>
+                                <input type="text" class="form-control" id="operator" value="监区管理员">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pcount" class="control-label">应到人数</label>
+                                <input type="text" class="form-control" id="pcount" placeholder="应到人数">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pcountsum" class="control-label">实到人数</label>
+                                <input type="text" class="form-control" id="pcountsum" placeholder="实到人数">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group no-margin">
+                                <label for="description" class="control-label">消除说明</label>
+                                <textarea class="form-control" id="description" placeholder="请填写消除说明"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="eliminateMsg"></div>
+                    <input type="hidden" id="endTime" value="" />
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">关闭</button>
+                    <button type="button" id="eliminate" class="btn btn-info waves-effect waves-light">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- ============================================================== -->
 <!-- End Right content here -->
@@ -267,7 +280,8 @@
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';
     $(document).on("click", ".warning-li", function(){
-        console.log(this);
+        console.log($(this).attr("endTime"));
+        $("#endTime").val($(this).attr("endTime"));
     });
     $(document).ready(function(){
         $("#eliminate").on("click", function(){
@@ -280,7 +294,7 @@
                 type:"post",
                 url:"statistic/eliminateWarning",
                 contentType: 'application/json;charset=UTF-8',
-                data: JSON.stringify({"wInfoId":$("#wInfoId").val(), "description":description}),
+                data: JSON.stringify({"endTime":$("#endTime").val(),"pcount":$("#pcount").val(), "pcountsum":$("#pcountsum").val(), "description":description}),
                 dataType: 'json',
                 success:function(data){
                     if(data.msg=="failed"){

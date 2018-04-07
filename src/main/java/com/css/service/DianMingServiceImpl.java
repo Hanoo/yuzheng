@@ -6,6 +6,8 @@ import com.css.datasource.DataSources;
 import com.css.entity.DMinfo;
 import com.css.entity.DeptJL;
 import com.css.util.IConstant;
+import com.css.util.IdGen;
+import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailParseException;
 import org.springframework.stereotype.Service;
@@ -630,7 +632,7 @@ public class DianMingServiceImpl implements IDianMingService {
         param.put("timeParam", timeParam);
 
         if(!IConstant.ADMIN_AREA.equals(pArea)) { // 中心监管员可查看所有监区预警
-            param.put("areaParam", "where a.aid = " + pArea);
+            param.put("areaParam", "where detail.aid = " + pArea);
         }
 
         List dianMingList = (List) dao.findForList("DianMingMapper.getAllDMInfoByPArea", param);
@@ -722,6 +724,35 @@ public class DianMingServiceImpl implements IDianMingService {
         List realList = (List) dao.findForList("DianMingMapper.getPCountByArea", null);
 
         return realList;
+    }
+
+    public int insertManualDianMingInfo(Map logInfo) throws Exception {
+        String xh = IdGen.getUUID();
+        logInfo.put("xh", xh);
+        String endTime = (String) logInfo.get("endTime");
+        if(StringUtils.isNullOrEmpty(endTime)) {
+            return -1;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date endTimeDate = sdf.parse(endTime);
+        Calendar ec = Calendar.getInstance();
+        ec.setTime(endTimeDate);
+        ec.set(Calendar.HOUR_OF_DAY, ec.get(Calendar.HOUR_OF_DAY)-1);
+        logInfo.put("endtime", endTimeDate);
+        logInfo.remove("endTime");
+        logInfo.put("begintime", ec.getTime());
+        if(logInfo.get("pcount")==null || Integer.valueOf(logInfo.get("pcount").toString())==0) {
+            logInfo.put("pcount", 999);
+        }
+        if(logInfo.get("pcountsum")==null || Integer.valueOf(logInfo.get("pcountsum").toString())==0) {
+            logInfo.put("pcountsum", 999);
+        }
+        String pname = (String) logInfo.get("pname");
+        if(StringUtils.isNullOrEmpty(pname)) {
+            logInfo.put("pname", "监区点名");
+        }
+        Object result = dao.save("DianMingMapper.insertManualDianMingInfo", logInfo);
+        return (Integer) result;
     }
 
     @Transactional
