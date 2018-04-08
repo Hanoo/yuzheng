@@ -637,20 +637,58 @@ $.ajax({
     dataType: 'json',
     success: function (jsonData) {
         var data = jsonData.resList;
-        var displayDiv = $('#yjMsg');
-        for(var i=0;i<10;i++) {
+        var liClass;
+        var dmAlarm = $("#dmAlarm");
+        var othAlarm = $("#othAlarm");
+        dmAlarm.empty();
+        othAlarm.empty();
+        var i = 0, j=0;
+        while(j<10 && i<data.length) {
             var dataMap = data[i];
-            displayDiv.append("<h4 class='warning-li' endTime='"+jsonData.endTime+"'><a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>["+dataMap.name+"]"+dataMap.info+"</a></h4>");
-        }
-        if($('#yjMsg').children().length>5){
-            function showMsg(){
-                var firstMsg=$('#yjMsg').children().get(0);
-                $('#yjMsg').append(firstMsg);
+            i++;
+            if(dataMap.name=="点名预警") {
+                if(i>10) {
+                    continue;
+                }
+                liClass = "dmAlarm-li";
+                dmAlarm.append("<li class='list-group-item "+liClass+"' endTime='"+jsonData.endTime+"'>" + "<i class='mdi mdi-bell noti-icon'>" +
+                    " <a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>"+dataMap.info+"</a></li>");
+            } else {
+                liClass = "";
+                othAlarm.append("<li class='list-group-item "+liClass+"' endTime='"+jsonData.endTime+"'><a href='javascript:void(0);'>["+dataMap.name+"]"+dataMap.info+"</a></li>");
+                j++;
             }
-            setInterval(showMsg,3000);// 3秒切换一次信息
         }
+        if(dmAlarm.find("li").length<2) {
+            dmAlarm.removeClass("bulletin");
+        }
+        if(othAlarm.find("li").length<4) {
+            othAlarm.removeClass("bulletin");
+        }
+        $(".bulletin").bootstrapNews({
+            newsPerPage: 4,
+            autoplay: true,
+            pauseOnHover: true,
+            navigation: false,
+            direction: 'up',
+            newsTickerInterval: 2500,
+            onToDo: function () {
+                //console.log(this);
+            }
+        });
     },
     error: function() {
         console.log("Get warning info failed.");
     }
 });
+var switchVar = 1;
+setInterval(function(){
+    if(switchVar==1) {
+        $(".mdi-bell").css("color", "red");
+        switchVar = 2;
+    } else {
+        $(".mdi-bell").css("color", "yellow");
+        switchVar = 1;
+    }
+
+}, 500);

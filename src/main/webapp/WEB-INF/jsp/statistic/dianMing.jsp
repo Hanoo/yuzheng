@@ -111,6 +111,7 @@
                                                     <h4 class="col-2 header-title m-t-0 " style="margin-bottom: 0;padding: 14px 10px 10px 0;">
                                                         实时监区点名汇总
                                                     </h4>
+                                                    <!--
                                                     <label class="col-3 col-form-label text-right" style="line-height: 30px">请输入查询日期：</label>
                                                     <div class="col-3">
                                                         <input class="form-control" type="date" name="date">
@@ -124,6 +125,7 @@
                                                     <button type="submit" class="btn btn-primary waves-effect waves-light btn-md">
                                                         搜索
                                                     </button>
+                                                    -->
                                                 </div>
                                             </div>
                                         </div>

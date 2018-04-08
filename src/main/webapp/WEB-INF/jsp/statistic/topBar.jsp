@@ -24,7 +24,7 @@
                     <i class="mdi mdi-crop-free noti-icon"></i>
                 </a>
             </li>
-
+<!--
             <li class="list-inline-item notification-list">
                 <a class="nav-link right-bar-toggle waves-light waves-effect" href="#">
                     <i class="mdi mdi-dots-horizontal noti-icon"></i>
@@ -37,9 +37,8 @@
                     <i class="mdi mdi-bell noti-icon"></i>
                     <span class="badge badge-pink noti-icon-badge">4</span>
                 </a>
-
             </li>
-
+-->
             <li class="list-inline-item dropdown notification-list">
                 <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
@@ -167,3 +166,6 @@
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/prison.js"></script>
 <script src="assets/js/changePassword.js" type="text/javascript"></script>
+<script>
+    var isSupervise = <%=IConstant.ADMIN_AREA.equals(user.getPrisonArea())%>;
+</script>

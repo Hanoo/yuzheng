@@ -111,8 +111,7 @@
                                 <h4 class=" header-title m-t-0 m-b-30">犯罪类型统计</h4>
 
                                 <div class="widget-chart">
-                                    <div  style="background:#EFF0EC; height:280px;"
-                                          id="fzlxPie"></div>
+                                    <div  style="background:#EFF0EC; height:280px;" id="fzlxPie"></div>
                                 </div>
                             </div>
                         </div>
@@ -127,19 +126,19 @@
                                     <div class="row" id="empTypeHJ2">
                                         <div class="itemwrap01" style="width:215px">
                                             <div class="tborder3"></div>
-                                            <div class="tit02">全部：<b class="cyans" id="jfyd">123</b></div>
+                                            <div class="tit02">全部：<b class="cyans" id="jfyd">-</b></div>
                                         </div>
                                         <div class="itemwrap01" style="width:215px">
                                             <div class="tborder3"></div>
-                                            <div class="tit02">出工：<b class="greens" id="jfsd">456</b></div>
+                                            <div class="tit02">出工：<b class="greens" id="jfsd">-</b></div>
                                         </div>
                                         <div class="itemwrap01" style="width:215px">
                                             <div class="tborder3"></div>
-                                            <div class="tit02">未出工：<b class="reds" id="jfwd">789</b></div>
+                                            <div class="tit02">未出工：<b class="reds" id="jfwd">-</b></div>
                                         </div>
                                     </div>
                                     <div class="widget-chart text-left">
-                                        <div style="background:#EFF0EC; height:550px;" id="dianmingPie"></div>
+                                        <div style="background:#EFF0EC; height:720px;" id="dianmingPie"></div>
                                     </div>
                                 </div>
                             </div>
@@ -150,8 +149,18 @@
                                             实时预警平台
                                         </h4>
 
-                                        <div class="widget-chart text-left" id="yjMsg" style="height: 130px;overflow-y: hidden;">
-
+                                        <div class="card m-b-20" style="height: 48px;overflow-y: hidden;">
+                                            <ul class="list-group list-group-flush bulletin" id="dmAlarm">
+                                                <li class="list-group-item">暂无点名预警</li>
+                                            </ul>
+                                        </div>
+                                        <div class="card m-b-20" style="height: 144px;overflow-y: hidden;">
+                                            <ul class="list-group list-group-flush bulletin" id="othAlarm">
+                                                <li class="list-group-item">暂无巡更或警力预警</li>
+                                                <li class="list-group-item">暂无巡更或警力预警</li>
+                                                <li class="list-group-item">暂无巡更或警力预警</li>
+                                                <li class="list-group-item">暂无巡更或警力预警</li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +190,7 @@
                                     </h4>
 
                                     <div class="widget-chart text-center">
-                                        <div style="background:#EFF0EC; height:450px;" id="jqNumBar"></div>
+                                        <div style="background:#EFF0EC; height:430px;" id="jqNumBar"></div>
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +246,7 @@
                     <div id="eliminateMsg"></div>
                     <input type="hidden" id="endTime" value="" />
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">关闭</button>
-                    <button type="button" id="eliminate" class="btn btn-info waves-effect waves-light">保存</button>
+                    <button type="button" id="eliminate" class="btn btn-info waves-effect waves-light">消除</button>
                 </div>
             </div>
         </div>
@@ -276,15 +285,21 @@
 <script src="assets/js/jquery.core.js"></script>
 <script src="assets/js/jquery.app.js"></script>
 <script src="style/js/echart3/echarts.min.js"></script>
-<script>
+<script src="assets/js/jquery.bootstrap.newsbox.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';
-    $(document).on("click", ".warning-li", function(){
-        console.log($(this).attr("endTime"));
+    $(document).on("click", ".dmAlarm-li", function(){
         $("#endTime").val($(this).attr("endTime"));
     });
     $(document).ready(function(){
         $("#eliminate").on("click", function(){
+            showFdBkInfo("", "success");
+            if(isSupervise) {
+                showFdBkInfo("监管员无权消除预警！", "error");
+                return false;
+            }
             var description = $("#description").val();
             if(!description) {
                 showFdBkInfo("请填写消除预警的描述", "error");
@@ -298,11 +313,12 @@
                 dataType: 'json',
                 success:function(data){
                     if(data.msg=="failed"){
-                        showFdBkInfo("用户名或密码错误！", "error");
+                        showFdBkInfo("消除预警失败！", "error");
                     } else if (data.msg=="error") {
                         showFdBkInfo("服务器内部错误！", "error");
                     } else {
                         showFdBkInfo("消除预警成功。", "success");
+                        $("#description").val("");
                     }
                 }
 
