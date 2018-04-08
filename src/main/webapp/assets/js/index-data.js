@@ -640,29 +640,37 @@ $.ajax({
         var liClass;
         var dmAlarm = $("#dmAlarm");
         var othAlarm = $("#othAlarm");
-        dmAlarm.empty();
-        othAlarm.empty();
-        var i = 0, j=0;
+        var dmAlarmContent = "";
+        var othAlarmContent = "";
+        var i = 0, j=0, k=0;
         while(j<10 && i<data.length) {
             var dataMap = data[i];
             i++;
             if(dataMap.name=="点名预警") {
-                if(i>10) {
-                    continue;
-                }
+                k ++;
                 liClass = "dmAlarm-li";
-                dmAlarm.append("<li class='list-group-item "+liClass+"' endTime='"+jsonData.endTime+"'>" + "<i class='mdi mdi-bell noti-icon'>" +
-                    " <a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>"+dataMap.info+"</a></li>");
+                if(k<9) {
+                    dmAlarmContent += "<li class='list-group-item "+liClass+"' endTime='"+jsonData.endTime+"'>" + "<i class='mdi mdi-bell noti-icon'>" +
+                        " <a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>"+dataMap.info+"</a></li>";
+                }
             } else {
                 liClass = "";
-                othAlarm.append("<li class='list-group-item "+liClass+"' endTime='"+jsonData.endTime+"'><a href='javascript:void(0);'>["+dataMap.name+"]"+dataMap.info+"</a></li>");
+                othAlarmContent += "<li class='list-group-item "+liClass+"' endTime='"+jsonData.endTime+"'><a href='javascript:void(0);'>["+dataMap.name+"]"+dataMap.info+"</a></li>";
                 j++;
             }
         }
-        if(dmAlarm.find("li").length<2) {
+        if(k>0) {
+            dmAlarm.empty();
+            dmAlarm.append(dmAlarmContent);
+        }
+        if(j>0) {
+            othAlarm.empty();
+            othAlarm.append(othAlarmContent);
+        }
+        if(k<2) {
             dmAlarm.removeClass("bulletin");
         }
-        if(othAlarm.find("li").length<4) {
+        if(j<4) {
             othAlarm.removeClass("bulletin");
         }
         $(".bulletin").bootstrapNews({

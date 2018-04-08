@@ -151,7 +151,7 @@
 
                                         <div class="card m-b-20" style="height: 48px;overflow-y: hidden;">
                                             <ul class="list-group list-group-flush bulletin" id="dmAlarm">
-                                                <li class="list-group-item">暂无点名预警</li>
+                                                <li class='list-group-item'>暂无点名预警</li>
                                             </ul>
                                         </div>
                                         <div class="card m-b-20" style="height: 144px;overflow-y: hidden;">
@@ -215,7 +215,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="operator" class="control-label">操作人</label>
-                                <input type="text" class="form-control" id="operator" value="监区管理员">
+                                <input type="text" class="form-control" id="operator" value="">
                             </div>
                         </div>
                     </div>
@@ -290,7 +290,9 @@
 
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';
+    var elimateTarget;
     $(document).on("click", ".dmAlarm-li", function(){
+        elimateTarget = $(this);
         $("#endTime").val($(this).attr("endTime"));
     });
     $(document).ready(function(){
@@ -319,6 +321,12 @@
                     } else {
                         showFdBkInfo("消除预警成功。", "success");
                         $("#description").val("");
+                        if(elimateTarget) {
+                            elimateTarget.remove();
+                            if($("#dmAlarm").find("li").length==0) {
+                                $("#dmAlarm").append("<li class='list-group-item'>暂无点名预警</li>");
+                            }
+                        }
                     }
                 }
 

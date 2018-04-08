@@ -125,16 +125,15 @@
         SELECT
                 detail.aname as name,
                 detail.aid   as area_id,
-                (CASE WHEN log.xh IS null THEN 0 ELSE log.xh END ) as xh ,
                 (CASE WHEN log.pcountsum IS null THEN 0 ELSE log.pcountsum END) as value,
                 (CASE WHEN log.pcount IS null THEN 0 ELSE log.pcount END) as pcount
         FROM
                 zte_AreaDetail detail
         LEFT JOIN
                 (
-                SELECT * FROM zte_AreaQd_Log WHERE 1=1 ${timeParam}
+                SELECT pid, pname, aid, begintime, endtime, pcount, pcountsum, aminute, jkczy FROM zte_AreaQd_Log WHERE 1=1 ${timeParam}
                 UNION ALL
-				SELECT xh, pid, pname, aid, begintime, endtime, pcount, pcountsum, aminute, jkczy from zte_AreaQd_MnuLog where 1=1 ${timeParam}
+                SELECT pid, pname, aid, begintime, endtime, pcount, pcountsum, aminute, jkczy from zte_AreaQd_MnuLog where 1=1 ${timeParam}
                 ) log
         ON
                 detail.aid=log.aid
