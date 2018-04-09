@@ -18,4 +18,9 @@ public interface XunGengService {
 
 
     List<XunGeng> getWXGtongjiReduceInfo(Map map) throws Exception;
+
+    /**
+     * 插入手动消除巡更异常的数据
+     */
+    int insertManualXGInfo(Map map) throws Exception;
 }

@@ -395,24 +395,24 @@ public class XunGengServiceImpl implements XunGengService {
         DataSourceTypeManager.set(DataSources.EYFINGER);
         String stTime = (String) map.get("stTime");
         String endTime = (String) map.get("endTime");
-
-        SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:30:00");//可以方便地修改日期格式 ？
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//可以方便地修改日期格式
-        SimpleDateFormat startTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        SimpleDateFormat endTimeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date startTime = dateFormat.parse(stTime);
-        String zjTime = dateFormat1.format(startTime);
         Date ndTime = dateFormat.parse(endTime);
-        String sTimeDis = startTimeFormat.format(startTime);
-        String eTimeDis = endTimeFormat.format(startTime);
-        String ndTimeDis = endTimeFormat.format(ndTime);
+        SimpleDateFormat zjFormat = new SimpleDateFormat("yyyy-MM-dd HH:30:00");
+        String zjTime = zjFormat.format(startTime);
+        Date halfTime = dateFormat.parse(zjTime);
 
-        Map<String, String> param = new HashMap();
-        param.put("strdate",stTime);
-        param.put("enddate",zjTime);
-        List<XunGeng> WXGtongjiList1 = (List) dao.findForList("XunGeng.WXGtongjiMap", param);
+        // 页面展示的起止时间格式，减小长度以便页面显示
+        SimpleDateFormat fstDisplayTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat secDisplayTimeFormat = new SimpleDateFormat("HH:mm");
 
-        String AddrName ="";
+        // 查询前半小时的数据
+        Map<String, String> fstHalfTime = new HashMap();
+        fstHalfTime.put("strdate",stTime);
+        fstHalfTime.put("enddate",zjTime);
+        List<XunGeng> WXGtongjiList1 = (List) dao.findForList("XunGeng.WXGTongji", fstHalfTime);
+
+        String AddrName = "";
 
         String nowToDis = dateFormat.format(new Date());
         List newList = new ArrayList();
@@ -420,27 +420,39 @@ public class XunGengServiceImpl implements XunGengService {
             Map item = new HashMap();
             AddrName = xunGeng.getAddrName();
             item.put("name","巡更异常");
-            item.put("info",AddrName + sTimeDis+"至"+eTimeDis +"未准时巡更" );
+            item.put("info",AddrName + fstDisplayTimeFormat.format(startTime)+"至"+secDisplayTimeFormat.format(halfTime) +"未准时巡更" );
             item.put("time",nowToDis);
+            item.put("LogDate", stTime);
+            item.put("RegDate", zjTime);
+            item.put("AddrID", xunGeng.getAddrID());
             newList.add(item);
         }
 
-        Map param1 = new HashMap();
-
-        param1.put("strdate",zjTime);
-        param1.put("enddate",endTime);
-        List<XunGeng> WXGtongjiList2 = (List) dao.findForList("XunGeng.WXGtongjiMap", param1);
+        // 查询后半个小时的数据
+        Map secHalfTime = new HashMap();
+        secHalfTime.put("strdate",zjTime);
+        secHalfTime.put("enddate",endTime);
+        List<XunGeng> WXGtongjiList2 = (List) dao.findForList("XunGeng.WXGTongji", secHalfTime);
         for (XunGeng xunGeng : WXGtongjiList2){
             Map item = new HashMap();
             AddrName = xunGeng.getAddrName();
             item.put("name","巡更统计");
-            item.put("info",AddrName + eTimeDis+"至"+ndTimeDis +"未准时巡更" );
+            item.put("info",AddrName + fstDisplayTimeFormat.format(halfTime) +"至"+secDisplayTimeFormat.format(ndTime) +"未准时巡更" );
             item.put("time",nowToDis);
+            item.put("LogDate", zjTime);
+            item.put("RegDate", endTime);
+            item.put("AddrID", xunGeng.getAddrID());
             newList.add(item);
         }
 
         return newList;
     }
+
+    public int insertManualXGInfo(Map xgInfo) throws Exception {
+        Object result = dao.save("XunGeng.insertManualXGInfo", xgInfo);
+        return (Integer) result;
+    }
+
 }
 
 

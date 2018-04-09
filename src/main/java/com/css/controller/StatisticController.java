@@ -194,9 +194,9 @@ public class StatisticController {
         return data;
     }
 
-    @RequestMapping(value = "eliminateWarning", method = RequestMethod.POST)
+    @RequestMapping(value = "eliminateDM", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject eliminateWarning(HttpSession session, @RequestBody JSONObject data ) {
+    public JSONObject eliminateDM(HttpSession session, @RequestBody JSONObject data ) {
         YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
 
         Map logInfo = (Map) JSONObject.toBean(data, Map.class);
@@ -207,13 +207,43 @@ public class StatisticController {
             DataSourceTypeManager.set(DataSources.ZKESERVER);
             result = dianMingService.insertManualDianMingInfo(logInfo);
         } catch (Exception e) {
-            logger.error("消除预警失败！", e);
+            logger.error("点名消除预警失败！", e);
         }
         if(result>0) {
-            logger.info("预警消除成功，操作人：" + user.getDisplayName());
+            logger.info("点名预警消除成功，操作人：" + user.getDisplayName());
             data.put("msg", "success");
         } else {
-            logger.error("预警消除失败，操作人：" + user.getDisplayName());
+            logger.error("点名预警消除失败，操作人：" + user.getDisplayName());
+            data.put("msg", "error");
+        }
+        return data;
+    }
+
+    @RequestMapping(value = "eliminateXG", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject eliminateXG(HttpSession session, @RequestBody JSONObject data ) {
+        YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
+
+        Map xgInfo = (Map) JSONObject.toBean(data, Map.class);
+
+        String OpeName = data.getString("OpeName");
+        if(StringUtils.isNullOrEmpty(OpeName)) {
+            xgInfo.put("OpeName", user.getDisplayName());
+        }
+        xgInfo.put("UserID", user.getPrisonArea());
+
+        int result = 0;
+        try {
+            DataSourceTypeManager.set(DataSources.EYFINGER);
+            result = xunGengService.insertManualXGInfo(xgInfo);
+        } catch (Exception e) {
+            logger.error("巡更异常失败！", e);
+        }
+        if(result>0) {
+            logger.info("巡更异常处理成功，操作人：" + user.getDisplayName());
+            data.put("msg", "success");
+        } else {
+            logger.error("巡更异常处理失败，操作人：" + user.getDisplayName());
             data.put("msg", "error");
         }
         return data;

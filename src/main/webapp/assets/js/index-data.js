@@ -2,7 +2,7 @@ $(function() {
     $(".knob").knob();
     $('.circliful-chart').circliful();
 
-    // 加载罪犯年龄统计
+    // 一次性加载，不需要定时更新的
     $.ajax({
         type:"get",
         url: "/statistic/getAgeGroups",
@@ -495,8 +495,9 @@ pie.showLoading({
 pie.setOption(option);
 dianming_pie.setOption(dianming_option);
 
-//异步刷新pie
+// 需要定时更新的
 function refData() {
+    console.log(new Date());
 
     // 读取监区点名数据
     $.ajax({
@@ -560,6 +561,8 @@ function refData() {
             dianming_pie.hideLoading();
         }
     });
+
+    loadAlarmData();
 
 }
 
@@ -626,69 +629,74 @@ function getSeries_data_dianming(json) {
     return series_data;
 }
 
-setInterval(console.log('log'), 1000 * 60 * 5);// 每隔五分钟重新读取数据
+setInterval(refData, 1000 * 60 * 5);// 每隔五分钟重新读取数据
 refData();
 
 // 加载预警信息并且轮播
-$.ajax({
-    type: 'post',
-    url: '/statistic/getWarningInfo',
-    cache: false,
-    dataType: 'json',
-    success: function (jsonData) {
-        var data = jsonData.resList;
-        var liClass;
-        var dmAlarm = $("#dmAlarm");
-        var othAlarm = $("#othAlarm");
-        var dmAlarmContent = "";
-        var othAlarmContent = "";
-        var i = 0, j=0, k=0;
-        while(j<10 && i<data.length) {
-            var dataMap = data[i];
-            i++;
-            if(dataMap.name=="点名预警") {
-                k ++;
-                liClass = "dmAlarm-li";
-                if(k<9) {
-                    dmAlarmContent += "<li class='list-group-item "+liClass+"' endTime='"+jsonData.endTime+"'>" + "<i class='mdi mdi-bell noti-icon'>" +
-                        " <a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>"+dataMap.info+"</a></li>";
+function loadAlarmData() {
+    $.ajax({
+        type: 'GET',
+        url: '/statistic/getWarningInfo',
+        cache: false,
+        dataType: 'json',
+        success: function (jsonData) {
+            var data = jsonData.resList;
+            var dmAlarm = $("#dmAlarm");
+            var othAlarm = $("#othAlarm");
+            var dmAlarmContent = "";
+            var othAlarmContent = "";
+            var i = 0, j=0, k=0, l=0;
+            while(j<10 && i<data.length) {
+                var dataMap = data[i];
+                i++;
+                if(dataMap.name=="点名预警") {
+                    k ++;
+                    if(k<9) {
+                        dmAlarmContent += "<li class='list-group-item dmAlarm-li' endTime='"+jsonData.endTime+"'>" + "<i class='mdi mdi-bell noti-icon'></i>" +
+                            " <a href='javascript:void(0);' data-toggle='modal' data-target='#warning-modal'>"+dataMap.info+"</a></li>";
+                    }
+                } else if(dataMap.name=="巡更异常") {
+                    j++;
+                    othAlarmContent += "<li class='list-group-item xgAlarm-li' LogDate='" + dataMap.LogDate + "' RegDate='" + dataMap.RegDate + "' AddrID='" + dataMap.AddrID +
+                        "'><a href='javascript:void(0);' data-toggle='modal' data-target='#XG-modal'>[" + dataMap.name + "]" + dataMap.info + "</a></li>";
+                } else {
+                    l ++;
+                    if(l<9) {
+                        othAlarmContent += "<li class='list-group-item' endTime='"+jsonData.endTime+"'><a href='javascript:void(0);'>["+dataMap.name+"]"+dataMap.info+"</a></li>";
+                    }
                 }
-            } else {
-                liClass = "";
-                othAlarmContent += "<li class='list-group-item "+liClass+"' endTime='"+jsonData.endTime+"'><a href='javascript:void(0);'>["+dataMap.name+"]"+dataMap.info+"</a></li>";
-                j++;
             }
-        }
-        if(k>0) {
-            dmAlarm.empty();
-            dmAlarm.append(dmAlarmContent);
-        }
-        if(j>0) {
-            othAlarm.empty();
-            othAlarm.append(othAlarmContent);
-        }
-        if(k<2) {
-            dmAlarm.removeClass("bulletin");
-        }
-        if(j<4) {
-            othAlarm.removeClass("bulletin");
-        }
-        $(".bulletin").bootstrapNews({
-            newsPerPage: 4,
-            autoplay: true,
-            pauseOnHover: true,
-            navigation: false,
-            direction: 'up',
-            newsTickerInterval: 2500,
-            onToDo: function () {
-                //console.log(this);
+            if(k>0) {
+                dmAlarm.empty();
+                dmAlarm.append(dmAlarmContent);
             }
-        });
-    },
-    error: function() {
-        console.log("Get warning info failed.");
-    }
-});
+            if(j>0) {
+                othAlarm.empty();
+                othAlarm.append(othAlarmContent);
+            }
+            if(k<2) {
+                dmAlarm.removeClass("bulletin");
+            }
+            if(j<4) {
+                othAlarm.removeClass("bulletin");
+            }
+            $(".bulletin").bootstrapNews({
+                newsPerPage: 4,
+                autoplay: true,
+                pauseOnHover: true,
+                navigation: false,
+                direction: 'up',
+                newsTickerInterval: 2500,
+                onToDo: function () {
+                    //console.log(this);
+                }
+            });
+        },
+        error: function() {
+            console.log("Get warning info failed.");
+        }
+    });
+}
 var switchVar = 1;
 setInterval(function(){
     if(switchVar==1) {

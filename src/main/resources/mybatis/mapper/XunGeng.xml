@@ -121,4 +121,37 @@
         and Log.LogDate  &lt;=  CONVERT(datetime,#{enddate},20) )
     </select>
 
+    <select id="WXGTongji" resultMap="wxgTongjiInfo">
+        SELECT Ptr_AddrDef.AddrID,Ptr_AddrDef.AddrName from Ptr_AddrDef where Ptr_AddrDef.AddrID NOT IN(
+            SELECT
+            Log.AddrID
+            FROM
+            Ptr_Log Log
+            WHERE
+            Log.LogDate >= CONVERT(datetime,#{strdate},20) and CONVERT(datetime,#{enddate},20) >= Log.LogDate
+            UNION ALL
+            SELECT
+            MLog.AddrID
+            FROM
+            Ptr_MnuLog MLog
+            WHERE
+            MLog.LogDate >= CONVERT(datetime,#{strdate},20) and CONVERT(datetime,#{enddate},20) >= MLog.LogDate
+        )
+    </select>
+
+    <!-- 手动插入一条点名数据以消除巡更异常 -->
+    <insert id="insertManualXGInfo" parameterType="java.util.Map" >
+        insert into Ptr_MnuLog (
+        AddrID,
+        LogDate,
+        RegDate,
+        EvenRec,
+        OpeName)
+        values (
+        #{AddrID,jdbcType=CHAR},
+        #{LogDate,jdbcType=TIMESTAMP},
+        #{RegDate, jdbcType=TIMESTAMP},
+        #{EvenRec,jdbcType=VARCHAR},
+        #{OpeName,jdbcType=VARCHAR})
+    </insert>
 </mapper>

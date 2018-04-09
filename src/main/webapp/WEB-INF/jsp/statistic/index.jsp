@@ -251,6 +251,43 @@
             </div>
         </div>
     </div>
+    <div id="XG-modal" class="modal fade" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">巡更异常处理</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="OpeName" class="control-label">操作人</label>
+                                <input type="text" class="form-control" id="OpeName" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group no-margin">
+                                <label for="EvenRec" class="control-label">消除说明</label>
+                                <textarea class="form-control" id="EvenRec" placeholder="请填写消除说明"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="XGeliminateMsg"></div>
+                    <input type="hidden" id="LogDate" value="" />
+                    <input type="hidden" id="RegDate" value="" />
+                    <input type="hidden" id="AddrID" value="" />
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">关闭</button>
+                    <button type="button" id="XGeliminate" class="btn btn-info waves-effect waves-light">处理</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- ============================================================== -->
 <!-- End Right content here -->
@@ -287,7 +324,6 @@
 <script src="style/js/echart3/echarts.min.js"></script>
 <script src="assets/js/jquery.bootstrap.newsbox.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';
     var elimateTarget;
@@ -295,31 +331,41 @@
         elimateTarget = $(this);
         $("#endTime").val($(this).attr("endTime"));
     });
+
+    $(document).on("click", ".xgAlarm-li", function(){
+        elimateTarget = $(this);
+        $("#LogDate").val($(this).attr("LogDate"));
+        $("#RegDate").val($(this).attr("RegDate"));
+        $("#AddrID").val($(this).attr("AddrID"));
+    });
+
+    // 消除点名预警
     $(document).ready(function(){
         $("#eliminate").on("click", function(){
-            showFdBkInfo("", "success");
+            var area = $("#eliminateMsg");
+            showFdBkInfo("", area, "success");
             if(isSupervise) {
-                showFdBkInfo("监管员无权消除预警！", "error");
+                showFdBkInfo("监管员无权消除预警！", area, "error");
                 return false;
             }
             var description = $("#description").val();
             if(!description) {
-                showFdBkInfo("请填写消除预警的描述", "error");
+                showFdBkInfo("请填写消除预警的描述", area, "error");
                 return false;
             }
             $.ajax({
                 type:"post",
-                url:"statistic/eliminateWarning",
+                url:"statistic/eliminateDM",
                 contentType: 'application/json;charset=UTF-8',
                 data: JSON.stringify({"endTime":$("#endTime").val(),"pcount":$("#pcount").val(), "pcountsum":$("#pcountsum").val(), "description":description}),
                 dataType: 'json',
                 success:function(data){
                     if(data.msg=="failed"){
-                        showFdBkInfo("消除预警失败！", "error");
+                        showFdBkInfo("消除预警失败！",area, "error");
                     } else if (data.msg=="error") {
-                        showFdBkInfo("服务器内部错误！", "error");
+                        showFdBkInfo("服务器内部错误！",area, "error");
                     } else {
-                        showFdBkInfo("消除预警成功。", "success");
+                        showFdBkInfo("消除预警成功。",area, "success");
                         $("#description").val("");
                         if(elimateTarget) {
                             elimateTarget.remove();
@@ -332,13 +378,48 @@
 
             });
         });
+
+        // 处理巡更异常
+        $("#XGeliminate").on("click", function(){
+            var area = $("#XGeliminateMsg");
+            showFdBkInfo("", area, "success");
+            var EvenRec = $("#EvenRec").val();
+            if(!EvenRec) {
+                showFdBkInfo("请填写异常处理的描述", area, "error");
+                return false;
+            }
+            $.ajax({
+                type:"post",
+                url:"statistic/eliminateXG",
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({"RegDate":$("#RegDate").val(),"LogDate":$("#LogDate").val(), "AddrID":$("#AddrID").val(), "EvenRec":$("#EvenRec").val(), "OpeName":$("#OpeName").val()}),
+                dataType: 'json',
+                success:function(data){
+                    if(data.msg=="failed"){
+                        showFdBkInfo("异常处理失败！", area, "error");
+                    } else if (data.msg=="error") {
+                        showFdBkInfo("服务器内部错误！", area, "error");
+                    } else {
+                        showFdBkInfo("异常处理成功。", area, "success");
+                        $("#EvenRec").val("");
+                        if(elimateTarget) {
+                            elimateTarget.remove();
+                            if($("#othAlarm").find("li").length==0) {
+                                $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
+                            }
+                        }
+                    }
+                }
+
+            });
+        });
     });
-    function showFdBkInfo(msg, type){
+    function showFdBkInfo(msg, area, type){
         var fontColor = "green";
         if("error"==type) {
             fontColor = "red";
         }
-        $("#eliminateMsg").css("color", fontColor).html(msg);
+        area.css("color", fontColor).html(msg);
     }
 </script>
 <script src="assets/js/index-data.js" type="text/javascript"></script>
