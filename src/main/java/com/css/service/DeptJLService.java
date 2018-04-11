@@ -37,4 +37,11 @@ public interface DeptJLService {
     public List<DeptJL> getHistoryTjDeptJl(Map map) throws Exception;
     /*获取各监区值班以及总值班情况*/
     public List<DeptJL> getDeptZBAndHeadZBInfo() throws Exception;
+
+    /**
+     * 根据时间参数查询当前警力数据
+     */
+    public List<DeptJL> getDeptJl(Map map) throws Exception;
+
+    int insertManualJlInfo(Map jlInfo) throws Exception;
 }

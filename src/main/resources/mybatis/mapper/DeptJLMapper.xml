@@ -274,6 +274,80 @@
         ${params}
         ORDER BY t.aid
     </select>
+
+    <!-- 根据时间参数统计监区警力情况 -->
+    <select id="getDeptJl" parameterType="java.util.Map" resultType="DeptJL">
+    SELECT rec.DeptID DeptID, rec.DeptName  DeptName, rec.realCount  realCount, manual.description zbtemp1
+    FROM (
+        SELECT
+            dept.deptid DeptID,
+            dept.deptname DeptName,
+            (CASE WHEN t6.i IS NOT NULL THEN t6.i ELSE 0 END) realCount,
+            (CASE WHEN t6.o IS NOT NULL THEN t6.o ELSE 0 END) absentCount
+        FROM HrDept dept
+        LEFT JOIN (
+            SELECT
+                deptid,
+                SUM (CASE WHEN iostate = 1 THEN ios ELSE 0 END) i,
+                SUM (CASE WHEN iostate = 0 THEN ios ELSE 0 END) o
+            FROM (
+                SELECT
+                    deptid,
+                    iostate,
+                    COUNT (*) ios
+                FROM (
+                    SELECT
+                        t3.userid,
+                        t3.iostate,
+                        emp.deptid
+                    FROM (
+                        SELECT
+                            t2.userid,
+                            t2.iostate,
+                            t2.opptime
+                        FROM (
+                            SELECT
+                                t1.*, row_number () OVER (partition BY t1.userid ORDER BY t1.opptime DESC) r
+                            FROM (
+                                SELECT
+                                    userid,
+                                    iostate,
+                                    opptime
+                                FROM T_records t
+                                WHERE usertype = 1 AND opptime>=CONVERT(datetime, #{startTime},20) AND CONVERT(datetime, #{endTime},20)>=opptime
+                            ) t1
+                        ) t2
+                        WHERE 1=1 AND t2.r = 1
+                    ) t3
+                    LEFT JOIN HrEmployee emp ON t3.userid = emp.empid
+                    WHERE 1=1 AND emp.Leave=0
+                ) t4 GROUP BY deptid, iostate
+            ) t5 GROUP BY deptid
+        ) t6 ON dept.deptid = t6.deptid
+        WHERE 1=1 AND dept.depttype = 1
+    ) rec
+    LEFT JOIN
+    (
+        SELECT dept_id, description FROM Dept_JLMnu WHERE starttime>=CONVERT(datetime, #{startTime},20) AND CONVERT(datetime, #{endTime},20)>=endtime
+    ) manual
+    ON rec.DeptID=manual.dept_id
+    </select>
+
+    <!-- 手动插入一条点名数据以消除巡更异常 -->
+    <insert id="insertManualJlInfo" parameterType="java.util.Map" >
+        insert into Dept_JLMnu (
+        starttime,
+        endtime,
+        description,
+        dept_id,
+        operator)
+        values (
+        #{starttime,jdbcType=TIMESTAMP},
+        #{endtime, jdbcType=TIMESTAMP},
+        #{description,jdbcType=VARCHAR},
+        #{dept_id,jdbcType=VARCHAR},
+        #{operator,jdbcType=VARCHAR})
+    </insert>
 </mapper>
 
 

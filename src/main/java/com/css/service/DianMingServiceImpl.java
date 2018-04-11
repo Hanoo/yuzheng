@@ -644,10 +644,9 @@ public class DianMingServiceImpl implements IDianMingService {
         SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         //获取警力分布情况
-        List jlList = deptJLService.getHistoryTjDeptJl(reqMap);
+        List jlList = deptJLService.getDeptJl(reqMap);
 
         //查询所有监区点名情况
-        List dmList = new ArrayList();
         for (Object object : dianMingList) {
             Map resMap = new HashMap();
             DMinfo dmInfo = (DMinfo) object;
@@ -679,24 +678,25 @@ public class DianMingServiceImpl implements IDianMingService {
                         jlMap.put("time", nowTime);
                         resList.add(jlMap);
                     } else {
-                        double percent = dl.getRealCount() / dmInfo.getValue();
+                        if(StringUtils.isNullOrEmpty(dl.getZbtemp1())) {
+                            double percent = dl.getRealCount() / dmInfo.getValue();
 
-                        //获取格式化对象
-                        NumberFormat nt = NumberFormat.getPercentInstance();
-                        //设置百分数精确度2即保留两位小数
-                        nt.setMinimumFractionDigits(2);
-                        perc = nt.format(percent);
+                            //获取格式化对象
+                            NumberFormat nt = NumberFormat.getPercentInstance();
+                            //设置百分数精确度2即保留两位小数
+                            nt.setMinimumFractionDigits(2);
 
-                        if (percent < 0.1) {
-                            jlMap.put("name", "警力预警");
-                            jlMap.put("info", deptName + dformat.format(cxDate) + "到" + displayEndTimeFormate.format(now) + "警力预警");
-                            jlMap.put("time", nowTime);
-                            resList.add(jlMap);
+                            if (percent < 0.1) {
+                                jlMap.put("name", "警力预警");
+                                jlMap.put("info", deptName + dformat.format(cxDate) + "到" + displayEndTimeFormate.format(now) + "警力预警");
+                                jlMap.put("time", nowTime);
+                                jlMap.put("starttime", cxTime);
+                                jlMap.put("endtime", nowTime);
+                                jlMap.put("dept_id", dl.getDeptID());
+                                resList.add(jlMap);
+                            }
                         }
                     }
-                    //百分比
-                    dmInfo.setPerc(perc);
-                    dmList.add(dmInfo);
                 }
             }
         }

@@ -148,7 +148,7 @@
         EvenRec,
         OpeName)
         values (
-        #{AddrID,jdbcType=CHAR},
+        #{AddrID,jdbcType=VARCHAR},
         #{LogDate,jdbcType=TIMESTAMP},
         #{RegDate, jdbcType=TIMESTAMP},
         #{EvenRec,jdbcType=VARCHAR},

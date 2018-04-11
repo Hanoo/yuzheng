@@ -662,7 +662,8 @@ function loadAlarmData() {
                 } else {
                     l ++;
                     if(l<9) {
-                        othAlarmContent += "<li class='list-group-item' endTime='"+jsonData.endTime+"'><a href='javascript:void(0);'>["+dataMap.name+"]"+dataMap.info+"</a></li>";
+                        othAlarmContent += "<li class='list-group-item jlAlarm-li' starttime='"+dataMap.starttime+"' endtime='"+dataMap.endtime+"' dept_id='"+dataMap.dept_id+
+                            "'><a href='javascript:void(0);' data-toggle='modal' data-target='#JL-modal'>["+dataMap.name+"]"+dataMap.info+"</a></li>";
                     }
                 }
             }
@@ -674,23 +675,26 @@ function loadAlarmData() {
                 othAlarm.empty();
                 othAlarm.append(othAlarmContent);
             }
-            if(k<2) {
-                dmAlarm.removeClass("bulletin");
+            if(k>1) {
+                $(".dm-bulletin").bootstrapNews({
+                    newsPerPage: 2,
+                    autoplay: true,
+                    pauseOnHover: true,
+                    navigation: false,
+                    direction: 'up',
+                    newsTickerInterval: 2500
+                });
             }
-            if(j<4) {
-                othAlarm.removeClass("bulletin");
+            if(j>3) {
+                $(".oth-bulletin").bootstrapNews({
+                    newsPerPage: 4,
+                    autoplay: true,
+                    pauseOnHover: true,
+                    navigation: false,
+                    direction: 'up',
+                    newsTickerInterval: 2500
+                });
             }
-            $(".bulletin").bootstrapNews({
-                newsPerPage: 4,
-                autoplay: true,
-                pauseOnHover: true,
-                navigation: false,
-                direction: 'up',
-                newsTickerInterval: 2500,
-                onToDo: function () {
-                    //console.log(this);
-                }
-            });
         },
         error: function() {
             console.log("Get warning info failed.");

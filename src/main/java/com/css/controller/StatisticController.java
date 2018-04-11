@@ -4,10 +4,7 @@ import com.css.datasource.DataSourceTypeManager;
 import com.css.datasource.DataSources;
 import com.css.entity.DMinfo;
 import com.css.entity.YuzhengUser;
-import com.css.service.StatisticService;
-import com.css.service.IDianMingService;
-import com.css.service.XunGengService;
-import com.css.service.YuzhengUserService;
+import com.css.service.*;
 import com.css.util.IConstant;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.jdbc.StringUtils;
@@ -42,6 +39,9 @@ public class StatisticController {
 
     @Resource
     private YuzhengUserService yuzhengUserService;
+
+    @Resource
+    private DeptJLService jlService;
 
 
     @RequestMapping("/login")
@@ -244,6 +244,35 @@ public class StatisticController {
             data.put("msg", "success");
         } else {
             logger.error("巡更异常处理失败，操作人：" + user.getDisplayName());
+            data.put("msg", "error");
+        }
+        return data;
+    }
+
+    @RequestMapping(value = "eliminateJl", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject eliminateJl(HttpSession session, @RequestBody JSONObject data ) {
+        YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
+
+        Map jlInfo = (Map) JSONObject.toBean(data, Map.class);
+
+        String operator = data.getString("operator");
+        if(StringUtils.isNullOrEmpty(operator)) {
+            jlInfo.put("operator", user.getDisplayName());
+        }
+
+        int result = 0;
+        try {
+            DataSourceTypeManager.set(DataSources.IMSDB);
+            result = jlService.insertManualJlInfo(jlInfo);
+        } catch (Exception e) {
+            logger.error("警力预警消除失败！", e);
+        }
+        if(result>0) {
+            logger.info("警力预警消除成功，操作人：" + user.getDisplayName());
+            data.put("msg", "success");
+        } else {
+            logger.error("警力预警消除失败，操作人：" + user.getDisplayName());
             data.put("msg", "error");
         }
         return data;

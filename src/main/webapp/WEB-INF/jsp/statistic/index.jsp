@@ -150,12 +150,12 @@
                                         </h4>
 
                                         <div class="card m-b-20" style="height: 48px;overflow-y: hidden;">
-                                            <ul class="list-group list-group-flush bulletin" id="dmAlarm">
+                                            <ul class="list-group list-group-flush dm-bulletin" id="dmAlarm">
                                                 <li class='list-group-item'>暂无点名预警</li>
                                             </ul>
                                         </div>
                                         <div class="card m-b-20" style="height: 144px;overflow-y: hidden;">
-                                            <ul class="list-group list-group-flush bulletin" id="othAlarm">
+                                            <ul class="list-group list-group-flush oth-bulletin" id="othAlarm">
                                                 <li class="list-group-item">暂无巡更或警力预警</li>
                                                 <li class="list-group-item">暂无巡更或警力预警</li>
                                                 <li class="list-group-item">暂无巡更或警力预警</li>
@@ -288,6 +288,43 @@
             </div>
         </div>
     </div>
+    <div id="JL-modal" class="modal fade" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">警力异常处理</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Oper" class="control-label">操作人</label>
+                                <input type="text" class="form-control" id="Oper" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group no-margin">
+                                <label for="desc" class="control-label">解除说明</label>
+                                <textarea class="form-control" id="desc" placeholder="请填写解除说明"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="JLeliminateMsg"></div>
+                    <input type="hidden" id="starttime" value="" />
+                    <input type="hidden" id="jlendtime" value="" />
+                    <input type="hidden" id="dept_id" value="" />
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">关闭</button>
+                    <button type="button" id="JLeliminate" class="btn btn-info waves-effect waves-light">处理</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- ============================================================== -->
 <!-- End Right content here -->
@@ -337,6 +374,14 @@
         $("#LogDate").val($(this).attr("LogDate"));
         $("#RegDate").val($(this).attr("RegDate"));
         $("#AddrID").val($(this).attr("AddrID"));
+        console.log($(this).index());
+    });
+
+    $(document).on("click", ".jlAlarm-li", function(){
+        elimateTarget = $(this);
+        $("#starttime").val($(this).attr("starttime"));
+        $("#jlendtime").val($(this).attr("endtime"));
+        $("#dept_id").val($(this).attr("dept_id"));
     });
 
     // 消除点名预警
@@ -413,7 +458,55 @@
 
             });
         });
+
+        // 处理警力异常
+        $("#JLeliminate").on("click", function(){
+            var area = $("#JLeliminateMsg");
+            showFdBkInfo("", area, "success");
+            if(isSupervise) {
+                showFdBkInfo("监管员无权消除预警！", area, "error");
+                return false;
+            }
+            var starttime = $("#starttime").val();
+            if(!starttime) {
+                showFdBkInfo("请先消除点名预警！", area, "error");
+                return false;
+            }
+            var desc = $("#desc").val();
+            if(!desc) {
+                showFdBkInfo("请填写消除预警的原因描述", area, "error");
+                return false;
+            }
+            $.ajax({
+                type:"post",
+                url:"statistic/eliminateJl",
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({"operator":$("#Oper").val(),"starttime":starttime, "endtime":$("#jlendtime").val(), "description":$("#desc").val(), "dept_id":$("#dept_id").val()}),
+                dataType: 'json',
+                success:function(data){
+                    if(data.msg=="failed"){
+                        showFdBkInfo("警力预警消除失败！", area, "error");
+                    } else if (data.msg=="error") {
+                        showFdBkInfo("服务器内部错误！", area, "error");
+                    } else {
+                        showFdBkInfo("警力预警消除成功。", area, "success");
+                        $("#desc").val("");
+                        if(elimateTarget) {
+                            console.log(elimateTarget);
+                            elimateTarget.remove();
+                            if($("#othAlarm").find("li").length==0) {
+                                $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
+                            }
+                        }
+                    }
+                }
+
+            });
+        });
+
+
     });
+
     function showFdBkInfo(msg, area, type){
         var fontColor = "green";
         if("error"==type) {

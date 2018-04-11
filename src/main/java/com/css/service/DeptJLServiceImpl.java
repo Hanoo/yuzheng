@@ -274,4 +274,22 @@ public class DeptJLServiceImpl implements DeptJLService {
         //map.put("DEPTZB",deptZBList);
         return deptZBList;
     }
+
+    public List<DeptJL> getDeptJl(Map map) throws Exception {
+
+        DataSourceTypeManager.set(DataSources.IMSDB);
+        String endTime = (String)map.get("endTime");
+        String startTime = (String) map.get("stTime");
+        Map params = new HashMap();
+        params.put("endTime", endTime);
+        params.put("startTime", startTime);
+        List <DeptJL> list =(List) dao.findForList("DeptJLMapper.getDeptJl", params);
+
+        return list;
+    }
+
+    public int insertManualJlInfo(Map jlInfo) throws Exception {
+        Object result = dao.save("DeptJLMapper.insertManualJlInfo", jlInfo);
+        return (Integer) result;
+    }
 }
