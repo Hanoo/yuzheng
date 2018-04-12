@@ -1,6 +1,7 @@
 var dianming_radius = [47, 57];//pie内外半径
 var legend_data = [];//pie图例
 var dianming_pie = echarts.init(document.getElementById('dianmingPie'));
+var xh;
 
 var labelTop = {
     normal: {
@@ -226,4 +227,17 @@ function refDianming() {
             alert("获取数据失败，请保证网络畅通!");
         }
     });
+}
+function wdDm() {
+    if(xh) {
+        $('#dlg').dialog({
+            width: 800,
+            title: "未到人员明细表",
+            height: 600,
+            closed: false,
+            cache: false,
+            href: '/toWd?xh=' + xh,
+            modal: true
+        });
+    }
 }

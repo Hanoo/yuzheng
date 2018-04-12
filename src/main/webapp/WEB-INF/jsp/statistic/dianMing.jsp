@@ -16,6 +16,7 @@
 
     <title>点名</title>
 
+    <link href="style/js/easyui/themes/black/easyui.css" rel="stylesheet" type="text/css"/>
     <link href="plugins/jquery-circliful/css/jquery.circliful.css" rel="stylesheet" type="text/css" />
     <link href="plugins/switchery/switchery.min.css" rel="stylesheet" />
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -178,7 +179,7 @@
                                                 <p>
                                                     <span class="s-left">出工：<b class="greens" id="sdNum">-</b></span>
                                                     <span class="s-left">全部：<b class="text-white" id="ydNum">-</b></span>
-                                                    <span class="s-left">未出工：<b class="text-danger" id="wdNum">-</b></span>
+                                                    <span class="s-left"><a onclick="javascript:wdDm();">未出工：<b class="text-danger" id="wdNum">-</b></a></span>
                                                 </p>
                                             </div>
                                             <div class="card-box hz-r-bj">
@@ -205,6 +206,7 @@
 
                     </div>
                 </div>
+                <div id="dlg"></div>
             </div>
         </div>
         <!-- end container -->
@@ -248,6 +250,7 @@
 <script src="assets/js/jquery.app.js"></script>
 <script src="style/js/echart3/echarts.min.js"></script>
 <script src="assets/js/modernizr.min.js"></script>
+<script src="style/js/easyui/jquery.easyui.min.js" type="text/javascript"></script>
 <script src="assets/js/dianMing-data.js" type="text/javascript"></script>
 <script>
     $(document).ready(function(){

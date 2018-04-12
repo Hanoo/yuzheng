@@ -125,15 +125,12 @@
                                     </h4>
                                     <div class="row" id="empTypeHJ2">
                                         <div class="itemwrap01" style="width:215px">
-                                            <div class="tborder3"></div>
                                             <div class="tit02">全部：<b class="cyans" id="jfyd">-</b></div>
                                         </div>
                                         <div class="itemwrap01" style="width:215px">
-                                            <div class="tborder3"></div>
                                             <div class="tit02">出工：<b class="greens" id="jfsd">-</b></div>
                                         </div>
                                         <div class="itemwrap01" style="width:215px">
-                                            <div class="tborder3"></div>
                                             <div class="tit02">未出工：<b class="reds" id="jfwd">-</b></div>
                                         </div>
                                     </div>
@@ -361,6 +358,7 @@
 <script src="style/js/echart3/echarts.min.js"></script>
 <script src="assets/js/jquery.scrollQ.js" type="text/javascript"></script>
 <script type="text/javascript">
+    var scrollQ1,scrollQ2;
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';
     var elimateTarget;
@@ -414,8 +412,7 @@
                         if(elimateTarget) {
                             elimateTarget.remove();
                             if($("#dmAlarm").find("li").length==0) {
-                                $("#dmAlarm").scrollQStop();
-                                $("#dmAlarm").removeProp("scrollQ");
+                                cleanScrollQ(scrollQ1);
                                 $("#dmAlarm").append("<li class='list-group-item'>暂无点名预警</li>");
                             }
                         }
@@ -452,8 +449,7 @@
                             console.log(elimateTarget.attr("class"));
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
-                                $("#othAlarm").scrollQStop();
-                                $("#othAlarm").removeProp("scrollQ");
+                                cleanScrollQ(scrollQ2);
                                 $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
                             }
                         }
@@ -499,8 +495,7 @@
                             console.log(elimateTarget);
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
-                                $("#othAlarm").scrollQStop();
-                                $("#othAlarm").removeProp("scrollQ");
+                                cleanScrollQ(scrollQ2);
                                 $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
                             }
                         }

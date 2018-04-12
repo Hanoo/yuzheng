@@ -533,7 +533,6 @@ function refData() {
 
                 $("#empTypeHJ").append(
                     '<div class="itemwrap01" style="width:215px">' +
-                    '<div class="tborder3"></div>' +
                     '<div class="tit02">' + val.typeName + '：' + '<b class="greens">' + val.realCount +
                     '</b></div></div>');
             });
@@ -681,18 +680,21 @@ function loadAlarmData() {
                 othAlarm.append(othAlarmContent);
             }
             if(k>1) {
-                $("#dmAlarm").scrollQStop();
-                $("#dmAlarm").removeProp("scrollQ");
-                $("#dmAlarm").scrollQ({
+                if(scrollQ1) {
+                    cleanScrollQ(scrollQ1);
+                }
+
+                scrollQ1 = $("#dmAlarm").scrollQ({
                     line:1,
                     scrollNum:1,
                     scrollTime:3000
                 });
             }
             if(j>3) {
-                $("#othAlarm").scrollQStop();
-                $("#othAlarm").removeProp("scrollQ");
-                $("#othAlarm").scrollQ({
+                if(scrollQ2) {
+                    cleanScrollQ(scrollQ2);
+                }
+                scrollQ2 = $("#othAlarm").scrollQ({
                     line:3,
                     scrollNum:1,
                     scrollTime:3000
@@ -715,3 +717,10 @@ setInterval(function(){
     }
 
 }, 500);
+
+function cleanScrollQ(ulObject){
+    clearInterval(ulObject.scrollTimer);
+    ulObject.eleUL.unbind("mouseover");
+    ulObject.eleUL.unbind("mouseout");
+    ulObject.eleUL.removeProp("scrollQ");
+}

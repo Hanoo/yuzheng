@@ -6,56 +6,47 @@
  * scrollTime 滚动速度 单位毫秒
  *
  */
-(function ($) {
-    var status = false;
-    var timer;
-    var _self;
-    $.fn.scrollQ = function (options) {
+(function($){
+
+    $.fn.scrollQ = function(options){
         var defaults = {
-            line: 4,
-            scrollNum: 1,
-            scrollTime: 2000
-        }
-        var options = jQuery.extend(defaults, options);
-        _self = this;
-        return this.each(function () {
-            $("li", this).each(function () {
-                $(this).css("display", "none");
-            })
-            $("li:lt(" + options.line + ")", this).each(function () {
-                $(this).css("display", "block");
-            })
-            function scroll() {
-                for (i = 0; i < options.scrollNum; i++) {
-                    var start = $("li:first", _self);
-                    start.fadeOut(100);
-                    start.css("display", "none");
-                    start.appendTo(_self);
-                    $("li:eq(" + (options.line - 1) + ")", _self).each(function () {
-                        $(this).fadeIn(500);
-                        $(this).css("display", "block");
-                    })
-                }
-            }
+            line:4,
+            scrollNum:1,
+            scrollTime:2000,
+            flag:true
+        };
+        var options=jQuery.extend(defaults,options);
+        var _self = this;
 
-            timer = setInterval(scroll, options.scrollTime);
-            _self.bind("mouseover", function () {
-                clearInterval(timer);
-            });
-            _self.bind("mouseout", function () {
-                timer = setInterval(scroll, options.scrollTime);
-            });
+        $("li",this).each(function(){
+            $(this).css("display","none");
         });
-    };
-
-    $.fn.scrollQStop = function () {
-        if (_self) {
-            clearInterval(timer);
-            _self.unbind("mouseover");
-            _self.unbind("mouseout");
+        $("li:lt("+options.line+")",this).each(function(){
+            $(this).css("display","block");
+        });
+        if(!options.flag) {
+            return false;
         }
+        function scroll() {
+            for(var i=0;i<options.scrollNum;i++) {
+                var start=$("li:first",_self);
+                start.fadeOut(100);
+                start.css("display","none");
+                start.appendTo(_self);
+                $("li:eq("+(options.line-1)+")",_self).each(function(){
+                    $(this).fadeIn(500);
+                    $(this).css("display","block");
+                })
+            }
+        }
+        var timer = setInterval(scroll,options.scrollTime);
+        _self.bind("mouseover",function(){
+            clearInterval(timer);
+        });
+        _self.bind("mouseout",function(){
+            timer = setInterval(scroll,options.scrollTime);
+        });
+        return {"eleUL":_self, "scrollTimer":timer};
     }
-    $.fn.scrollQPause = function () {
-        clearInterval(timer);
-    }
+
 })(jQuery);
