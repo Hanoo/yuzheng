@@ -117,7 +117,7 @@ $(function() {
                         y : 'top',
                         data:['初中','小学','高中','大学']
                     },
-                    color: ['#D66B94', '#F3E59A', '#EDA936', '#E87355'],
+                    color: ['#D66B94', '#4d88f3', '#EDA936', '#64e886', '#e8db25', '#e85a4e'],
                     series: [
                         {
                             name:'数量',
@@ -244,6 +244,7 @@ $(function() {
                     data: nameList,
                     textStyle: {color: '#ccc'}
                 },
+                color: ['#F3E59A', '#E87355', '#87CDF3', '#CDCD00', '#4A81D2'],
                 series : [
                     {
                         name: '数量',
@@ -279,44 +280,48 @@ $(function() {
             for(var i=0;i<pCountList.length;i++) {
                 var pCount = pCountList[i];
                 dataList[i] = {"value":pCount.count, "name":pCount.name};
-                nameList[i] = pCount.name;//犯罪类型统计
-                var fzlx_option = {
-                    legend: {
-                        x : 'right',
-                        y : 'top',
-                        data: nameList,
-                        selectedMode: true,
-                        textStyle: {color: '#ccc'}
-                    },
-                    title: {
-                        // text: '犯罪类型统计',
-                        //subtext: 'from global web index',
-                        x: 'center',
-                        y: '10',
-                        textStyle: {
-                            // fontFamily: 'Arial, Verdana, sans...',
-                            fontSize: 24,
-                            fontStyle: 'normal',
-                            fontWeight: 'normal',
-                            color: '#ff1f1f'
-                        }
-                    },
-                    color: ['#D66B94', '#F3E59A', '#EDA936', '#E87355'],
-                    calculable : true,
-                    series : [
-                        {
-                            name:'面积模式',
-                            type:'pie',
-                            radius : [30, 110],
-                            center : ['50%', '50%'],
-                            roseType : 'area',
-                            data:dataList
-                        }
-                    ]
-                };
-                var fzlx_pie = echarts.init(document.getElementById('fzlxPie'));
-                fzlx_pie.setOption(fzlx_option);
+                nameList[i] = pCount.name;
             }
+            var fzlx_option = {
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    x : 'right',
+                    y : 'top',
+                    data: nameList,
+                    selectedMode: true,
+                    textStyle: {color: '#ccc'}
+                },
+                title: {
+                    // text: '犯罪类型统计',
+                    //subtext: 'from global web index',
+                    x: 'center',
+                    y: '10',
+                    textStyle: {
+                        // fontFamily: 'Arial, Verdana, sans...',
+                        fontSize: 24,
+                        fontStyle: 'normal',
+                        fontWeight: 'normal',
+                        color: '#ff1f1f'
+                    }
+                },
+                color: ['#D66B94', '#4d88f3', '#EDA936', '#E87355'],
+                calculable : true,
+                series : [
+                    {
+                        name:'罪犯人数及所占比',
+                        type:'pie',
+                        radius : [30, 110],
+                        center : ['50%', '50%'],
+                        roseType : 'area',
+                        data:dataList
+                    }
+                ]
+            };
+            var fzlx_pie = echarts.init(document.getElementById('fzlxPie'));
+            fzlx_pie.setOption(fzlx_option);
         }
     });
 

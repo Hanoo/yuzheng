@@ -66,7 +66,7 @@
     <select id="getPCountByCrimeType" resultType="java.util.Map">
         select '贪污受贿' as name, count(zm) as count from DA_JBXX where zm LIKE '7%'
         union ALL
-        select '以危险方法危害社会安全' as name, count(zm) as count from DA_JBXX where zm LIKE '1%'
+        select '危害社会安全' as name, count(zm) as count from DA_JBXX where zm LIKE '1%'
         union ALL
         select '经济类犯罪' as name, count(zm) as count from DA_JBXX where zm LIKE '2%'
         union ALL
