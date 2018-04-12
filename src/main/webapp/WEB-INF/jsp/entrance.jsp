@@ -99,6 +99,8 @@
 <%
     } else {
 %>
+            <div class="row col-lg-12 entrance">
+            </div>
             <div class="row ent-center">
                 <div class="ent-width ">
                     <div class="widget-simple text-center card-box ent-border">

@@ -676,23 +676,21 @@ function loadAlarmData() {
                 othAlarm.append(othAlarmContent);
             }
             if(k>1) {
-                $(".dm-bulletin").bootstrapNews({
-                    newsPerPage: 2,
-                    autoplay: true,
-                    pauseOnHover: true,
-                    navigation: false,
-                    direction: 'up',
-                    newsTickerInterval: 2500
+                $("#dmAlarm").scrollQStop();
+                $("#dmAlarm").removeProp("scrollQ");
+                $("#dmAlarm").scrollQ({
+                    line:1,
+                    scrollNum:1,
+                    scrollTime:3000
                 });
             }
             if(j>3) {
-                $(".oth-bulletin").bootstrapNews({
-                    newsPerPage: 4,
-                    autoplay: true,
-                    pauseOnHover: true,
-                    navigation: false,
-                    direction: 'up',
-                    newsTickerInterval: 2500
+                $("#othAlarm").scrollQStop();
+                $("#othAlarm").removeProp("scrollQ");
+                $("#othAlarm").scrollQ({
+                    line:3,
+                    scrollNum:1,
+                    scrollTime:3000
                 });
             }
         },

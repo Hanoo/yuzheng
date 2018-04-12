@@ -150,12 +150,12 @@
                                         </h4>
 
                                         <div class="card m-b-20" style="height: 48px;overflow-y: hidden;">
-                                            <ul class="list-group list-group-flush dm-bulletin" id="dmAlarm">
+                                            <ul class="list-group list-group-flush" id="dmAlarm">
                                                 <li class='list-group-item'>暂无点名预警</li>
                                             </ul>
                                         </div>
                                         <div class="card m-b-20" style="height: 144px;overflow-y: hidden;">
-                                            <ul class="list-group list-group-flush oth-bulletin" id="othAlarm">
+                                            <ul class="list-group list-group-flush" id="othAlarm">
                                                 <li class="list-group-item">暂无巡更或警力预警</li>
                                                 <li class="list-group-item">暂无巡更或警力预警</li>
                                                 <li class="list-group-item">暂无巡更或警力预警</li>
@@ -359,7 +359,7 @@
 <script src="assets/js/jquery.core.js"></script>
 <script src="assets/js/jquery.app.js"></script>
 <script src="style/js/echart3/echarts.min.js"></script>
-<script src="assets/js/jquery.bootstrap.newsbox.min.js" type="text/javascript"></script>
+<script src="assets/js/jquery.scrollQ.js" type="text/javascript"></script>
 <script type="text/javascript">
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';
@@ -374,7 +374,6 @@
         $("#LogDate").val($(this).attr("LogDate"));
         $("#RegDate").val($(this).attr("RegDate"));
         $("#AddrID").val($(this).attr("AddrID"));
-        console.log($(this).index());
     });
 
     $(document).on("click", ".jlAlarm-li", function(){
@@ -415,6 +414,8 @@
                         if(elimateTarget) {
                             elimateTarget.remove();
                             if($("#dmAlarm").find("li").length==0) {
+                                $("#dmAlarm").scrollQStop();
+                                $("#dmAlarm").removeProp("scrollQ");
                                 $("#dmAlarm").append("<li class='list-group-item'>暂无点名预警</li>");
                             }
                         }
@@ -448,8 +449,11 @@
                         showFdBkInfo("异常处理成功。", area, "success");
                         $("#EvenRec").val("");
                         if(elimateTarget) {
+                            console.log(elimateTarget.attr("class"));
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
+                                $("#othAlarm").scrollQStop();
+                                $("#othAlarm").removeProp("scrollQ");
                                 $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
                             }
                         }
@@ -495,6 +499,8 @@
                             console.log(elimateTarget);
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
+                                $("#othAlarm").scrollQStop();
+                                $("#othAlarm").removeProp("scrollQ");
                                 $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
                             }
                         }
