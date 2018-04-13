@@ -365,6 +365,8 @@
     $(document).on("click", ".dmAlarm-li", function(){
         elimateTarget = $(this);
         $("#endTime").val($(this).attr("endTime"));
+        var area = $("#eliminateMsg");
+        showFdBkInfo("", area, "success");
     });
 
     $(document).on("click", ".xgAlarm-li", function(){
@@ -372,6 +374,8 @@
         $("#LogDate").val($(this).attr("LogDate"));
         $("#RegDate").val($(this).attr("RegDate"));
         $("#AddrID").val($(this).attr("AddrID"));
+        var area = $("#XGeliminateMsg");
+        showFdBkInfo("", area, "success");
     });
 
     $(document).on("click", ".jlAlarm-li", function(){
@@ -379,6 +383,8 @@
         $("#starttime").val($(this).attr("starttime"));
         $("#jlendtime").val($(this).attr("endtime"));
         $("#dept_id").val($(this).attr("dept_id"));
+        var area = $("#JLeliminateMsg");
+        showFdBkInfo("", area, "success");
     });
 
     // 消除点名预警
@@ -492,7 +498,6 @@
                         showFdBkInfo("警力预警消除成功。", area, "success");
                         $("#desc").val("");
                         if(elimateTarget) {
-                            console.log(elimateTarget);
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
                                 cleanScrollQ(scrollQ2);

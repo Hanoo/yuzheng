@@ -18,6 +18,13 @@
     <nav class="navbar-custom">
 
         <ul class="list-inline float-right mb-0">
+            <li class="list-inline-item notification-list">
+                <div class="col-sm-12 nav-link waves-light waves-effect ">
+                    <i class="wi wi-time-12"></i>
+                    <span class="text-info" id="nyr"></span>
+                    <span class="time-num text-info" id="sfm"></span>
+                </div>
+            </li>
 
             <li class="list-inline-item notification-list hide-phone">
                 <a class="nav-link waves-light waves-effect" href="#" id="btn-fullscreen">
