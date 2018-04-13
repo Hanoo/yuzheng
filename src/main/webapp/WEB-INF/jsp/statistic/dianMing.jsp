@@ -179,7 +179,7 @@
                                                 <p>
                                                     <span class="s-left">出工：<b class="greens" id="sdNum">-</b></span>
                                                     <span class="s-left">全部：<b class="text-white" id="ydNum">-</b></span>
-                                                    <span class="s-left"><a onclick="javascript:wdDm();">未出工：<b class="text-danger" id="wdNum">-</b></a></span>
+                                                    <span class="s-left"><a href="javascript:wdDm();">未出工：<b class="text-danger" id="wdNum">-</b></a></span>
                                                 </p>
                                             </div>
                                             <div class="card-box hz-r-bj">

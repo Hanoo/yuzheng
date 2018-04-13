@@ -682,23 +682,25 @@ function loadAlarmData() {
             }
             if(k>1) {
                 if(scrollQ1) {
-                    cleanScrollQ(scrollQ1);
+                    cleanScrollQ(scrollQ1, "timer1");
                 }
 
-                scrollQ1 = $("#dmAlarm").scrollQ({
+                scrollQ1 = dmAlarm.scrollQ({
                     line:1,
                     scrollNum:1,
-                    scrollTime:3500
+                    scrollTime:3500,
+                    index:"timer1"
                 });
             }
             if(j>3) {
                 if(scrollQ2) {
-                    cleanScrollQ(scrollQ2);
+                    cleanScrollQ(scrollQ2,"timer2");
                 }
-                scrollQ2 = $("#othAlarm").scrollQ({
+                scrollQ2 = othAlarm.scrollQ({
                     line:3,
                     scrollNum:1,
-                    scrollTime:2500
+                    scrollTime:2500,
+                    index:"timer2"
                 });
             }
         },
@@ -719,8 +721,13 @@ setInterval(function(){
 
 }, 500);
 
-function cleanScrollQ(ulObject){
-    clearInterval(ulObject.scrollTimer);
+function cleanScrollQ(ulObject, index){
+    var timer = timerMapper[index];
+    if(!timer) {
+        clearInterval(ulObject.scrollTimer);
+    } else {
+        clearInterval(timer);
+    }
     ulObject.eleUL.unbind("mouseover");
     ulObject.eleUL.unbind("mouseout");
     ulObject.eleUL.removeProp("scrollQ");

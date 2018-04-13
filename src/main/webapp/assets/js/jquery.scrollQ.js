@@ -13,7 +13,8 @@
             line:4,
             scrollNum:1,
             scrollTime:2000,
-            flag:true
+            flag:true,
+            index:"noindex"
         };
         var options=jQuery.extend(defaults,options);
         var _self = this;
@@ -45,6 +46,7 @@
         });
         _self.bind("mouseout",function(){
             timer = setInterval(scroll,options.scrollTime);
+            timerMapper[options.index] = timer;
         });
         return {"eleUL":_self, "scrollTimer":timer};
     }

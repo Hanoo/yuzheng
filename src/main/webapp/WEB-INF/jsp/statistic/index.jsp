@@ -359,6 +359,7 @@
 <script src="assets/js/jquery.scrollQ.js" type="text/javascript"></script>
 <script type="text/javascript">
     var scrollQ1,scrollQ2;
+    var timerMapper = new Array();
     var resizefunc = [];
     var contextPath = '${pageContext.request.contextPath}';
     var elimateTarget;
@@ -418,7 +419,7 @@
                         if(elimateTarget) {
                             elimateTarget.remove();
                             if($("#dmAlarm").find("li").length==0) {
-                                cleanScrollQ(scrollQ1);
+                                cleanScrollQ(scrollQ1, "timer1");
                                 $("#dmAlarm").append("<li class='list-group-item'>暂无点名预警</li>");
                             }
                         }
@@ -455,7 +456,7 @@
                             console.log(elimateTarget.attr("class"));
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
-                                cleanScrollQ(scrollQ2);
+                                cleanScrollQ(scrollQ2,"timer2");
                                 $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
                             }
                         }
@@ -500,7 +501,7 @@
                         if(elimateTarget) {
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
-                                cleanScrollQ(scrollQ2);
+                                cleanScrollQ(scrollQ2, "timer2");
                                 $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
                             }
                         }
