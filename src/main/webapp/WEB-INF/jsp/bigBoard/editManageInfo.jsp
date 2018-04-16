@@ -46,7 +46,7 @@
         <!-- LOGO -->
         <div class="topbar-left">
             <div class="text-center">
-                <a href="index.html" class="logo"><i class="mdi mdi-radar"></i><span>监狱管理系统后台</span></a>
+                <a href="javascript:void(0);" class="logo"><i class="mdi mdi-radar"></i><span>监狱管理系统后台</span></a>
             </div>
         </div>
 
@@ -61,13 +61,16 @@
                 <li class="list-inline-item dropdown notification-list">
                     <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                        aria-haspopup="false" aria-expanded="false">
-                        <img src="assets/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
+                        <img src="assets/images/users/admin.jpg" alt="user" class="rounded-circle">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-dropdown " aria-labelledby="Preview">
                         <!-- item-->
                         <div class="dropdown-item noti-title">
                             <h5 class="text-overflow"><small>欢迎使用</small> </h5>
                         </div>
+                        <a href="/entrance" class="dropdown-item notify-item">
+                            <i class="mdi mdi-arrow-left"></i> <span>返回</span>
+                        </a>
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                             <i class="mdi mdi-logout"></i> <span>登出</span>

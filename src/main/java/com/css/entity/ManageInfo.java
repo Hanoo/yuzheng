@@ -1,7 +1,9 @@
 package com.css.entity;
 
+import java.util.Date;
+
 public class ManageInfo {
-    private String id = "theOnlyRec";
+    private int id;
 
     private Integer policeQuantity;
 
@@ -57,12 +59,14 @@ public class ManageInfo {
 
     private Integer externalVehicle;
 
-    public String getId() {
+    private Date miInsertTime;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Integer getPoliceQuantity() {
@@ -279,5 +283,13 @@ public class ManageInfo {
 
     public void setExternalVehicle(Integer externalVehicle) {
         this.externalVehicle = externalVehicle;
+    }
+
+    public Date getMiInsertTime() {
+        return miInsertTime;
+    }
+
+    public void setMiInsertTime(Date miInsertTime) {
+        this.miInsertTime = miInsertTime;
     }
 }

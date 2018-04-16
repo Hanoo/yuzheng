@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="DutyInfoMapper" >
   <resultMap id="BaseResultMap" type="DutyInfo" >
-    <id column="id" property="id" jdbcType="CHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="p_quantity" property="pQuantity" jdbcType="INTEGER" />
     <result column="p_real_quantity" property="pRealQuantity" jdbcType="INTEGER" />
     <result column="police_quantity" property="policeQuantity" jdbcType="INTEGER" />
@@ -14,39 +14,37 @@
     <result column="p_on_duty" property="pOnDuty" jdbcType="VARCHAR" />
     <result column="p_in_station" property="pInStation" jdbcType="VARCHAR" />
     <result column="p_in_command_center" property="pInCommandCenter" jdbcType="VARCHAR" />
+    <result column="di_insert_time" property="diInsertTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, p_quantity, p_real_quantity, police_quantity, police_on_duty_quantity, chief_officer, 
-    officer, chief_officer_tel, officer_tel, p_on_duty, p_in_station, p_in_command_center
+    officer, chief_officer_tel, officer_tel, p_on_duty, p_in_station, p_in_command_center,di_insert_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from duty_info
-    where id = #{id,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from duty_info
-    where id = #{id,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="DutyInfo" >
-    insert into duty_info (id, p_quantity, p_real_quantity,
+    insert into duty_info (p_quantity, p_real_quantity,
       police_quantity, police_on_duty_quantity, chief_officer, 
       officer, chief_officer_tel, officer_tel, 
-      p_on_duty, p_in_station, p_in_command_center
+      p_on_duty, p_in_station, p_in_command_center, di_insert_time
       )
-    values (#{id,jdbcType=CHAR}, #{pQuantity,jdbcType=INTEGER}, #{pRealQuantity,jdbcType=INTEGER},
+    values (#{pQuantity,jdbcType=INTEGER}, #{pRealQuantity,jdbcType=INTEGER},
       #{policeQuantity,jdbcType=INTEGER}, #{policeOnDutyQuantity,jdbcType=INTEGER}, #{chiefOfficer,jdbcType=VARCHAR},
       #{officer,jdbcType=VARCHAR}, #{chiefOfficerTel,jdbcType=VARCHAR}, #{officerTel,jdbcType=VARCHAR}, 
-      #{pOnDuty,jdbcType=VARCHAR}, #{pInStation,jdbcType=VARCHAR}, #{pInCommandCenter,jdbcType=VARCHAR}
+      #{pOnDuty,jdbcType=VARCHAR}, #{pInStation,jdbcType=VARCHAR}, #{pInCommandCenter,jdbcType=VARCHAR}, NOW()
       )
   </insert>
   <insert id="insertSelective" parameterType="DutyInfo" >
     insert into duty_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="pQuantity != null" >
         p_quantity,
       </if>
@@ -80,11 +78,9 @@
       <if test="pInCommandCenter != null" >
         p_in_command_center,
       </if>
+        di_insert_time
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=CHAR},
-      </if>
       <if test="pQuantity != null" >
         #{pQuantity,jdbcType=INTEGER},
       </if>
@@ -118,6 +114,7 @@
       <if test="pInCommandCenter != null" >
         #{pInCommandCenter,jdbcType=VARCHAR},
       </if>
+        NOW()
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="DutyInfo" >
@@ -156,8 +153,11 @@
       <if test="pInCommandCenter != null" >
         p_in_command_center = #{pInCommandCenter,jdbcType=VARCHAR},
       </if>
+      <if test="diInsertTime != null">
+          di_insert_time = #{diInsertTime, jdbcType=TIMESTAMP}
+      </if>
     </set>
-    where id = #{id,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="DutyInfo" >
     update duty_info
@@ -172,6 +172,13 @@
       p_on_duty = #{pOnDuty,jdbcType=VARCHAR},
       p_in_station = #{pInStation,jdbcType=VARCHAR},
       p_in_command_center = #{pInCommandCenter,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryTheLast" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from duty_info
+    ORDER BY di_insert_time DESC
+    limit 0,1
+  </select>
 </mapper>

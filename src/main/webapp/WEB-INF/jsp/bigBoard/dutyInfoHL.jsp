@@ -80,12 +80,12 @@
                                     <td>
                                         <span class="zhiban-name" id="chiefOfficer"></span>
                                     </td>
-                                    <td>87665900-01</td>
+                                    <td id="chiefOfficerTel">87665900-01</td>
                                 </tr>
                                 <tr>
                                     <td>值&nbsp;&nbsp;班&nbsp;&nbsp;长：</td>
                                     <td><span class="zhiban-name" id="officer"></span></td>
-                                    <td>87665900-01</td>
+                                    <td id="officerTel">87665900-01</td>
                                 </tr>
                                 <tr>
                                     <td>值&nbsp;&nbsp;班&nbsp;&nbsp;员：</td>

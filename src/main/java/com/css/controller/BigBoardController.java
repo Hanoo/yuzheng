@@ -27,7 +27,7 @@ public class BigBoardController {
 
     @RequestMapping("/dutyInfo")
     public String dutyInfo(HttpServletRequest request){
-        DutyInfo dutyInfo = bigBoardService.getDutyInfo();
+        DutyInfo dutyInfo = bigBoardService.getDisplayDutyInfo();
         if(null!= dutyInfo) {
             request.setAttribute("dutyInfo", JSONObject.fromObject(dutyInfo));
         } else {
@@ -38,7 +38,7 @@ public class BigBoardController {
 
     @RequestMapping("/manageInfo")
     public String manageInfo(HttpServletRequest request){
-        ManageInfo manageInfo = bigBoardService.getManageInfo();
+        ManageInfo manageInfo = bigBoardService.getDisplayManageInfo();
         if(null!= manageInfo) {
             request.setAttribute("manageInfo", JSONObject.fromObject(manageInfo));
         } else {
@@ -49,7 +49,7 @@ public class BigBoardController {
 
     @RequestMapping(value = "/editDutyInfo", method = RequestMethod.GET)
     public String editDutyInfo(HttpServletRequest request){
-        DutyInfo dutyInfo = bigBoardService.getDutyInfo();
+        DutyInfo dutyInfo = bigBoardService.getDisplayDutyInfo();
         if(null!= dutyInfo) {
             request.setAttribute("dutyInfo", JSONObject.fromObject(dutyInfo));
         } else {
@@ -74,13 +74,13 @@ public class BigBoardController {
             request.setAttribute("eMsg", "您没有权限访问这个页面！");
             return "innerError";
         }
-        DutyInfo dutyInfo = bigBoardService.getDutyInfo();
+        DutyInfo dutyInfo = bigBoardService.getDisplayDutyInfo();
         if(null!= dutyInfo) {
             request.setAttribute("dutyInfo", JSONObject.fromObject(dutyInfo));
         } else {
             request.setAttribute("dutyInfo", "null");
         }
-        ManageInfo manageInfo = bigBoardService.getManageInfo();
+        ManageInfo manageInfo = bigBoardService.getDisplayManageInfo();
         if(null!= manageInfo) {
             JSONObject mi = JSONObject.fromObject(manageInfo);
             mi.put("mpQuantity", mi.get("policeQuantity"));

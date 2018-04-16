@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ManageInfoMapper" >
   <resultMap id="BaseResultMap" type="ManageInfo" >
-    <id column="id" property="id" jdbcType="CHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="police_quantity" property="policeQuantity" jdbcType="INTEGER" />
     <result column="prisoner_quantity" property="prisonerQuantity" jdbcType="INTEGER" />
     <result column="prison_area_quantity" property="prisonAreaQuantity" jdbcType="INTEGER" />
@@ -30,6 +30,7 @@
     <result column="meeting_quantity" property="meetingQuantity" jdbcType="INTEGER" />
     <result column="assistor_quantity" property="assistorQuantity" jdbcType="INTEGER" />
     <result column="external_vehicle" property="externalVehicle" jdbcType="INTEGER" />
+    <result column="mi_insert_time" property="miInsertTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, police_quantity, prisoner_quantity, prison_area_quantity, police_on_duty, police_on_patrol, 
@@ -37,20 +38,20 @@
     prisoner_drug_related, prisoner_mobdom_related, prisoner_cult_related, prisoner_old_sick, 
     prisoner_outsider, prisoner_foreigner, prisoner_parole, prisoner_probation, prisoner_at_large, 
     prisoner_imprison, prisoner_release, prisoner_medical_parole, prisoner_confine, prisoner_strick_ctrl, 
-    meeting_quantity, assistor_quantity, external_vehicle
+    meeting_quantity, assistor_quantity, external_vehicle, mi_insert_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from manage_info
-    where id = #{id,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from manage_info
-    where id = #{id,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="ManageInfo" >
-    insert into manage_info (id, police_quantity, prisoner_quantity, 
+    insert into manage_info (police_quantity, prisoner_quantity,
       prison_area_quantity, police_on_duty, police_on_patrol, 
       police_in_reserve, prisoner_in_reprieve, prisoner_in_life, 
       prisoner_in_roc, prisoner_recidivist, prisoner_drug_related, 
@@ -59,8 +60,8 @@
       prisoner_parole, prisoner_probation, prisoner_at_large, 
       prisoner_imprison, prisoner_release, prisoner_medical_parole, 
       prisoner_confine, prisoner_strick_ctrl, meeting_quantity, 
-      assistor_quantity, external_vehicle)
-    values (#{id,jdbcType=CHAR}, #{policeQuantity,jdbcType=INTEGER}, #{prisonerQuantity,jdbcType=INTEGER}, 
+      assistor_quantity, external_vehicle, mi_insert_time)
+    values (#{policeQuantity,jdbcType=INTEGER}, #{prisonerQuantity,jdbcType=INTEGER},
       #{prisonAreaQuantity,jdbcType=INTEGER}, #{policeOnDuty,jdbcType=INTEGER}, #{policeOnPatrol,jdbcType=INTEGER}, 
       #{policeInReserve,jdbcType=INTEGER}, #{prisonerInReprieve,jdbcType=INTEGER}, #{prisonerInLife,jdbcType=INTEGER}, 
       #{prisonerInRoc,jdbcType=INTEGER}, #{prisonerRecidivist,jdbcType=INTEGER}, #{prisonerDrugRelated,jdbcType=INTEGER}, 
@@ -69,14 +70,11 @@
       #{prisonerParole,jdbcType=INTEGER}, #{prisonerProbation,jdbcType=INTEGER}, #{prisonerAtLarge,jdbcType=INTEGER}, 
       #{prisonerImprison,jdbcType=INTEGER}, #{prisonerRelease,jdbcType=INTEGER}, #{prisonerMedicalParole,jdbcType=INTEGER}, 
       #{prisonerConfine,jdbcType=INTEGER}, #{prisonerStrickCtrl,jdbcType=INTEGER}, #{meetingQuantity,jdbcType=INTEGER}, 
-      #{assistorQuantity,jdbcType=INTEGER}, #{externalVehicle,jdbcType=INTEGER})
+      #{assistorQuantity,jdbcType=INTEGER}, #{externalVehicle,jdbcType=INTEGER}, NOW())
   </insert>
   <insert id="insertSelective" parameterType="ManageInfo" >
     insert into manage_info
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="policeQuantity != null" >
         police_quantity,
       </if>
@@ -158,11 +156,9 @@
       <if test="externalVehicle != null" >
         external_vehicle,
       </if>
+      mi_insert_time
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=CHAR},
-      </if>
       <if test="policeQuantity != null" >
         #{policeQuantity,jdbcType=INTEGER},
       </if>
@@ -244,6 +240,7 @@
       <if test="externalVehicle != null" >
         #{externalVehicle,jdbcType=INTEGER},
       </if>
+      NOW()
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="ManageInfo" >
@@ -330,7 +327,10 @@
       <if test="externalVehicle != null" >
         external_vehicle = #{externalVehicle,jdbcType=INTEGER}
       </if>
-    where id = #{id,jdbcType=CHAR}
+      <if test="miInsertTime != null">
+          mi_insert_time = #{miInsertTime, jdbcType=TIMESTAMP}
+      </if>
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="ManageInfo" >
     update manage_info
@@ -361,6 +361,14 @@
       meeting_quantity = #{meetingQuantity,jdbcType=INTEGER},
       assistor_quantity = #{assistorQuantity,jdbcType=INTEGER},
       external_vehicle = #{externalVehicle,jdbcType=INTEGER}
-    where id = #{id,jdbcType=CHAR}
+      mi_insert_time = #{miInsertTime, jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="queryTheLast" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from manage_info
+    ORDER BY mi_insert_time DESC
+    limit 0,1
+  </select>
 </mapper>

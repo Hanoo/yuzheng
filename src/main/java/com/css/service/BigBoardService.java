@@ -7,10 +7,10 @@ import net.sf.json.JSONObject;
 public interface BigBoardService {
 
     /**
-     * 查询值班信息
+     * 查询大屏幕展示的值班信息，即最后一条插入的纪录
      * @return
      */
-    DutyInfo getDutyInfo();
+    DutyInfo getDisplayDutyInfo();
 
     /**
      * 修改值班信息
@@ -27,10 +27,10 @@ public interface BigBoardService {
     boolean saveDutyInfo(JSONObject dutyInfo);
 
     /**
-     * 获取管理信息
+     * 查询大屏幕显示的管理信息，即最后一条插入的纪录
      * @return
      */
-    ManageInfo getManageInfo();
+    ManageInfo getDisplayManageInfo();
 
     /**
      * 修改管理信息并将结果存入JSON格式的传入参数

@@ -17,13 +17,11 @@ public class BigBoardServiceImpl implements BigBoardService {
     @Resource
     DAO dao;
 
-    public static final String onlyRecordId = "theOnlyRec";
-
-    public DutyInfo getDutyInfo() {
+    public DutyInfo getDisplayDutyInfo() {
         DataSourceTypeManager.set(DataSources.JIANYU);
         Object i = null;
         try {
-            i = dao.findForObject("DutyInfoMapper.selectByPrimaryKey", onlyRecordId);
+            i = dao.findForObject("DutyInfoMapper.queryTheLast", null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -43,15 +41,21 @@ public class BigBoardServiceImpl implements BigBoardService {
 
     public boolean saveDutyInfo(JSONObject dutyInfoJSON) {
         DutyInfo dutyInfo = (DutyInfo) JSONObject.toBean(dutyInfoJSON, DutyInfo.class);
-        dutyInfo.setId(onlyRecordId);
-        return updateDutyInfo(dutyInfo);
+        Object i;
+        try {
+            i = dao.save("DutyInfoMapper.insert", dutyInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            i = 0;
+        }
+        return (Integer)i>0;
     }
 
-    public ManageInfo getManageInfo() {
+    public ManageInfo getDisplayManageInfo() {
         DataSourceTypeManager.set(DataSources.JIANYU);
         Object i = null;
         try {
-            i = dao.findForObject("ManageInfoMapper.selectByPrimaryKey", onlyRecordId);
+            i = dao.findForObject("ManageInfoMapper.queryTheLast", null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,10 +65,9 @@ public class BigBoardServiceImpl implements BigBoardService {
     public boolean saveManageInfo(JSONObject manageInfoJSON) {
 
         ManageInfo manageInfo = (ManageInfo) JSONObject.toBean(manageInfoJSON, ManageInfo.class);
-        manageInfo.setId(onlyRecordId);
         Object i;
         try {
-            i = dao.update("ManageInfoMapper.updateByPrimaryKeySelective", manageInfo);
+            i = dao.update("ManageInfoMapper.insert", manageInfo);
         } catch (Exception e) {
             e.printStackTrace();
             i = 0;

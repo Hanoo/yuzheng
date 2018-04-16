@@ -2,7 +2,7 @@
     值班信息表
  */
 create table duty_info(
-  id                      char(10)   NOT NULL  COMMENT '用户唯一标志id',
+  id                      INT AUTO_INCREMENT  NOT NULL  COMMENT '用户唯一标志id',
   p_quantity              INT                  comment '囚犯总数',
   p_real_quantity         INT                  COMMENT '实际押犯数量',
   police_quantity         INT                  COMMENT '狱警数量',
@@ -14,6 +14,7 @@ create table duty_info(
   p_on_duty               varchar(50)          comment '值班员',
   p_in_station            varchar(50)          COMMENT '检查站人员',
   p_in_command_center     varchar(50)          COMMENT '指挥中心人员',
+  di_insert_time          DATETIME             COMMENT '纪录插入时间',
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -21,7 +22,7 @@ create table duty_info(
     管理信息表
  */
 create table manage_info(
-  id                      char(10)   NOT NULL  COMMENT '用户唯一标志id',
+  id                      INT AUTO_INCREMENT  NOT NULL  COMMENT '用户唯一标志id',
   police_quantity         INT                  COMMENT '警察数量',
   prisoner_quantity       INT                  COMMENT '押犯数量',
   prison_area_quantity    INT                  COMMENT '监区数量',
@@ -49,6 +50,7 @@ create table manage_info(
   meeting_quantity        INT                  COMMENT '会见人数',
   assistor_quantity       INT                  COMMENT '外协人员',
   external_vehicle        INT                  COMMENT '外部车辆',
+  mi_insert_time          DATETIME             COMMENT '纪录插入时间',
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

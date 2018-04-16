@@ -1,7 +1,9 @@
 package com.css.entity;
 
+import java.util.Date;
+
 public class DutyInfo {
-    private String id;
+    private int id;
 
     private int pQuantity;
 
@@ -25,11 +27,13 @@ public class DutyInfo {
 
     private String pInCommandCenter;
 
-    public String getId() {
+    private Date diInsertTime;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -119,5 +123,13 @@ public class DutyInfo {
 
     public void setpQuantity(int pQuantity) {
         this.pQuantity = pQuantity;
+    }
+
+    public Date getDiInsertTime() {
+        return diInsertTime;
+    }
+
+    public void setDiInsertTime(Date diInsertTime) {
+        this.diInsertTime = diInsertTime;
     }
 }
