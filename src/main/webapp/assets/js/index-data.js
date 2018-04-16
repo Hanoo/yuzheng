@@ -634,7 +634,6 @@ function getSeries_data_dianming(json) {
 }
 
 setInterval(refData, 1000 * 60 * 5);// 每隔五分钟重新读取数据
-setInterval(showTime, 1000);
 refData();
 
 // 加载预警信息并且轮播
@@ -731,28 +730,4 @@ function cleanScrollQ(ulObject, index){
     ulObject.eleUL.unbind("mouseover");
     ulObject.eleUL.unbind("mouseout");
     ulObject.eleUL.removeProp("scrollQ");
-}
-
-function showTime() {
-    var today = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
-    var myDate = new Date();
-    var month = myDate.getMonth() + 1;
-    var day = myDate.getDate();
-    if (month < 10) month = "0" + month;
-    if (day < 10) {
-        day = "0" + day
-    }
-
-    var ymd = myDate.getFullYear() + '-' + month + '-' + day;
-    var hour = myDate.getHours();
-    if (hour < 10) hour = "0" + hour;
-    var min = myDate.getMinutes();
-    if (min < 10) {
-        min = "0" + min;
-    }
-    var mi = myDate.getSeconds();
-    if (mi < 10) mi = "0" + mi;
-    var result = hour + ":" + min + ":" + mi;
-    $("#sfm").html(result);
-    $("#nyr").html(ymd + "  " + today[myDate.getDay()]);
 }

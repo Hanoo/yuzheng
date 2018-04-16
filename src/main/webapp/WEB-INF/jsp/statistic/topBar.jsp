@@ -4,6 +4,8 @@
 <%
     YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
 %>
+
+<link href="assets/css/statistic.css" rel="stylesheet" type="text/css">
 <!-- Top Bar Start -->
 <div class="topbar">
 
@@ -27,20 +29,11 @@
             </li>
 
             <li class="list-inline-item notification-list hide-phone">
-                <a class="nav-link waves-light waves-effect" href="#" id="btn-fullscreen">
+                <a class="nav-link waves-light waves-effect" href="javascript:void(0);" id="btn-fullscreen">
                     <i class="mdi mdi-crop-free noti-icon"></i>
                 </a>
             </li>
 
-            <!--
-                        <li class="list-inline-item dropdown notification-list">
-                            <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown" href="#" role="button"
-                               aria-haspopup="false" aria-expanded="false">
-                                <i class="mdi mdi-bell noti-icon"></i>
-                                <span class="badge badge-pink noti-icon-badge">4</span>
-                            </a>
-                        </li>
-            -->
             <li class="list-inline-item dropdown notification-list">
                 <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                    aria-haspopup="false" aria-expanded="false">
@@ -51,6 +44,10 @@
                     <div class="dropdown-item noti-title">
                         <h5 class="text-overflow"><small>欢迎您：<%=user.getDisplayName()%></small> </h5>
                     </div>
+                    <a href="/entrance" class="dropdown-item notify-item">
+                        <i class="mdi mdi-settings"></i>
+                        <span>返回</span>
+                    </a>
 
                     <!-- item-->
                     <a href="javascript:void(0);" class="dropdown-item notify-item" data-toggle="modal" data-target="#con-close-modal">
@@ -168,4 +165,29 @@
 <script src="assets/js/changePassword.js" type="text/javascript"></script>
 <script>
     var isSupervise = <%=IConstant.ADMIN_AREA.equals(user.getPrisonArea())%>;
+    $(document).ready(function(){
+        setInterval(function(){
+            var today = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+            var myDate = new Date();
+            var month = myDate.getMonth() + 1;
+            var day = myDate.getDate();
+            if (month < 10) month = "0" + month;
+            if (day < 10) {
+                day = "0" + day
+            }
+
+            var ymd = myDate.getFullYear() + '-' + month + '-' + day;
+            var hour = myDate.getHours();
+            if (hour < 10) hour = "0" + hour;
+            var min = myDate.getMinutes();
+            if (min < 10) {
+                min = "0" + min;
+            }
+            var mi = myDate.getSeconds();
+            if (mi < 10) mi = "0" + mi;
+            var result = hour + ":" + min + ":" + mi;
+            $("#sfm").html(result);
+            $("#nyr").html(ymd + "  " + today[myDate.getDay()]);
+        },1000);
+    });
 </script>

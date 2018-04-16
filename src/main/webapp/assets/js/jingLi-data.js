@@ -191,7 +191,7 @@ function refData() {
             data.forEach(function (val, index) {
 
                 $("#empTypeCount").append(
-                    '<div class="itemwrap01 col-lg-3 text-center">' +
+                    '<div class="itemwrap03 col-lg-3 text-center">' +
                     '<div class="tit02">' + val.typeName + '：' + '<b class="greens">' + val.realCount +
                     '</b></div></div>');
             });
