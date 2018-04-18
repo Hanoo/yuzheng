@@ -23,4 +23,6 @@ public interface XunGengService {
      * 插入手动消除巡更异常的数据
      */
     int insertManualXGInfo(Map map) throws Exception;
+
+    List<XunGeng> getXunGengHistory(Map<String, String> timeParams) throws Exception;
 }

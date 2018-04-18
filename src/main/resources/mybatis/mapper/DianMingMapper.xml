@@ -18,7 +18,6 @@
         <result column="qxyy" property="qxyy"/>
     </resultMap>
 
-
     <!--  获取当前时间前一小时当前监狱所有监区应到人数和实际到达人数-->
     <select id="getydSum" parameterType="java.util.Map" resultType="int">
 
@@ -225,4 +224,23 @@ end
             #{aminute,jdbcType=INTEGER},
             #{jkczy,jdbcType=VARCHAR})
     </insert>
+
+    <select id="getDMHistory" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+            pd.aid as aid,
+            pd.pname as pname,
+            pd.pcount,
+            case when logs.pcountsum is null THEN '0' else logs.pcountsum end as pcountsum,
+            case when logs.begintime is null THEN #{stTime} else logs.begintime end as begintime,
+            case when logs.endtime is null THEN #{endTime} else logs.endtime end as endtime,
+            case when logs.aminute is null THEN '60' else logs.aminute end as aminute,
+            logs.jkczy
+        FROM zte_AreaQdPlanDetail pd
+        LEFT JOIN (
+            SELECT aid, pcountsum, begintime, endtime, aminute, jkczy FROM zte_AreaQd_Log where 1=1 AND endtime >=#{stTime} AND #{endTime} >= endtime
+            ) logs
+        ON
+        logs.aid=pd.aid
+        ORDER BY convert(int, pd.aid)
+    </select>
 </mapper>

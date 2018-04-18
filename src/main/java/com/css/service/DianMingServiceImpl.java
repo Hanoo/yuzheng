@@ -755,6 +755,18 @@ public class DianMingServiceImpl implements IDianMingService {
         return (Integer) result;
     }
 
+    public List getJQPCGCountHistory(Map<String, String> timeParams) throws Exception {
+        DataSourceTypeManager.set(DataSources.ZKESERVER);
+
+        Map params = new HashMap();
+        params.put("stTime", timeParams.get("stTime"));
+        params.put("endTime", timeParams.get("endTime"));
+
+        List realList = (List) dao.findForList("DianMingMapper.getDMHistory", params);
+
+        return realList;
+    }
+
     @Transactional
     //查询时间的方法
     public Map getCxTime() {

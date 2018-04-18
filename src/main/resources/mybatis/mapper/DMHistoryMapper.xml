@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DMHistoryMapper">
+    <resultMap id="BaseResultMap" type="DMHistory">
+        <id column="xh" property="xh" jdbcType="INTEGER"/>
+        <result column="pname" property="pname" jdbcType="VARCHAR"/>
+        <result column="aid" property="aid" jdbcType="VARCHAR"/>
+        <result column="begintime" property="begintime" jdbcType="TIMESTAMP"/>
+        <result column="endtime" property="endtime" jdbcType="TIMESTAMP"/>
+        <result column="pcount" property="pcount" jdbcType="INTEGER"/>
+        <result column="pcountsum" property="pcountsum" jdbcType="INTEGER"/>
+        <result column="aminute" property="aminute" jdbcType="INTEGER"/>
+        <result column="jkczy" property="jkczy" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        xh, pname, aid, begintime, endtime, pcount, pcountsum, aminute, jkczy
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from dianming_history
+        where xh = #{xh,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from dianming_history
+        where xh = #{xh,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="DMHistory">
+        insert into dianming_history (pname,
+          aid, begintime, endtime,
+          pcount, pcountsum, aminute,
+          jkczy)
+        values (#{pname,jdbcType=VARCHAR},
+          #{aid,jdbcType=VARCHAR}, #{begintime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP},
+          #{pcount,jdbcType=INTEGER}, #{pcountsum,jdbcType=INTEGER}, #{aminute,jdbcType=INTEGER},
+          #{jkczy,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="DMHistory">
+        insert into dianming_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pname != null">
+                pname,
+            </if>
+            <if test="aid != null">
+                aid,
+            </if>
+            <if test="begintime != null">
+                begintime,
+            </if>
+            <if test="endtime != null">
+                endtime,
+            </if>
+            <if test="pcount != null">
+                pcount,
+            </if>
+            <if test="pcountsum != null">
+                pcountsum,
+            </if>
+            <if test="aminute != null">
+                aminute,
+            </if>
+            <if test="jkczy != null">
+                jkczy,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pname != null">
+                #{pname,jdbcType=VARCHAR},
+            </if>
+            <if test="aid != null">
+                #{aid,jdbcType=VARCHAR},
+            </if>
+            <if test="begintime != null">
+                #{begintime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endtime != null">
+                #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pcount != null">
+                #{pcount,jdbcType=INTEGER},
+            </if>
+            <if test="pcountsum != null">
+                #{pcountsum,jdbcType=INTEGER},
+            </if>
+            <if test="aminute != null">
+                #{aminute,jdbcType=INTEGER},
+            </if>
+            <if test="jkczy != null">
+                #{jkczy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="DMHistory">
+        update dianming_history
+        <set>
+            <if test="pname != null">
+                pname = #{pname,jdbcType=VARCHAR},
+            </if>
+            <if test="aid != null">
+                aid = #{aid,jdbcType=VARCHAR},
+            </if>
+            <if test="begintime != null">
+                begintime = #{begintime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endtime != null">
+                endtime = #{endtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pcount != null">
+                pcount = #{pcount,jdbcType=INTEGER},
+            </if>
+            <if test="pcountsum != null">
+                pcountsum = #{pcountsum,jdbcType=INTEGER},
+            </if>
+            <if test="aminute != null">
+                aminute = #{aminute,jdbcType=INTEGER},
+            </if>
+            <if test="jkczy != null">
+                jkczy = #{jkczy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where xh = #{xh,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="DMHistory">
+        update dianming_history
+        set
+          pname = #{pname,jdbcType=VARCHAR},
+          aid = #{aid,jdbcType=VARCHAR},
+          begintime = #{begintime,jdbcType=TIMESTAMP},
+          endtime = #{endtime,jdbcType=TIMESTAMP},
+          pcount = #{pcount,jdbcType=INTEGER},
+          pcountsum = #{pcountsum,jdbcType=INTEGER},
+          aminute = #{aminute,jdbcType=INTEGER},
+          jkczy = #{jkczy,jdbcType=VARCHAR}
+        where xh = #{xh,jdbcType=INTEGER}
+    </update>
+</mapper>

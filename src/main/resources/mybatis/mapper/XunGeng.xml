@@ -154,4 +154,26 @@
         #{EvenRec,jdbcType=VARCHAR},
         #{OpeName,jdbcType=VARCHAR})
     </insert>
+
+    <!-- 把巡更的历史信息写入数据库 -->
+    <insert id="insertXunGeng" parameterType="XunGeng" >
+        insert into Ptr_MnuLog (
+        LineID,
+        BeginTime,
+        EndTime,
+        AddrID,
+        LogTime,
+        AddrName,
+        LogDate,
+        Xgnum)
+        values (
+        #{LineID,jdbcType=VARCHAR},
+        #{BeginTime,jdbcType=TIMESTAMP},
+        #{EndTime, jdbcType=TIMESTAMP},
+        #{AddrID,jdbcType=VARCHAR},
+        #{LogTime, jdbcType=TIMESTAMP},
+        #{AddrName,jdbcType=VARCHAR},
+        #{LogDate, jdbcType=TIMESTAMP},
+        #{Xgnum, jdbcType=INTEGER})
+    </insert>
 </mapper>

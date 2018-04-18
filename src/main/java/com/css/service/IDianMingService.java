@@ -61,4 +61,12 @@ public interface IDianMingService {
 
     int insertManualDianMingInfo(Map logInfo) throws Exception;
 
+    /**
+     * 根据时间参数查询各监区点名数据
+     * 包含总人数和
+     * @return
+     * @throws Exception
+     */
+    List getJQPCGCountHistory(Map<String, String> timeParams) throws Exception;
+
 }

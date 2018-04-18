@@ -92,6 +92,32 @@ CREATE TABLE jingli_history (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE dianming_history (
+  xh                      INT AUTO_INCREMENT NOT NULL COMMENT '自增长主键',
+  pname                   varchar(60),
+  aid                     varchar(20),
+  begintime               DATETIME,
+  endtime                 DATETIME,
+  pcount                  INT,
+  pcountsum               INT,
+  aminute                 INT,
+  jkczy                   varchar(20),
+  PRIMARY KEY (xh)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE xungeng_history (
+  RID                     INT AUTO_INCREMENT NOT NULL COMMENT '自增长主键',
+  LineID                  varchar(3),
+  AddrID                  varchar(3),
+  AddrName                varchar(50),
+  BeginTime               DATETIME,
+  EndTime                 DATETIME,
+  LogTime                 DATETIME,
+  LogDate                 DATETIME,
+  Xgnum                   INT,
+  PRIMARY KEY (RID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /**
     生成初始化数据
  */

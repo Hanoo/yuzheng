@@ -112,21 +112,24 @@
                                                     <h4 class="col-2 header-title m-t-0 " style="margin-bottom: 0;padding: 14px 10px 10px 0;">
                                                         实时监区点名汇总
                                                     </h4>
-                                                    <!--
-                                                    <label class="col-3 col-form-label text-right" style="line-height: 30px">请输入查询日期：</label>
-                                                    <div class="col-3">
-                                                        <input class="form-control" type="date" name="date">
+                                                    <label class="col-4 col-form-label text-right" style="line-height: 30px">请输入查询日期：</label>
+                                                    <div class="col-2">
+                                                        <input class="form-control" type="date" id="date">
                                                     </div>
-                                                    <div class=" text-center" style="width: 20px; line-height: 40px">
-                                                        至
+
+                                                    <div class="col-2">
+                                                        <input class="form-control" type="time" id="time">
                                                     </div>
-                                                    <div class="col-3">
-                                                        <input class="form-control" type="date" name="date">
+                                                    <div class="col-1">
+                                                        <button type="button" class="col-12 btn btn-primary waves-effect waves-light btn-md">
+                                                            搜索
+                                                        </button>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light btn-md">
-                                                        搜索
-                                                    </button>
-                                                    -->
+                                                    <div class="col-1">
+                                                        <button type="button" class="col-12 btn btn-warning waves-effect waves-light btn-md">
+                                                            导出
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

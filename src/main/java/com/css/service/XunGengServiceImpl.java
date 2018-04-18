@@ -160,7 +160,7 @@ public class XunGengServiceImpl implements XunGengService {
 
             SimpleDateFormat df1 = new SimpleDateFormat("HH:00");
             Stime = df1.format(calendar.getTime());
-            ;
+
             Etime = df1.format(new Date());
             startTime = df.format(calendar.getTime());
             endTime = df.format(new Date());
@@ -453,9 +453,16 @@ public class XunGengServiceImpl implements XunGengService {
         return (Integer) result;
     }
 
+    public List<XunGeng> getXunGengHistory(Map<String, String> timeParams) throws Exception {
+        DataSourceTypeManager.set(DataSources.EYFINGER);
+
+        Map<String, String> map = new HashMap<String, String>();
+        String params = " AND Log.LogDate >= CONVERT(datetime,'" + timeParams.get("stTime") + "',20) AND Log.LogDate <= CONVERT(datetime,'" + timeParams.get("endTime") + "',20) ";
+        map.put("params", params);
+
+        List xunGengList = (List) dao.findForList("XunGeng.getXunGengInfo", map);
+
+        return xunGengList;
+    }
+
 }
-
-
-
-
-
