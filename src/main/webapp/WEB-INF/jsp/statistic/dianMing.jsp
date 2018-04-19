@@ -118,15 +118,15 @@
                                                     </div>
 
                                                     <div class="col-2">
-                                                        <input class="form-control" type="time" id="time">
+                                                        <input class="form-control" type="time" id="time" value="00:00">
                                                     </div>
                                                     <div class="col-1">
-                                                        <button type="button" class="col-12 btn btn-primary waves-effect waves-light btn-md">
+                                                        <button type="button" id="searchDM" class="col-12 btn btn-primary waves-effect waves-light btn-md">
                                                             搜索
                                                         </button>
                                                     </div>
                                                     <div class="col-1">
-                                                        <button type="button" class="col-12 btn btn-warning waves-effect waves-light btn-md">
+                                                        <button type="button" id="exportDM" class="col-12 btn btn-warning waves-effect waves-light btn-md">
                                                             导出
                                                         </button>
                                                     </div>
@@ -258,7 +258,42 @@
 <script>
     $(document).ready(function(){
         refDianming();
-        setInterval(refDianming, 1000 * 60 * <%=refDataIntervalDianMing%>);
+        var timer = setInterval(refDianming, 1000 * 60 * <%=refDataIntervalDianMing%>);
+
+        $("#searchDM").on("click", function(){
+            clearInterval(timer);
+            var choosenDate = $("#date").val();
+            var choosenTime = $("#time").val();
+            if(!choosenDate) {
+                alert("请选择查询的日期");
+                return false;
+            }
+            if(!choosenTime) {
+                alert("请选择查询的时间");
+                return false;
+            }
+            var timeParam = choosenDate+" "+choosenTime;
+
+            $.ajax({
+                type: 'GET',
+                url: '/dm/getHistoryData',
+                data: "timeParam="+timeParam,
+                success: function(data){
+                    if(!data || data.length==0) {
+                        alert("未获取到对应时间的结果集！");
+                        return false;
+                    }
+                    var optionNew2 = dianming_pie.getOption();
+                    optionNew2.series = getSeries_data_dianming(data);
+                    optionNew2.legend.data = legend_data;
+                    dianming_pie.setOption(optionNew2);
+                    dianming_pie.hideLoading();
+                },
+                error:function () {
+                    alert("获取点名信息失败！");
+                }
+            });
+        });
     });
 </script>
 </body>

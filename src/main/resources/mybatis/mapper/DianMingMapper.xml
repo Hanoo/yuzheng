@@ -141,7 +141,7 @@
 
     <!-- 获取当前时间前一小时每个监区的点名未到人员情况-->
     <select id="getWdDMInfo" parameterType="java.util.Map" resultMap="dmqx">
-        select q.qxyy as qxyy,u.uname as  name from zte_AreaQd_qxLog q
+        select q.qxyy as qxyy,u.uname as name from zte_AreaQd_qxLog q
         left JOIN
             zte_UserInfo u
             ON
@@ -242,5 +242,11 @@ end
         ON
         logs.aid=pd.aid
         ORDER BY convert(int, pd.aid)
+    </select>
+
+    <select id="getDMByTime" parameterType="java.util.Map" resultType="java.util.Map">
+        select xh, pname as name, pcount, pcountsum as realCount
+        from dianming_history
+        where 1=1 AND begintime>=#{stTime} AND #{endTime}>=endtime
     </select>
 </mapper>

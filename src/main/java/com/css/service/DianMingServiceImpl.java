@@ -9,7 +9,6 @@ import com.css.util.IConstant;
 import com.css.util.IdGen;
 import com.mysql.jdbc.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -758,13 +757,19 @@ public class DianMingServiceImpl implements IDianMingService {
     public List getJQPCGCountHistory(Map<String, String> timeParams) throws Exception {
         DataSourceTypeManager.set(DataSources.ZKESERVER);
 
-        Map params = new HashMap();
-        params.put("stTime", timeParams.get("stTime"));
-        params.put("endTime", timeParams.get("endTime"));
-
-        List realList = (List) dao.findForList("DianMingMapper.getDMHistory", params);
+        List realList = (List) dao.findForList("DianMingMapper.getDMHistory", timeParams);
 
         return realList;
+    }
+
+    public List getDianMingByTime(String stTime, String endTime) throws Exception {
+        DataSourceTypeManager.set(DataSources.JIANYU);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("stTime", stTime);
+        params.put("endTime", endTime);
+
+        List dataList = (List)dao.findForList("DianMingMapper.getDMByTime", params);
+        return dataList;
     }
 
     @Transactional

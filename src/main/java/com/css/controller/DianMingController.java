@@ -1,19 +1,11 @@
 package com.css.controller;
 
-import com.css.entity.DMinfo;
 import com.css.entity.DeptJL;
-import com.css.entity.EmpInfo;
 import com.css.service.DeptJLService;
 import com.css.service.IDianMingService;
 import com.css.service.XunGengService;
 import com.css.util.JSON;
 
-import com.css.util.ViewExcel;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.mail.MailParseException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -290,8 +282,19 @@ public class DianMingController {
 
         return resList;
     }
-
-
-
 */
+    @RequestMapping("/dm/getHistoryData")
+    @ResponseBody
+    public List getHistoryData(String timeParam) throws Exception{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date queryTime = sdf.parse(timeParam);
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(queryTime);
+        String stTime = sdf.format(instance.getTime());
+        instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
+        String endTime = sdf.format(instance.getTime());
+
+        List data = dianMingService.getDianMingByTime(stTime, endTime);
+        return data;
+    }
 }

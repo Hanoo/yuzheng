@@ -69,4 +69,12 @@ public interface IDianMingService {
      */
     List getJQPCGCountHistory(Map<String, String> timeParams) throws Exception;
 
+    /**
+     * 根据时间参数查询历史纪录
+     * @param stTime
+     * @param endTime
+     * @return
+     * @throws Exception
+     */
+    List getDianMingByTime(String stTime, String endTime) throws Exception;
 }
