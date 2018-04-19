@@ -113,21 +113,24 @@
                                                     <h4 class="col-2 header-title m-t-0 " style="margin-bottom: 0;padding: 14px 10px 10px 0;">
                                                         实时监区点名汇总
                                                     </h4>
-                                                    <!--
-                                                    <label class="col-3 col-form-label text-right" style="line-height: 30px">请输入查询日期：</label>
-                                                    <div class="col-3">
-                                                        <input class="form-control" type="date" name="date">
+                                                    <label class="col-4 col-form-label text-right" style="line-height: 30px">请输入查询日期：</label>
+                                                    <div class="col-2">
+                                                        <input class="form-control" type="date" id="date">
                                                     </div>
-                                                    <div class=" text-center" style="width: 20px; line-height: 40px">
-                                                        至
+
+                                                    <div class="col-2">
+                                                        <input class="form-control" type="time" id="time" value="00:00">
                                                     </div>
-                                                    <div class="col-3">
-                                                        <input class="form-control" type="date" name="date">
+                                                    <div class="col-1">
+                                                        <button type="button" class="col-12 btn btn-primary waves-effect waves-light btn-md" id="searchXG">
+                                                            搜索
+                                                        </button>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light btn-md">
-                                                        搜索
-                                                    </button>
-                                                    -->
+                                                    <div class="col-1">
+                                                        <button type="button" class="col-12 btn btn-warning waves-effect waves-light btn-md" id="exportXG">
+                                                            导出
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -758,7 +761,52 @@
 <script>
     $(document).ready(function(){
         refXunGeng();
-        setInterval(refXunGeng, 1000 * 60 * 5);
+        var timer = setInterval(refXunGeng, 1000 * 60 * 5);
+
+        $("#searchXG").on("click", function(){
+            clearInterval(timer);
+            var choosenDate = $("#date").val();
+            var choosenTime = $("#time").val();
+            if(!choosenDate) {
+                alert("请选择查询的日期");
+                return false;
+            }
+            if(!choosenTime) {
+                alert("请选择查询的时间");
+                return false;
+            }
+            var timeParam = choosenDate+" "+choosenTime;
+
+            $.ajax({
+                type: 'GET',
+                url: '/xg/getHistoryData',
+                data: "timeParam="+timeParam,
+                success: function(data){
+                    var json =  eval(data);
+                    if(!json ||　json.length==0) {
+                        alert("未找到符合查询条件的结果集！");
+                        return false;
+                    }
+
+                    $.each(json,function(index,entry){
+                        var addrID = entry["addrID"];
+                        var addrName = entry["addrName"];
+                        var logDate = entry["logDate"];
+                        var lineID =  entry["lineID"];
+                        var xgp = $("#xgp"+addrID);
+                        xgp.find("div .text-muted").html(addrName);
+                        if(lineID == "0"){
+                            xgp.find("div .bg-icon").removeClass("bg-icon-inverse").addClass("bg-icon-danger").removeClass("bg-icon-success");
+                        } else{
+                            xgp.find("div .bg-icon").removeClass("bg-icon-inverse").removeClass("bg-icon-danger").addClass("bg-icon-success");
+                        }
+                    })
+                },
+                error:function () {
+                    alert("获取巡更信息失败！");
+                }
+            });
+        });
     });
 </script>
 </body>

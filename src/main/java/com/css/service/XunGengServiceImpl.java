@@ -465,4 +465,16 @@ public class XunGengServiceImpl implements XunGengService {
         return xunGengList;
     }
 
+    public List<XunGeng> getXunGengByTime(String stTime, String endTime) throws Exception {
+        DataSourceTypeManager.set(DataSources.JIANYU);
+
+        Map<String, String> map = new HashMap<String, String>();
+        String params = " AND BeginTime >= '" + stTime + "' AND EndTime <= '" + endTime + "' limit 0,46";
+        map.put("params", params);
+
+        List xunGengList = (List) dao.findForList("XunGeng.getXunGengByTime", map);
+
+        return xunGengList;
+    }
+
 }

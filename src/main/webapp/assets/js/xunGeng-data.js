@@ -26,7 +26,7 @@ function refXunGeng() {
                 var addrID = entry["addrID"];
                 var addrName = entry["addrName"];
                 var logDate = entry["logDate"];
-                var lineID =  entry["lineID"]
+                var lineID =  entry["lineID"];
                 var xgp = $("#xgp"+addrID);
                 xgp.find("div .text-muted").html(addrName);
                 if(lineID == "0"){

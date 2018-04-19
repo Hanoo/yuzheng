@@ -57,5 +57,8 @@ public class GenTest {
         System.out.println(startTime);
         String endTime = df.format(new Date());
         System.out.println(endTime);
+
+        SimpleDateFormat sdfNoSec = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        System.out.println(sdf.format(calendar.getTime()));
     }
 }
