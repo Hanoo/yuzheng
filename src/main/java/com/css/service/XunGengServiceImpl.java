@@ -453,11 +453,11 @@ public class XunGengServiceImpl implements XunGengService {
         return (Integer) result;
     }
 
-    public List<XunGeng> getXunGengHistory(Map<String, String> timeParams) throws Exception {
+    public List<XunGeng> getXunGengHistory(String stTime, String endTime) throws Exception {
         DataSourceTypeManager.set(DataSources.EYFINGER);
 
         Map<String, String> map = new HashMap<String, String>();
-        String params = " AND Log.LogDate >= CONVERT(datetime,'" + timeParams.get("stTime") + "',20) AND Log.LogDate <= CONVERT(datetime,'" + timeParams.get("endTime") + "',20) ";
+        String params = " AND Log.LogDate >= CONVERT(datetime,'" + stTime + "',20) AND Log.LogDate <= CONVERT(datetime,'" + endTime + "',20) ";
         map.put("params", params);
 
         List xunGengList = (List) dao.findForList("XunGeng.getXunGengInfo", map);

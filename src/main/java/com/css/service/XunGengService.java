@@ -24,5 +24,5 @@ public interface XunGengService {
      */
     int insertManualXGInfo(Map map) throws Exception;
 
-    List<XunGeng> getXunGengHistory(Map<String, String> timeParams) throws Exception;
+    List<XunGeng> getXunGengHistory(String stTime, String endTime) throws Exception;
 }

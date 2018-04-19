@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="JingliMapper">
     <resultMap id="BaseResultMap" type="Jingli">
-        <id column="id" jdbcType="CHAR" property="id"/>
+        <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="dept_id" jdbcType="VARCHAR" property="deptId"/>
         <result column="dept_no" jdbcType="VARCHAR" property="deptNo"/>
         <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
@@ -18,26 +18,23 @@
         select
         <include refid="Base_Column_List"/>
         from jingli_history
-        where id = #{id,jdbcType=CHAR}
+        where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
         delete from jingli_history
-        where id = #{id,jdbcType=CHAR}
+        where id = #{id,jdbcType=INTEGER}
     </delete>
     <insert id="insert" parameterType="Jingli">
-        insert into jingli_history (id, dept_id, dept_no,
+        insert into jingli_history (dept_id, dept_no,
           dept_name, plan_count, real_count,
           percent, record_time)
-        values (#{id,jdbcType=CHAR}, #{deptId,jdbcType=VARCHAR}, #{deptNo,jdbcType=VARCHAR},
+        values (#{deptId,jdbcType=VARCHAR}, #{deptNo,jdbcType=VARCHAR},
           #{deptName,jdbcType=VARCHAR}, #{planCount,jdbcType=INTEGER}, #{realCount,jdbcType=INTEGER},
           #{percent,jdbcType=VARCHAR}, #{recordTime,jdbcType=DATE})
     </insert>
     <insert id="insertSelective" parameterType="Jingli">
         insert into jingli_history
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
             <if test="deptId != null">
                 dept_id,
             </if>
@@ -61,9 +58,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=CHAR},
-            </if>
             <if test="deptId != null">
                 #{deptId,jdbcType=VARCHAR},
             </if>
@@ -112,7 +106,7 @@
                 record_time = #{recordTime,jdbcType=DATE},
             </if>
         </set>
-        where id = #{id,jdbcType=CHAR}
+        where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="Jingli">
         update jingli_history
@@ -123,6 +117,6 @@
           real_count = #{realCount,jdbcType=INTEGER},
           percent = #{percent,jdbcType=VARCHAR},
           record_time = #{recordTime,jdbcType=DATE}
-        where id = #{id,jdbcType=CHAR}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

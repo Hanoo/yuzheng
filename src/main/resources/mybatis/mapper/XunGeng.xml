@@ -157,7 +157,7 @@
 
     <!-- 把巡更的历史信息写入数据库 -->
     <insert id="insertXunGeng" parameterType="XunGeng" >
-        insert into Ptr_MnuLog (
+        insert into xungeng_history (
         LineID,
         BeginTime,
         EndTime,

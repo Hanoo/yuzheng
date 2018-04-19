@@ -11,5 +11,5 @@ public interface HistoryDataService {
 
     boolean saveDMHistroy(List<DMHistory> datas) throws Exception;
 
-    boolean saveXGHistory(List<XunGeng> datas) throws Exception;
+    boolean saveXGHistory(List<XunGeng> datas, String stTime, String endTime) throws Exception;
 }

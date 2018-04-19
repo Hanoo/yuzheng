@@ -69,10 +69,10 @@ create table bulletin (
     系统用户表
  */
 create table yuzheng_user (
-  id                      char(2)    not NULL comment '主键',
-  user_name               VARCHAR(20) not null comment '用户登录名',
-  user_password           varchar(12) not null comment '登录密码',
-  display_name            varchar(20)          comment '展示名称',
+  id                      char(2) AUTO_INCREMENT not NULL comment '主键',
+  user_name               VARCHAR(20)    not null comment '用户登录名',
+  user_password           varchar(12)    not null comment '登录密码',
+  display_name            varchar(20)             comment '展示名称',
   prison_area             varchar(2)     not null comment '所属监区',
   primary key (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -81,14 +81,14 @@ create table yuzheng_user (
      警力统计历史信息
  */
 CREATE TABLE jingli_history (
-  id                      char(32)   not NULL comment '主键',
+  id                      INT AUTO_INCREMENT not NULL comment '主键',
   dept_id                 VARCHAR(2)          COMMENT '部门ID',
   dept_no                 VARCHAR(4)          COMMENT '部门编号',
   dept_name               VARCHAR(10)         COMMENT '部门名称',
   plan_count              INT                 COMMENT '应到人数',
   real_count              INT                 COMMENT '实到人数',
   percent                 VARCHAR(10)         COMMENT '出勤百分比',
-  record_time             DATE                COMMENT '统计时间',
+  record_time             DATETIME            COMMENT '统计时间',
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -10,6 +10,7 @@ import com.css.service.HistoryDataService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -18,9 +19,18 @@ public class HistoryDataServicImpl implements HistoryDataService{
     @Resource
     private DAO dao;
 
-    public boolean saveJingli(List<Jingli> data) throws Exception {
-        Object result = dao.batchSave("JingliMapper.insert", data);
-        return (Integer)result>0;
+    public boolean saveJingli(List<Jingli> datas) throws Exception {
+        boolean result = true;
+        for(Jingli jl : datas) {
+            try {
+                dao.save("JingliMapper.insert", jl);
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = false;
+            }
+        }
+
+        return result;
     }
 
     public boolean saveDMHistroy(List datas) throws Exception {
@@ -36,8 +46,24 @@ public class HistoryDataServicImpl implements HistoryDataService{
         return result;
     }
 
-    public boolean saveXGHistory(List<XunGeng> datas) throws Exception {
-        Object result = dao.batchSave("XunGeng.insertXunGeng", datas);
-        return (Integer)result>0;
+    public boolean saveXGHistory(List<XunGeng> datas, String stTime, String endTime) throws Exception {
+        boolean result = true;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        for(Object xgData : datas) {
+            try {
+                XunGeng xunGeng = (XunGeng)xgData;
+                if(null==xunGeng.getBeginTime()) {
+                    xunGeng.setBeginTime(sdf.parse(stTime));
+                }
+                if(null==xunGeng.getEndTime()) {
+                    xunGeng.setEndTime(sdf.parse(endTime));
+                }
+                dao.save("XunGeng.insertXunGeng", xgData);
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = false;
+            }
+        }
+        return result;
     }
 }
