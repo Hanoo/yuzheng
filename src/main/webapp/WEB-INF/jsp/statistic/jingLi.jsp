@@ -102,19 +102,19 @@
                                                         </h4>
                                                         <label class="col-4 col-form-label text-right" style="line-height: 30px">请输入查询日期：</label>
                                                         <div class="col-2">
-                                                            <input class="form-control" type="date" id="date">
+                                                            <input class="form-control" type="date" id="date" />
                                                         </div>
 
                                                         <div class="col-2">
-                                                            <input class="form-control" type="time" id="time">
+                                                            <input class="form-control" type="time" id="time" value="00:00">
                                                         </div>
                                                         <div class="col-1">
-                                                            <button type="button" class="col-12 btn btn-primary waves-effect waves-light btn-md">
+                                                            <button type="button" id="searchJL" class="col-12 btn btn-primary waves-effect waves-light btn-md">
                                                                 搜索
                                                             </button>
                                                         </div>
                                                         <div class="col-1">
-                                                            <button type="button" class="col-12 btn btn-warning waves-effect waves-light btn-md">
+                                                            <button type="button" id="exportJL" class="col-12 btn btn-warning waves-effect waves-light btn-md">
                                                                 导出
                                                             </button>
                                                         </div>
@@ -182,7 +182,44 @@
 <script>
     $(document).ready(function () {
         refData();
-        setInterval(refData, 1000 * 60 * <%=refDataIntervalJingLi%>);
+        var timer = setInterval(refData, 1000 * 60 * <%=refDataIntervalJingLi%>);
+
+        $("#searchJL").on("click", function(){
+            clearInterval(timer);
+            var choosenDate = $("#date").val();
+            var choosenTime = $("#time").val();
+            if(!choosenDate) {
+                alert("请选择查询的日期");
+                return false;
+            }
+            if(!choosenTime) {
+                alert("请选择查询的时间");
+                return false;
+            }
+            var timeParam = choosenDate+" "+choosenTime;
+
+            $.ajax({
+                type: 'GET',
+                url: '/jl/getHistoryData',
+                data: "timeParam="+timeParam,
+                success: function(data){
+                    var json =  eval(data);
+                    if(!json ||　json.length==0) {
+                        alert("未找到符合查询条件的结果集！");
+                        return false;
+                    }
+
+                    var option = pie.getOption();
+                    option.series = getSeries_data(json);
+                    option.legend.data = legend_data;
+                    pie.setOption(option);
+                    pie.hideLoading();
+                },
+                error:function () {
+                    alert("获取巡更信息失败！");
+                }
+            });
+        });
     });
 </script>
 </body>

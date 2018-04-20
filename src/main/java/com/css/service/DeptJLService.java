@@ -44,4 +44,6 @@ public interface DeptJLService {
     public List<DeptJL> getDeptJl(Map map) throws Exception;
 
     int insertManualJlInfo(Map jlInfo) throws Exception;
+
+    List getJLByTime(String stTime, String endTime) throws Exception;
 }

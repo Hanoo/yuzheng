@@ -292,4 +292,14 @@ public class DeptJLServiceImpl implements DeptJLService {
         Object result = dao.save("DeptJLMapper.insertManualJlInfo", jlInfo);
         return (Integer) result;
     }
+
+    public List getJLByTime(String stTime, String endTime) throws Exception {
+        DataSourceTypeManager.set(DataSources.JIANYU);
+
+        Map<String, String> params = new HashMap();
+        params.put("endTime", endTime);
+        params.put("stTime", stTime);
+        List list = (List)dao.findForList("DeptJLMapper.getJLByTime", params);
+        return list;
+    }
 }

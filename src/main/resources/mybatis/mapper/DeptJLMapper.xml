@@ -348,6 +348,17 @@
         #{dept_id,jdbcType=VARCHAR},
         #{operator,jdbcType=VARCHAR})
     </insert>
+
+    <select id="getJLByTime" parameterType="java.util.Map" resultType="java.util.Map">
+        select
+        dept_id as deptID,
+        dept_name as deptName,
+        plan_count as planCount,
+        real_count as realCount,
+        percent,
+        record_time
+        from jingli_history where record_time>=#{stTime} AND #{endTime}>=record_time
+    </select>
 </mapper>
 
 

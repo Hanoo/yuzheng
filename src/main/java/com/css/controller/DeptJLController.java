@@ -11,10 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -282,6 +280,19 @@ public class DeptJLController {
         return list;
     }
 
+    @RequestMapping("/jl/getHistoryData")
+    @ResponseBody
+    public List getHistoryData(String timeParam) throws Exception{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date queryTime = sdf.parse(timeParam);
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(queryTime);
+        String stTime = sdf.format(instance.getTime());
+        instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
+        String endTime = sdf.format(instance.getTime());
+
+        return deptJLService.getJLByTime(stTime, endTime);
+    }
 
     private List<DeptJL> getJLCount() {
 
