@@ -807,6 +807,22 @@
                 }
             });
         });
+
+        $("#exportXG").on("click", function() {
+            clearInterval(timer);
+            var choosenDate = $("#date").val();
+            var choosenTime = $("#time").val();
+            if (!choosenDate) {
+                alert("请选择查询的日期");
+                return false;
+            }
+            if (!choosenTime) {
+                alert("请选择查询的时间");
+                return false;
+            }
+            var timeParam = choosenDate + " " + choosenTime;
+            window.location.href = "/xg/export?timeParam="+timeParam;
+        });
     });
 </script>
 </body>

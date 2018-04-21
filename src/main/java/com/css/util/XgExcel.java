@@ -1,6 +1,5 @@
 package com.css.util;
 
-import com.css.entity.DMinfo;
 import com.css.entity.XunGeng;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.Region;
@@ -12,9 +11,6 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by wang on 7/14 0014.
- */
 public class XgExcel extends AbstractExcelView {
     private String excelName;
 
@@ -86,8 +82,11 @@ public class XgExcel extends AbstractExcelView {
                     row.createCell(j).setCellValue(element.getAddrName());
 
                 } else if (j == 1) {
-
-                    row.createCell(j).setCellValue(element.getXgnum());
+                    Integer xgNum = element.getXgnum();
+                    if(xgNum==null) {
+                        xgNum = 0;
+                    }
+                    row.createCell(j).setCellValue(xgNum);
 
                 } else {
                     row.createCell(j).setCellValue("else");

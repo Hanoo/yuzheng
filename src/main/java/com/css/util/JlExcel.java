@@ -11,9 +11,6 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by wang on 7/14 0014.
- */
 public class JlExcel extends AbstractExcelView {
     private String excelName;
 
@@ -38,6 +35,7 @@ public class JlExcel extends AbstractExcelView {
 
         HSSFCellStyle style = workbook.createCellStyle();
         style.setFont(font);
+
         //获取前一天的当前时间
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();

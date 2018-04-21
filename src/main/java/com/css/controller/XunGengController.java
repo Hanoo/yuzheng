@@ -3,6 +3,7 @@ package com.css.controller;
 import com.css.entity.XunGeng;
 import com.css.service.XunGengService;
 import com.css.util.JSON;
+import com.css.util.XgExcel;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -141,5 +142,33 @@ public class XunGengController {
         String endTime = sdf.format(instance.getTime());
         List<XunGeng> xgList = xunGengService.getXunGengByTime(stTime, endTime);
         return xgList;
+    }
+
+    @RequestMapping("/xg/export")
+    @ResponseBody
+    public ModelAndView export(String timeParam) throws Exception {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date queryTime = sdf.parse(timeParam);
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(queryTime);
+        String stTime = sdf.format(instance.getTime());
+        instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
+        String endTime = sdf.format(instance.getTime());
+        List<XunGeng> xgList = xunGengService.getXunGengByTime(stTime, endTime);
+
+        Map data = new HashMap();
+        List viewList = new ArrayList();
+        viewList.add(xgList);// 创建多个sheet使用
+        data.put("viewList", viewList);
+
+        List<String[]> cells = new ArrayList<String[]>();
+        cells.add(new String[]{"地址名称", "巡更次数"});
+        data.put("title", cells);
+
+        List<String> sheets = new ArrayList<String>();
+        sheets.add("巡更数据表");
+        data.put("sheets", sheets);
+        return new ModelAndView(new XgExcel("巡更"+stTime+"至"+endTime+".xls"), data);
     }
 }
