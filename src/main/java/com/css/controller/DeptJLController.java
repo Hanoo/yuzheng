@@ -4,6 +4,7 @@ import com.css.entity.DeptJL;
 import com.css.entity.EmpInfo;
 import com.css.service.DeptJLService;
 import com.css.util.JSON;
+import com.css.util.JingLiExcel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -292,6 +293,34 @@ public class DeptJLController {
         String endTime = sdf.format(instance.getTime());
 
         return deptJLService.getJLByTime(stTime, endTime);
+    }
+
+    @RequestMapping("/jl/export")
+    @ResponseBody
+    public ModelAndView export(String timeParam) throws Exception {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date queryTime = sdf.parse(timeParam);
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(queryTime);
+        String stTime = sdf.format(instance.getTime());
+        instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
+        String endTime = sdf.format(instance.getTime());
+        List<DeptJL> xgList = deptJLService.getJLByTime(stTime, endTime);
+
+        Map data = new HashMap();
+        List viewList = new ArrayList();
+        viewList.add(xgList);// 创建多个sheet使用
+        data.put("viewList", viewList);
+
+        List<String[]> cells = new ArrayList<String[]>();
+        cells.add(new String[]{"部门编号", "部门名称", "应到人数", "实到人数", "出勤率"});
+        data.put("title", cells);
+
+        List<String> sheets = new ArrayList<String>();
+        sheets.add("监区警力统计表");
+        data.put("sheets", sheets);
+        return new ModelAndView(new JingLiExcel("监区警力统计表"+stTime+"至"+endTime+".xls"), data);
     }
 
     private List<DeptJL> getJLCount() {
