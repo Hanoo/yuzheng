@@ -146,7 +146,7 @@ public class XunGengController {
 
     @RequestMapping("/xg/export")
     @ResponseBody
-    public ModelAndView export(String timeParam) throws Exception {
+    public ModelAndView export(String timeParam, HttpServletRequest request) throws Exception {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date queryTime = sdf.parse(timeParam);
@@ -156,6 +156,11 @@ public class XunGengController {
         instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
         String endTime = sdf.format(instance.getTime());
         List<XunGeng> xgList = xunGengService.getXunGengByTime(stTime, endTime);
+
+        if(0==xgList.size()) {
+            request.setAttribute("errorMsg", "查询结果集为空，无法导出列表。");
+            return new ModelAndView("404");
+        }
 
         Map data = new HashMap();
         List viewList = new ArrayList();

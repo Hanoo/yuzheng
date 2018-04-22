@@ -302,7 +302,7 @@ public class DianMingController {
 
     @RequestMapping("/dm/export")
     @ResponseBody
-    public ModelAndView export(String timeParam) throws Exception {
+    public ModelAndView export(String timeParam, HttpServletRequest request) throws Exception {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat named = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
@@ -316,6 +316,10 @@ public class DianMingController {
         String dendTime = named.format(instance.getTime());
 
         List dmList = dianMingService.getDianMingByTime(stTime, endTime);
+        if(dmList.size()==0) {
+            request.setAttribute("errorMsg", "查询结果集为空，无法导出列表。");
+            return new ModelAndView("404");
+        }
 
         Map data = new HashMap();
         List viewList = new ArrayList();

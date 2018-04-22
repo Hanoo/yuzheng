@@ -5,6 +5,7 @@ import com.css.entity.EmpInfo;
 import com.css.service.DeptJLService;
 import com.css.util.JSON;
 import com.css.util.JingLiExcel;
+import org.apache.http.protocol.HTTP;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -297,7 +298,7 @@ public class DeptJLController {
 
     @RequestMapping("/jl/export")
     @ResponseBody
-    public ModelAndView export(String timeParam) throws Exception {
+    public ModelAndView export(String timeParam, HttpServletRequest request) throws Exception {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date queryTime = sdf.parse(timeParam);
@@ -306,11 +307,16 @@ public class DeptJLController {
         String stTime = sdf.format(instance.getTime());
         instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
         String endTime = sdf.format(instance.getTime());
-        List<DeptJL> xgList = deptJLService.getJLByTime(stTime, endTime);
+        List<DeptJL> jlList = deptJLService.getJLByTime(stTime, endTime);
+
+        if(0==jlList.size()) {
+            request.setAttribute("errorMsg", "查询结果集为空，无法导出列表。");
+            return new ModelAndView("404");
+        }
 
         Map data = new HashMap();
         List viewList = new ArrayList();
-        viewList.add(xgList);// 创建多个sheet使用
+        viewList.add(jlList);// 创建多个sheet使用
         data.put("viewList", viewList);
 
         List<String[]> cells = new ArrayList<String[]>();
