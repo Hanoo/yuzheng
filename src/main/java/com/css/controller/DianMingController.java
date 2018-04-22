@@ -1,9 +1,11 @@
 package com.css.controller;
 
+import com.css.entity.DMinfo;
 import com.css.entity.DeptJL;
 import com.css.service.DeptJLService;
 import com.css.service.IDianMingService;
 import com.css.service.XunGengService;
+import com.css.util.DmExcel;
 import com.css.util.JSON;
 
 import org.springframework.stereotype.Controller;
@@ -296,5 +298,37 @@ public class DianMingController {
 
         List data = dianMingService.getDianMingByTime(stTime, endTime);
         return data;
+    }
+
+    @RequestMapping("/dm/export")
+    @ResponseBody
+    public ModelAndView export(String timeParam) throws Exception {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat named = new SimpleDateFormat("yyyy年MM月dd日HH:mm");
+        Date queryTime = sdf.parse(timeParam);
+        Calendar instance = Calendar.getInstance();
+        instance.setTime(queryTime);
+        String stTime = sdf.format(instance.getTime());
+        String dstTime = named.format(instance.getTime());
+        instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
+        String endTime = sdf.format(instance.getTime());
+        String dendTime = named.format(instance.getTime());
+
+        List dmList = dianMingService.getDianMingByTime(stTime, endTime);
+
+        Map data = new HashMap();
+        List viewList = new ArrayList();
+        viewList.add(dmList);// 创建多个sheet使用
+        data.put("viewList", viewList);
+
+        List<String[]> cells = new ArrayList<String[]>();
+        cells.add(new String[]{"监区名称", "应到人数", "实到人数"});
+        data.put("title", cells);
+
+        List<String> sheets = new ArrayList<String>();
+        sheets.add("出工点名数据表");
+        data.put("sheets", sheets);
+        return new ModelAndView(new DmExcel("出工点名"+dstTime+"至"+dendTime+".xls"), data);
     }
 }
