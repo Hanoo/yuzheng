@@ -26,47 +26,6 @@
 
     <%@ include file="topBar.jsp" %>
 
-    <!-- ========== Left Sidebar Start ========== -->
-    <div class="left side-menu">
-        <div class="sidebar-inner slimscrollleft">
-            <!--- Divider -->
-            <div id="sidebar-menu">
-                <ul>
-                    <li>
-                        <a href="/statistic/index" class="waves-effect waves-primary">
-                            <i class="ti-home"></i>
-                            <span> 首页 </span>
-                        </a>
-                    </li>
-                    <li class="has_sub">
-                        <a href="/statistic/jingLi" class="waves-effect waves-primary">
-                            <i class=" ti-user"></i>
-                            <span>警力分布</span>
-                        </a>
-
-                    </li>
-                    <li>
-                        <a href="/statistic/dianMing" class="waves-effect waves-primary">
-                            <i class=" ti-pencil-alt"></i>
-                            <span> 点名系统 </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/statistic/xunGeng" class="waves-effect waves-primary">
-                            <i class=" ti-loop"></i>
-                            <span> 巡更系统 </span>
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="clearfix"></div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-    <!-- Left Sidebar End -->
-
-
     <!-- ============================================================== -->
     <!-- Start right Content here -->
     <!-- ============================================================== -->

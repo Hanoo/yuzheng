@@ -153,6 +153,12 @@
                         <span> 巡更系统 </span>
                     </a>
                 </li>
+                <li>
+                    <a href="/statistic/wRecord" class="waves-effect waves-primary">
+                        <i class="ti-bell"></i>
+                        <span>预警纪录</span>
+                    </a>
+                </li>
             </ul>
             <div class="clearfix"></div>
         </div>

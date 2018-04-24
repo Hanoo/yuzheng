@@ -278,6 +278,11 @@ public class StatisticController {
         return data;
     }
 
+    @RequestMapping("/wRecord")
+    public String wRecord(){
+        return "statistic/wRecord";
+    }
+
     private String getUserPArea(HttpSession session) {
         YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
         return user.getPrisonArea();

@@ -1,6 +1,7 @@
 package com.css.util;
 
 import com.css.entity.XunGeng;
+import com.mysql.jdbc.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.Region;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
@@ -36,20 +37,12 @@ public class XgExcel extends AbstractExcelView {
         HSSFCellStyle style = workbook.createCellStyle();
         style.setFont(font);
 
-        //获取前一天的当前时间
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, -1);
-        date = calendar.getTime();
-        String nowTime = f.format(date);
         // 产生Excel表头
         HSSFSheet sheet = workbook.createSheet(sheetName);
         HSSFRow header0 = sheet.createRow(0); // 第0行
         sheet.addMergedRegion(new Region(0, (short) 0, 0, (short) 1));
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        header0.createCell(0).setCellValue("巡更报告("+nowTime+")");
+        header0.createCell(0).setCellValue("巡更报告");
         header0.getCell(0).setCellStyle(style);
         // 产生标题列
         HSSFRow header = sheet.createRow(1); // 第0行
@@ -59,7 +52,6 @@ public class XgExcel extends AbstractExcelView {
 
 
         for (int n = 0; n < title.length; n++) {
-
             header.getCell(n).setCellStyle(style);
             sheet.autoSizeColumn(n);
             sheet.setColumnWidth(n, 10 * 512);
@@ -70,27 +62,16 @@ public class XgExcel extends AbstractExcelView {
         int rowNum = 2;
         for (Iterator<XunGeng> iter = dataList.iterator(); iter.hasNext(); ) {
 
-            XunGeng element = (XunGeng) iter.next();
+            XunGeng xgData = iter.next();
             HSSFRow row = sheet.createRow(rowNum++);
-
-
             for (int j = 0; j < title.length; j++) {
-
-                // 此处需要调试 匹配对应字段
                 if (j == 0) {
-
-                    row.createCell(j).setCellValue(element.getAddrName());
-
+                    row.createCell(j).setCellValue(xgData.getAddrName());
                 } else if (j == 1) {
-                    Integer xgNum = element.getXgnum();
-                    if(xgNum==null) {
-                        xgNum = 0;
-                    }
-                    row.createCell(j).setCellValue(xgNum);
-
+                    String lineID = xgData.getLineID();
+                    row.createCell(j).setCellValue(StringUtils.isNullOrEmpty(lineID)?"否":"是");
                 } else {
                     row.createCell(j).setCellValue("else");
-
                 }
             }
         }

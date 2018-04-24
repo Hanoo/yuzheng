@@ -168,7 +168,7 @@ public class XunGengController {
         data.put("viewList", viewList);
 
         List<String[]> cells = new ArrayList<String[]>();
-        cells.add(new String[]{"地址名称", "巡更次数"});
+        cells.add(new String[]{"地址名称", "是否巡更"});
         data.put("title", cells);
 
         List<String> sheets = new ArrayList<String>();
