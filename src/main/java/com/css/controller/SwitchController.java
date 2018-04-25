@@ -203,7 +203,7 @@ public class SwitchController {
         List<String> sheets = new ArrayList<String>();
         sheets.add("异常预警数据表");
         data.put("sheets", sheets);
-        return new ModelAndView(new YcExcel("ycyj.xls"), data);
+        return new ModelAndView(new YcExcel("异常预警.xls"), data);
     }
 
     @RequestMapping(value = "/toXGfenxiJosn", produces = "text/json;charset=UTF-8")

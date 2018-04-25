@@ -154,7 +154,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/statistic/wRecord" class="waves-effect waves-primary">
+                    <a href="/statistic/wRecFrame" class="waves-effect waves-primary">
                         <i class="ti-bell"></i>
                         <span>预警纪录</span>
                     </a>
