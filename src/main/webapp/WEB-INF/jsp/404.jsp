@@ -55,8 +55,8 @@
                     <h6><%=errorMsg%></h6>
                     <div class="buttons-con">
                         <div class="action-link-wrap">
-                            <a onclick="history.back(-1)" href="" class="btn btn-custom btn-primary waves-effect waves-light m-t-20">Go Back</a>
-                            <a href="/statistic/index" class="btn btn-custom btn-primary waves-effect waves-light m-t-20">Go to Home Page</a>
+                            <a onclick="history.back(-1)" href="javascript:void(0);" class="btn btn-custom btn-primary waves-effect waves-light m-t-20">返回</a>
+                            <a href="/statistic/index" class="btn btn-custom btn-primary waves-effect waves-light m-t-20">返回首页</a>
                         </div>
                     </div>
                 </div>

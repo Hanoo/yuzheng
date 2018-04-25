@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<table id="yc" style="width:850px;height:560px"
+<table id="yc" style="width:850px;height:580px"
        data-options="rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:true, pageSize:20">
     <thead>
         <tr>

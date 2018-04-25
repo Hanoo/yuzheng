@@ -214,6 +214,8 @@
                     option.legend.data = legend_data;
                     pie.setOption(option);
                     pie.hideLoading();
+                    pie.off("click");
+                    $("#empTypeCount").empty();
                 },
                 error:function () {
                     alert("获取巡更信息失败！");
