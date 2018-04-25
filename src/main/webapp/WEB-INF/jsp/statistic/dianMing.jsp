@@ -288,6 +288,14 @@
                     optionNew2.legend.data = legend_data;
                     dianming_pie.setOption(optionNew2);
                     dianming_pie.hideLoading();
+                    dianming_pie.off("click");
+                    $("#sdNumAll").html('-');
+                    $("#wdNumAll").html('-');
+                    $("#wdjlCountAll").html('-');
+                    $("#ydNumAll").html('-');
+                    $("#realCountAll").html('-');
+                    $("#planCountAll").html('-');
+                    $("#percAll").html('-');
                 },
                 error:function () {
                     alert("获取点名信息失败！");

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="DeptJLMapper">
 
-    <cache type="com.css.redis.RedisCache" flushInterval="2000"/>
+    <!--<cache type="com.css.redis.RedisCache" flushInterval="2000"/>-->
 
     <resultMap id="deptJLResultMap" type="DeptJL">
         <id column="DeptID" property="DeptID"/>
