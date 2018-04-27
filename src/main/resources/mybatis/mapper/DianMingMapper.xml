@@ -202,7 +202,6 @@ end
     <!-- 手动插入一条点名数据以消除预警 -->
     <insert id="insertManualDianMingInfo" parameterType="java.util.Map" >
         insert into zte_AreaQd_MnuLog (
-            xh,
             pname,
             aid,
             begintime,
@@ -210,9 +209,9 @@ end
             pcount,
             pcountsum,
             aminute,
-            jkczy)
+            jkczy,
+            description)
         values (
-            #{xh,jdbcType=CHAR},
             #{pname,jdbcType=VARCHAR},
             #{aid, jdbcType=VARCHAR},
             #{begintime,jdbcType=TIMESTAMP},
@@ -220,7 +219,8 @@ end
             #{pcount,jdbcType=INTEGER},
             #{pcountsum,jdbcType=INTEGER},
             #{aminute,jdbcType=INTEGER},
-            #{jkczy,jdbcType=VARCHAR})
+            #{jkczy,jdbcType=VARCHAR},
+            #{description,jdbcType=VARCHAR})
     </insert>
 
     <select id="getDMHistory" parameterType="java.util.Map" resultType="java.util.Map">

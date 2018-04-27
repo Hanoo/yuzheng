@@ -163,7 +163,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">预警消除</h4>
+                    <h4 class="modal-title">点名预警消除</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -377,8 +377,10 @@
                         if(elimateTarget) {
                             elimateTarget.remove();
                             if($("#dmAlarm").find("li").length==0) {
-                                cleanScrollQ(scrollQ1, "timer1");
                                 $("#dmAlarm").append("<li class='list-group-item'>暂无点名预警</li>");
+                                if(scrollQ1) {
+                                    cleanScrollQ(scrollQ1, "timer1");
+                                }
                             }
                         }
                     }
@@ -414,8 +416,10 @@
                             console.log(elimateTarget.attr("class"));
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
-                                cleanScrollQ(scrollQ2,"timer2");
-                                $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
+                                $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理</li>");
+                                if(scrollQ2) {
+                                    cleanScrollQ(scrollQ2,"timer2");
+                                }
                             }
                         }
                     }
@@ -459,8 +463,10 @@
                         if(elimateTarget) {
                             elimateTarget.remove();
                             if($("#othAlarm").find("li").length==0) {
-                                cleanScrollQ(scrollQ2, "timer2");
-                                $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理/li>");
+                                $("#othAlarm").append("<li class='list-group-item'>暂无异常需要处理</li>");
+                                if(scrollQ2) {
+                                    cleanScrollQ(scrollQ2,"timer2");
+                                }
                             }
                         }
                     }

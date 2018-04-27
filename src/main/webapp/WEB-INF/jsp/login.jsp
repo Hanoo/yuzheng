@@ -29,7 +29,7 @@
         <div class="col-12">
             <div class="input-group">
                 <span class="input-group-addon"><i class="mdi mdi-account"></i></span>
-                <input class="form-control" id="userName" type="text" required="" placeholder="Username">
+                <input class="form-control" id="userName" type="text" required="" placeholder="用户名">
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
         <div class="col-12">
             <div class="input-group">
                 <span class="input-group-addon"><i class="mdi mdi-radar"></i></span>
-                <input class="form-control" id="password" type="password" required="" placeholder="Password">
+                <input class="form-control" id="password" type="password" required="" placeholder="密 码">
             </div>
         </div>
     </div>
