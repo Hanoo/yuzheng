@@ -82,13 +82,13 @@
                                         实时监区点名汇总
                                     </h4>
                                     <div class="row" id="empTypeHJ2">
-                                        <div class="itemwrap01" style="width:215px">
+                                        <div class="itemwrap01" style="width:170px">
                                             <div class="tit02">全部：<b class="cyans" id="jfyd">-</b></div>
                                         </div>
-                                        <div class="itemwrap01" style="width:215px">
+                                        <div class="itemwrap01" style="width:170px">
                                             <div class="tit02">出工：<b class="greens" id="jfsd">-</b></div>
                                         </div>
-                                        <div class="itemwrap01" style="width:215px">
+                                        <div class="itemwrap01" style="width:170px">
                                             <div class="tit02">未出工：<b class="reds" id="jfwd">-</b></div>
                                         </div>
                                     </div>

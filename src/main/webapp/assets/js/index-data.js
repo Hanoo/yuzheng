@@ -328,8 +328,13 @@ $(function() {
 
 });
 
+var widthRef =document.body.clientWidth;
 var radius = [25, 35];//pie内外半径
 var dianming_radius = [47, 57];//pie内外半径
+if(widthRef<2114) {
+    radius = [20, 30];
+    dianming_radius = [30, 40];
+}
 var legend_data = [];//pie图例
 
 var labelTop = {
@@ -532,7 +537,7 @@ function refData() {
             data.forEach(function (val, index) {
 
                 $("#empTypeHJ").append(
-                    '<div class="itemwrap01" style="width:215px">' +
+                    '<div class="itemwrap01" style="width:160px">' +
                     '<div class="tit02">' + val.typeName + '：' + '<b class="greens">' + val.realCount +
                     '</b></div></div>');
             });
@@ -582,6 +587,7 @@ function getSeries_data(json) {
         var a = Math.random() * 100;
         //全局变量legend_data赋值
         legend_data[i] = m.deptName;
+        var deptName =m.deptName;
 
         var s = {
             type: 'pie',
@@ -591,8 +597,8 @@ function getSeries_data(json) {
             itemStyle: labelFromatter,
             clickable: true,
             data: [
-                {key: 0, deptId: m.deptID, name: m.deptName, value: m.realCount, planValue: m.planCount, itemStyle: labelTop, realValue: m.realCount},
-                {key: 1, deptId: m.deptID, name: m.deptName, value: m.planCount - m.realCount, planValue: m.planCount, itemStyle: labelBottom, realValue: m.realCount}
+                {key: 0, deptId: m.deptID, name: deptName.replace("点名", ""), value: m.realCount, planValue: m.planCount, itemStyle: labelTop, realValue: m.realCount},
+                {key: 1, deptId: m.deptID, name: deptName.replace("点名", ""), value: m.planCount - m.realCount, planValue: m.planCount, itemStyle: labelBottom, realValue: m.realCount}
             ]
         }
         series_data[i] = s;
@@ -612,6 +618,7 @@ function getSeries_data_dianming(json) {
         var a = Math.random() * 100;
         //全局变量legend_data赋值
         legend_data[i] = m.deptName;
+        var deptName = m.name.replace("点名", "");
 
         var s = {
             type: 'pie',
@@ -624,8 +631,8 @@ function getSeries_data_dianming(json) {
                 // {key: 1, deptId: m.deptID, name: m.name, value: m.realCount, planValue: m.pcount, itemStyle: labelBottom, realValue: m.realCount},
                 // {key: 0, deptId: m.deptID, name: m.name, value: m.pcount - m.realCount, itemStyle: labelTop}
 
-                {key: 0, deptId: m.deptID, name: m.name, value: m.realCount, planValue: m.pcount, itemStyle: labelTop, realValue: m.realCount},
-                {key: 1, deptId: m.deptID, name: m.name, value: m.pcount - m.realCount, planValue: m.pcount, itemStyle: labelBottom,realValue: m.realCount}
+                {key: 0, deptId: m.deptID, name: deptName, value: m.realCount, planValue: m.pcount, itemStyle: labelTop, realValue: m.realCount},
+                {key: 1, deptId: m.deptID, name: deptName, value: m.pcount - m.realCount, planValue: m.pcount, itemStyle: labelBottom,realValue: m.realCount}
             ]
         }
         series_data[i] = s;
