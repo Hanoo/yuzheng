@@ -178,6 +178,6 @@
     </insert>
 
     <select id="getXunGengByTime" parameterType="java.util.Map" resultMap="XunGengLine">
-        SELECT * FROM xungeng_history where 1=1 ${params}
+        SELECT AddrID, AddrName, count(rid) as Xgnum FROM xungeng_history where LineID=1 ${params} group by AddrID, AddrName
     </select>
 </mapper>

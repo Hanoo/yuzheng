@@ -532,15 +532,34 @@ function refData() {
         dataType: 'json',
         success: function (data) {
 
-            $("#empTypeHJ").empty();
+            $("#empTypeHJTop").empty();
+            $("#empTypeHJBut").empty();
 
-            data.forEach(function (val, index) {
-
-                $("#empTypeHJ").append(
+            if(data.length==4) {
+                $("#empTypeHJTop").append(
                     '<div class="itemwrap01" style="width:160px">' +
-                    '<div class="tit02">' + val.typeName + '：' + '<b class="greens">' + val.realCount +
+                    '<div class="tit02">' + data[0].typeName + '：' + '<b class="greens">' + data[0].realCount +
                     '</b></div></div>');
-            });
+                $("#empTypeHJTop").append(
+                    '<div class="itemwrap01" style="width:160px">' +
+                    '<div class="tit02">' + data[1].typeName + '：' + '<b class="greens">' + data[1].realCount +
+                    '</b></div></div>');
+                $("#empTypeHJBut").append(
+                    '<div class="itemwrap01" style="width:160px">' +
+                    '<div class="tit02">' + data[2].typeName + '：' + '<b class="greens">' + data[2].realCount +
+                    '</b></div></div>');
+                $("#empTypeHJBut").append(
+                    '<div class="itemwrap01" style="width:160px">' +
+                    '<div class="tit02">' + data[3].typeName + '：' + '<b class="greens">' + data[3].realCount +
+                    '</b></div></div>');
+            } else {
+                data.forEach(function (val, index) {
+                    $("#empTypeHJTop").append(
+                        '<div class="itemwrap01" style="width:160px">' +
+                        '<div class="tit02">' + val.typeName + '：' + '<b class="greens">' + val.realCount +
+                        '</b></div></div>');
+                });
+            }
         }
     });
 

@@ -25,11 +25,11 @@ public class XgExcel extends AbstractExcelView {
         response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(excelName, "UTF-8"));
         List sheets = (List) model.get("sheets");
         for (int i = 0; i < sheets.size(); i++) {
-            createSheet(workbook, (String) sheets.get(i), (String[]) ((List) model.get("title")).get(i), (List) ((List) model.get("viewList")).get(i));
+            createSheet(workbook, (String) sheets.get(i), (String[]) ((List) model.get("title")).get(i), (List) ((List) model.get("viewList")).get(i), model.get("reportDate").toString());
         }
     }
 
-    private void createSheet(HSSFWorkbook workbook, String sheetName, String[] title, List dataList) {
+    private void createSheet(HSSFWorkbook workbook, String sheetName, String[] title, List dataList, String reportDate) {
         // 设置表头字体
         HSSFFont font = workbook.createFont();
         font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
@@ -42,7 +42,7 @@ public class XgExcel extends AbstractExcelView {
         HSSFRow header0 = sheet.createRow(0); // 第0行
         sheet.addMergedRegion(new Region(0, (short) 0, 0, (short) 1));
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-        header0.createCell(0).setCellValue("巡更报告");
+        header0.createCell(0).setCellValue("巡更报告"+reportDate+"晚20:00至次日06:00");
         header0.getCell(0).setCellStyle(style);
         // 产生标题列
         HSSFRow header = sheet.createRow(1); // 第0行
@@ -68,8 +68,7 @@ public class XgExcel extends AbstractExcelView {
                 if (j == 0) {
                     row.createCell(j).setCellValue(xgData.getAddrName());
                 } else if (j == 1) {
-                    String lineID = xgData.getLineID();
-                    row.createCell(j).setCellValue(StringUtils.isNullOrEmpty(lineID)?"否":"是");
+                    row.createCell(j).setCellValue(xgData.getXgnum());
                 } else {
                     row.createCell(j).setCellValue("else");
                 }

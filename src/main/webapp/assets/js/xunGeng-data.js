@@ -26,10 +26,10 @@ function refXunGeng() {
                 var addrID = entry["addrID"];
                 var addrName = entry["addrName"];
                 var logDate = entry["logDate"];
-                var lineID =  entry["lineID"];
+                var Xgnum =  entry["Xgnum"];
                 var xgp = $("#xgp"+addrID);
                 xgp.find("div .text-muted").html(addrName);
-                if(lineID == "0"){
+                if(Xgnum == "0"){
                     xgp.find("div .bg-icon").removeClass("bg-icon-inverse").addClass("bg-icon-danger").removeClass("bg-icon-success");
                 }else{
                     xgp.find("div .bg-icon").removeClass("bg-icon-inverse").removeClass("bg-icon-danger").addClass("bg-icon-success");

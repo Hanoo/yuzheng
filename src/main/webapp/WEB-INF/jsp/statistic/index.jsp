@@ -124,11 +124,14 @@
                                         <h4 class=" header-title m-t-0 m-b-30">
                                             警力分布
                                         </h4>
-                                        <div class="row" id="empTypeHJ">
+                                        <div class="row" id="empTypeHJTop">
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div class="row" id="empTypeHJBut">
                                             <div class="clear"></div>
                                         </div>
                                         <div class="widget-chart text-left">
-                                            <div  style="background:#EFF0EC; height:340px;" id="jlPie">
+                                            <div style="background:#EFF0EC; height:340px;" id="jlPie">
 
                                             </div>
                                         </div>

@@ -2,6 +2,8 @@ package com.css.service;
 
 import com.css.entity.XunGeng;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,5 +28,27 @@ public interface XunGengService {
 
     List<XunGeng> getXunGengHistory(String stTime, String endTime) throws Exception;
 
+    /**
+     * 根据时间参数查询巡更情况，每个小时的
+     * @param stTime
+     * @param endTime
+     * @return
+     * @throws Exception
+     */
     List<XunGeng> getXunGengByTime(String stTime, String endTime) throws Exception;
+
+    /**
+     * 根据时间参数查询某一天的巡更纪录
+     * @return
+     * @throws Exception
+     */
+    List<XunGeng> getXunGengByDate(String date) throws Exception;
+
+    /**
+     * 根据配置文件查询每天巡更的起止时间
+     * @param date
+     * @return
+     * @throws ParseException
+     */
+    Map<String, String> getSETime4ADay(String date) throws ParseException;
 }

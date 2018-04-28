@@ -149,13 +149,10 @@ public class XunGengController {
     public ModelAndView export(String timeParam, HttpServletRequest request) throws Exception {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat nameFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date queryTime = sdf.parse(timeParam);
-        Calendar instance = Calendar.getInstance();
-        instance.setTime(queryTime);
-        String stTime = sdf.format(instance.getTime());
-        instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
-        String endTime = sdf.format(instance.getTime());
-        List<XunGeng> xgList = xunGengService.getXunGengByTime(stTime, endTime);
+
+        List<XunGeng> xgList = xunGengService.getXunGengByDate(timeParam);
 
         if(0==xgList.size()) {
             request.setAttribute("errorMsg", "查询结果集为空，无法导出列表。");
@@ -168,12 +165,16 @@ public class XunGengController {
         data.put("viewList", viewList);
 
         List<String[]> cells = new ArrayList<String[]>();
-        cells.add(new String[]{"地址名称", "是否巡更"});
+        cells.add(new String[]{"地址名称", "巡更次数"});
         data.put("title", cells);
 
         List<String> sheets = new ArrayList<String>();
         sheets.add("巡更数据表");
         data.put("sheets", sheets);
-        return new ModelAndView(new XgExcel("巡更"+stTime+"至"+endTime+".xls"), data);
+
+        String reportDate = nameFormat.format(queryTime);
+        data.put("reportDate", reportDate);
+
+        return new ModelAndView(new XgExcel("巡更统计报告"+reportDate+".xls"), data);
     }
 }

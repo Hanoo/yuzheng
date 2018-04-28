@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -25,6 +26,11 @@ public class XunGengServiceImpl implements XunGengService {
 
     @Value("${sjjg}")
     private String sjjg;
+
+    @Value("${Patrol.start}")
+    private int pStart;
+    @Value("${Patrol.end}")
+    private int pEnd;
 
 
     public List<XunGeng> getXunGengInfo() throws Exception {
@@ -469,12 +475,42 @@ public class XunGengServiceImpl implements XunGengService {
         DataSourceTypeManager.set(DataSources.JIANYU);
 
         Map<String, String> map = new HashMap<String, String>();
-        String params = " AND BeginTime >= '" + stTime + "' AND EndTime <= '" + endTime + "' limit 0,46";
+        String params = " AND BeginTime >= '" + stTime + "' AND EndTime <= '" + endTime+"'";
         map.put("params", params);
 
         List xunGengList = (List) dao.findForList("XunGeng.getXunGengByTime", map);
 
         return xunGengList;
+    }
+
+    public List<XunGeng> getXunGengByDate(String date) throws Exception {
+        DataSourceTypeManager.set(DataSources.JIANYU);
+
+        Map<String, String> paramMap = new HashMap<String, String>();
+        Map<String, String> timePair = getSETime4ADay(date);
+        String params = " AND BeginTime >= '" + timePair.get("stTime") + "' AND EndTime <= '" + timePair.get("endTime")+"'";
+        paramMap.put("params", params);
+
+        List xunGengList = (List) dao.findForList("XunGeng.getXunGengByTime", paramMap);
+
+        return xunGengList;
+    }
+
+    public Map<String, String> getSETime4ADay(String date) throws ParseException {
+        SimpleDateFormat sourceDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Calendar queryDate = Calendar.getInstance();
+        queryDate.setTime(sourceDateFormat.parse(date));
+
+        Map<String, String> timePair = new HashMap();
+        SimpleDateFormat tdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        queryDate.set(Calendar.HOUR_OF_DAY, pStart);
+        timePair.put("stTime", tdf.format(queryDate.getTime()));
+
+        queryDate.set(Calendar.DATE, queryDate.get(Calendar.DATE)+1);
+        queryDate.set(Calendar.HOUR_OF_DAY, pEnd);
+        timePair.put("endTime", tdf.format(queryDate.getTime()));
+        return timePair;
     }
 
 }
