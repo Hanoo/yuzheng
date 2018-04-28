@@ -51,4 +51,11 @@ public interface XunGengService {
      * @throws ParseException
      */
     Map<String, String> getSETime4ADay(String date) throws ParseException;
+
+    /**
+     * 获取巡更开始的时间
+     * @return
+     */
+    int getXGStartTime();
+    int getXGEndTime();
 }

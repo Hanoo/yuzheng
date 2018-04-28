@@ -513,4 +513,12 @@ public class XunGengServiceImpl implements XunGengService {
         return timePair;
     }
 
+    public int getXGStartTime() {
+        return this.pStart;
+    }
+
+    public int getXGEndTime() {
+        return this.pEnd;
+    }
+
 }

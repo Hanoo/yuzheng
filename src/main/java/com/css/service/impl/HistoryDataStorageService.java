@@ -70,29 +70,47 @@ public class HistoryDataStorageService {
         }
     }
 
+    /**
+     * 每次抓取的事上一个巡更周期内的数据，就是前天20：00至23:59分，
+     * 昨天00:00至06:00
+     * @throws Exception
+     */
     @Scheduled(cron = "${jobs.Patrol}")
     public void xunGeng() throws Exception {
         logger.info("抓取巡更历史数据。");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Calendar timeInstance = Calendar.getInstance();
-        timeInstance.set(Calendar.DAY_OF_MONTH, timeInstance.get(Calendar.DAY_OF_MONTH)-1);
-        for(int i=0;i<24;i++) {
-            timeInstance.set(Calendar.HOUR_OF_DAY, i);
-            timeInstance.set(Calendar.MINUTE, 0);
-            timeInstance.set(Calendar.SECOND, 0);
-            String stTime = sdf.format(timeInstance.getTime());// "2017-03-09 00:00:00"
-            logger.info("本次抓取的开始时间：" + stTime);
+        timeInstance.set(Calendar.DAY_OF_MONTH, timeInstance.get(Calendar.DAY_OF_MONTH)-2);
 
-            timeInstance.set(Calendar.HOUR_OF_DAY, i);
-            timeInstance.set(Calendar.MINUTE, 59);
-            timeInstance.set(Calendar.SECOND, 59);
-            String endTime = sdf.format(timeInstance.getTime());// "2017-03-09 23:59:59"
-            logger.info("本次抓取的截至时间：" + stTime);
-            List data = xunGengService.getXunGengHistory(stTime, endTime);
-            DataSourceTypeManager.set(DataSources.JIANYU);
-            hDataService.saveXGHistory(data, stTime, endTime);
+        int startTimePoint = xunGengService.getXGStartTime();
+        for(;startTimePoint<24;startTimePoint++) {
+            etl(timeInstance, startTimePoint);
         }
+
+        timeInstance.set(Calendar.DAY_OF_MONTH, timeInstance.get(Calendar.DAY_OF_MONTH)+1);
+        int endTimePoint = xunGengService.getXGEndTime();
+        for(;endTimePoint>-1;endTimePoint--) {
+            etl(timeInstance, endTimePoint);
+        }
+    }
+
+    private void etl (Calendar timeInstance, int timePoint) throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        timeInstance.set(Calendar.HOUR_OF_DAY, timePoint);
+        timeInstance.set(Calendar.MINUTE, 0);
+        timeInstance.set(Calendar.SECOND, 0);
+        String stTime = sdf.format(timeInstance.getTime());// "2017-03-09 00:00:00"
+        logger.info("本次抓取的开始时间：" + stTime);
+
+        timeInstance.set(Calendar.HOUR_OF_DAY, timePoint);
+        timeInstance.set(Calendar.MINUTE, 59);
+        timeInstance.set(Calendar.SECOND, 59);
+        String endTime = sdf.format(timeInstance.getTime());// "2017-03-09 23:59:59"
+        logger.info("本次抓取的截至时间：" + endTime);
+        List data = xunGengService.getXunGengHistory(stTime, endTime);
+
+        DataSourceTypeManager.set(DataSources.JIANYU);
+        hDataService.saveXGHistory(data, stTime, endTime);
     }
 
     @Scheduled(cron = "${jobs.Attendance}")

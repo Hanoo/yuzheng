@@ -788,6 +788,8 @@
                         return false;
                     }
 
+                    $("#xgTime").remove();
+
                     $.each(json,function(index,entry){
                         var addrID = entry["addrID"];
                         var addrName = entry["addrName"];
