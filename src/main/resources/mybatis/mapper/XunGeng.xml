@@ -180,4 +180,25 @@
     <select id="getXunGengByTime" parameterType="java.util.Map" resultMap="XunGengLine">
         SELECT AddrID, AddrName, count(rid) as Xgnum FROM xungeng_history where LineID=1 ${params} group by AddrID, AddrName
     </select>
+
+    <select id="getXGYc" resultType="java.util.Map">
+        SELECT aDef.AddrID,aDef.AddrName,logs.EvenRec
+        from Ptr_AddrDef aDef
+        LEFT JOIN (
+        SELECT
+                Log.AddrID, Log.EvenRec
+                FROM
+                Ptr_Log Log
+                WHERE
+                Log.LogDate >= CONVERT(datetime,#{strdate},20) and CONVERT(datetime, #{enddate},20) >= Log.LogDate
+                UNION ALL
+                SELECT
+                MLog.AddrID, '[已处理]'+MLog.EvenRec
+                FROM
+                Ptr_MnuLog MLog
+                WHERE
+                MLog.LogDate >= CONVERT(datetime,#{strdate},20) and CONVERT(datetime, #{enddate},20) >= MLog.LogDate
+        ) logs
+        ON aDef.AddrID=logs.AddrID
+    </select>
 </mapper>

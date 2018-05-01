@@ -15,12 +15,13 @@
 </head>
 <body>
 
-<table id="yc" style="width:850px;height:580px"
+<table id="yc" style="width:950px;height:580px"
        data-options="rownumbers:true, singleSelect:true, autoRowHeight:false, pagination:true, pageSize:20">
     <thead>
         <tr>
-            <th data-options="field:'name',width:200,halign:'center'">名称</th>
-            <th data-options="field:'info',width:600,halign:'center'">异常</th>
+            <th data-options="field:'name',width:100,halign:'center'">名称</th>
+            <th data-options="field:'info',width:550,halign:'center'">异常</th>
+            <th data-options="field:'description',width:250,halign:'center'">处理</th>
         </tr>
     </thead>
 </table>
@@ -132,7 +133,7 @@
     $(function () {
         $.ajax({
             type: 'post',
-            url: '/toYc',
+            url: '/statistic/getWarningRec',
             cache: false,
             dataType: 'json',
             success: function (data) {

@@ -23,10 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/statistic")
@@ -107,8 +106,11 @@ public class StatisticController {
     public JSONObject getWarningInfo(HttpSession session) throws Exception {
         Map reqmap = dianMingService.getHzsj();
         List resList = dianMingService.getAllDianMingReduceInfoByPArea(reqmap, getUserPArea(session));
-        List xgList = xunGengService.getWXGtongjiReduceInfo(reqmap);
-        resList.addAll(xgList);
+
+        if(isXGTime(reqmap)) {
+            List xgList = xunGengService.getWXGtongjiReduceInfo(reqmap);
+            resList.addAll(xgList);
+        }
         JSONObject jsonObject = JSONObject.fromObject(reqmap);
         jsonObject.put("resList", resList);
         return jsonObject;
@@ -292,9 +294,38 @@ public class StatisticController {
         return "statistic/wRecFrame";
     }
 
+    @RequestMapping("/getWarningRec")
+    @ResponseBody
+    public List wHistory() throws Exception{
+        Map reqmap = dianMingService.getHzsj();
+        List resList = dianMingService.getYcInfoByTime(reqmap);
+//        if(isXGTime(reqmap)) {
+            List xgList = xunGengService.getXGYc(reqmap);
+            resList.addAll(xgList);
+//        }
+        return resList;
+    }
+
     private String getUserPArea(HttpSession session) {
         YuzhengUser user = (YuzhengUser) session.getAttribute(IConstant.SESSION_ATTRIBUTE_USER);
         return user.getPrisonArea();
+    }
+
+    private Boolean isXGTime(Map timePair) throws ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date stTime = df.parse(timePair.get("stTime").toString());
+        Date endTime = df.parse(timePair.get("endTime").toString());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(stTime);
+        int hourInStTime = calendar.get(Calendar.HOUR_OF_DAY);
+        calendar.setTime(endTime);
+        int hourInEndTime = calendar.get(Calendar.HOUR_OF_DAY);
+        int beginHour = xunGengService.getXGStartTime();
+        int endHour = xunGengService.getXGEndTime();
+        if(hourInStTime>=beginHour && hourInEndTime<=endHour) {
+            return true;
+        }
+        return false;
     }
 
     private static final Log logger = LogFactory.getLog(StatisticController.class);

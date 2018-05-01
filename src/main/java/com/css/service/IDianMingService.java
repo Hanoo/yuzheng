@@ -77,4 +77,12 @@ public interface IDianMingService {
      * @throws Exception
      */
     List getDianMingByTime(String stTime, String endTime) throws Exception;
+
+    /**
+     * 根据时间参数查询异常预警
+     * @param reqMap
+     * @return
+     * @throws Exception
+     */
+    List getYcInfoByTime(Map reqMap) throws Exception;
 }

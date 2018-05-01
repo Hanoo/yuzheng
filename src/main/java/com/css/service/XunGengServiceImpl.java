@@ -521,4 +521,63 @@ public class XunGengServiceImpl implements XunGengService {
         return this.pEnd;
     }
 
+    public List<XunGeng> getXGYc(Map timePair) throws Exception {
+        DataSourceTypeManager.set(DataSources.EYFINGER);
+        String stTime = (String) timePair.get("stTime");
+        String endTime = (String) timePair.get("endTime");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startTime = dateFormat.parse(stTime);
+        Date ndTime = dateFormat.parse(endTime);
+        SimpleDateFormat zjFormat = new SimpleDateFormat("yyyy-MM-dd HH:30:00");
+        String zjTime = zjFormat.format(startTime);
+        Date halfTime = dateFormat.parse(zjTime);
+
+        // 页面展示的起止时间格式，减小长度以便页面显示
+        SimpleDateFormat fstDisplayTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat secDisplayTimeFormat = new SimpleDateFormat("HH:mm");
+
+        // 查询前半小时的数据
+        Map<String, String> fstHalfTime = new HashMap();
+        fstHalfTime.put("strdate",stTime);
+        fstHalfTime.put("enddate",zjTime);
+        List<Map> WXGtongjiList1 = (List) dao.findForList("XunGeng.getXGYc", fstHalfTime);
+
+        String AddrName = "";
+
+        String nowToDis = dateFormat.format(new Date());
+        List newList = new ArrayList();
+        for (Map xunGeng : WXGtongjiList1){
+            Map item = new HashMap();
+            AddrName = xunGeng.get("AddrName").toString();
+            item.put("name","巡更异常");
+            item.put("info",AddrName + fstDisplayTimeFormat.format(startTime)+"至"+secDisplayTimeFormat.format(halfTime) +"未准时巡更" );
+            item.put("time",nowToDis);
+            item.put("LogDate", stTime);
+            item.put("RegDate", zjTime);
+            item.put("AddrID", xunGeng.get("AddrID"));
+            item.put("description", xunGeng.get("EvenRec"));
+            newList.add(item);
+        }
+
+        // 查询后半个小时的数据
+        Map secHalfTime = new HashMap();
+        secHalfTime.put("strdate",zjTime);
+        secHalfTime.put("enddate",endTime);
+        List<Map> WXGtongjiList2 = (List) dao.findForList("XunGeng.getXGYc", secHalfTime);
+        for (Map xunGeng : WXGtongjiList2){
+            Map item = new HashMap();
+            AddrName = xunGeng.get("AddrName").toString();
+            item.put("name","巡更统计");
+            item.put("info",AddrName + fstDisplayTimeFormat.format(halfTime) +"至"+secDisplayTimeFormat.format(ndTime) +"未准时巡更" );
+            item.put("time",nowToDis);
+            item.put("LogDate", zjTime);
+            item.put("RegDate", endTime);
+            item.put("AddrID", xunGeng.get("AddrID"));
+            item.put("description", xunGeng.get("EvenRec"));
+            newList.add(item);
+        }
+
+        return newList;
+    }
+
 }

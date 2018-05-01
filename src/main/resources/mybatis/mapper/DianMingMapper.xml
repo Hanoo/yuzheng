@@ -247,4 +247,24 @@ end
         from dianming_history
         where 1=1 AND begintime>=#{stTime} AND #{endTime}>=endtime
     </select>
+
+    <!-- 获取当前时间前一小时当前用户所属监区的点名情况，包含描述信息 -->
+    <select id="getFullDMInfo" parameterType="java.util.Map" resultMap="dianMingResultMap">
+        SELECT
+        detail.aname as name,
+        detail.aid   as area_id,
+        (CASE WHEN log.pcountsum IS null THEN 0 ELSE log.pcountsum END) as value,
+        (CASE WHEN log.pcount IS null THEN 0 ELSE log.pcount END) as pcount,
+        log.jkczy as caption
+        FROM
+        zte_AreaDetail detail
+        LEFT JOIN
+        (
+        SELECT pid, pname, aid, begintime, endtime, pcount, pcountsum, aminute, jkczy FROM zte_AreaQd_Log WHERE 1=1 ${timeParam}
+        UNION ALL
+        SELECT pid, pname, aid, begintime, endtime, pcount, pcountsum, aminute, '[已处理]'+description as jkczy from zte_AreaQd_MnuLog where 1=1 ${timeParam}
+        ) log
+        ON
+        detail.aid=log.aid
+    </select>
 </mapper>

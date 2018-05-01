@@ -53,9 +53,20 @@ public interface XunGengService {
     Map<String, String> getSETime4ADay(String date) throws ParseException;
 
     /**
-     * 获取巡更开始的时间
+     * 获取配置文件中定义的每天巡更的第一个钟点
      * @return
      */
     int getXGStartTime();
+
+    /**
+     * 获取配置文件中定义的每天巡更的最后一个钟点
+     * @return
+     */
     int getXGEndTime();
+
+    /**
+     * 查询当前的巡更异常
+     * @Param timePair 开始结束时间对
+     */
+    List<XunGeng> getXGYc(Map timePair) throws Exception;
 }

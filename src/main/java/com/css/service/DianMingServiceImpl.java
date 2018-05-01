@@ -772,6 +772,102 @@ public class DianMingServiceImpl implements IDianMingService {
         return dataList;
     }
 
+    public List getYcInfoByTime(Map reqMap) throws Exception {
+        //切换到点名系统数据源
+        DataSourceTypeManager.set(DataSources.ZKESERVER);
+        //实例化一个List用来存放结果集
+        List resList = new ArrayList();
+        String stTime = reqMap.get("stTime").toString();
+        String endTime = reqMap.get("endTime").toString();
+        String params = " AND endtime >='" + stTime + "' AND endtime <='" + endTime + "'";
+        Map queryParam = new HashMap();
+        queryParam.put("timeParam", params);
+        List dianMingList = (List) dao.findForList("DianMingMapper.getFullDMInfo", queryParam);
+        for (int i = 0; i<dianMingList.size(); i++) {
+            Map dataItem = new HashMap();
+            DMinfo dmInfo = (DMinfo) dianMingList.get(i);
+            String fx = dmInfo.getValue().toString();
+            String jqmc = dmInfo.getName();
+            String desc = dmInfo.getCaption();
+
+            if(!StringUtils.isNullOrEmpty(desc) && desc.startsWith("[已处理]")) {
+                dataItem.put("name", "点名预警");
+                dataItem.put("info", jqmc + stTime + "到" + endTime + "未按要求点名");
+                dataItem.put("time", endTime);
+                dataItem.put("description", desc);
+                resList.add(dataItem);
+            } else if ("0".equals(fx)) {
+                dataItem.put("name", "点名预警");
+                dataItem.put("info", jqmc + stTime + "到" + endTime + "未按要求点名");
+                dataItem.put("time", endTime);
+                resList.add(dataItem);
+            }
+        }
+
+        //获取警力分布情况
+        List jlList = deptJLService.getDeptJl(reqMap);
+
+        //查询所有监区点名情况
+
+        List dmList = new ArrayList();
+
+        //将警力部署和点名相结合
+        for (int i = 0; i < dianMingList.size(); i++) {
+
+            DMinfo dmInfo = (DMinfo) dianMingList.get(i);
+            for (int j = 0; j < jlList.size(); j++) {
+                DeptJL dl = (DeptJL) jlList.get(j);
+                String perc;
+                if (dmInfo.getName().equals(dl.getDeptName())) {
+
+                    Map jlMap = new HashMap();
+                    //因到警察数
+                    dmInfo.setPlanCount(dl.getPlanCount());
+
+                    //实到警察数
+                    dmInfo.setRealCount(dl.getRealCount());
+
+                    //实际到的服刑人数和警力人数
+
+                    String jqmc = dl.getDeptName();
+                    if (dmInfo.getValue() == 0 || !StringUtils.isNullOrEmpty(dl.getZbtemp1())) {
+                        perc = "0%";
+                        jlMap.put("name", "警力预警");
+                        jlMap.put("info", jqmc + stTime + "到" + endTime + "警力预警");
+                        jlMap.put("time", endTime);
+
+                        if(!StringUtils.isNullOrEmpty(dl.getZbtemp1())) {
+                            jlMap.put("description", dl.getZbtemp1());
+                        }
+                        resList.add(jlMap);
+                    } else {
+                        String fx = dmInfo.getValue().toString();
+                        String jl = dl.getRealCount().toString();
+                        double percent = Float.parseFloat(jl) / Float.parseFloat(fx);
+
+                        //获取格式化对象
+                        NumberFormat nt = NumberFormat.getPercentInstance();
+
+                        //设置百分数精确度2即保留两位小数
+                        nt.setMinimumFractionDigits(2);
+                        perc = nt.format(percent);
+
+                        if (percent < 0.1) {
+                            jlMap.put("name", "警力预警");
+                            jlMap.put("info", jqmc + stTime + "到" + endTime + "警力预警");
+                            jlMap.put("time", endTime);
+                            resList.add(jlMap);
+                        }
+                    }
+                    //百分比
+                    dmInfo.setPerc(perc);
+                    dmList.add(dmInfo);
+                }
+            }
+        }
+        return resList;
+    }
+
     @Transactional
     //查询时间的方法
     public Map getCxTime() {

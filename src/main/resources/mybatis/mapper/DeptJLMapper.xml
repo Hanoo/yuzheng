@@ -328,7 +328,7 @@
     ) rec
     LEFT JOIN
     (
-        SELECT dept_id, description FROM Dept_JLMnu WHERE starttime>=CONVERT(datetime, #{startTime},20) AND CONVERT(datetime, #{endTime},20)>=endtime
+        SELECT dept_id, '[已处理]'+description as description FROM Dept_JLMnu WHERE starttime>=CONVERT(datetime, #{startTime},20) AND CONVERT(datetime, #{endTime},20)>=endtime
     ) manual
     ON rec.DeptID=manual.dept_id
     </select>
