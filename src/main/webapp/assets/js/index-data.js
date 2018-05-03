@@ -701,7 +701,7 @@ function loadAlarmData() {
                 dmAlarm.empty();
                 dmAlarm.append(dmAlarmContent);
             }
-            if(j>0) {
+            if((j+k)>0) {
                 othAlarm.empty();
                 othAlarm.append(othAlarmContent);
             }
@@ -717,7 +717,7 @@ function loadAlarmData() {
                     index:"timer1"
                 });
             }
-            if(j>3) {
+            if((j+l)>3) {
                 if(scrollQ2) {
                     cleanScrollQ(scrollQ2,"timer2");
                 }

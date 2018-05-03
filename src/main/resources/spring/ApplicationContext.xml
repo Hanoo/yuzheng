@@ -72,8 +72,8 @@
     <bean id="ZKESERVER" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库基本信息配置 -->
         <property name="url" value="${proxool.urlZk}" />
-        <property name="username" value="sa" />
-        <property name="password" value="Asdf1234" />
+        <property name="username" value="${proxool.userZk}" />
+        <property name="password" value="${proxool.passwordZk}" />
         <property name="driverClassName" value="${proxool.driver}" />
         <!-- 最大并发连接数 -->
         <property name="maxActive" value="${maxActive}" />
@@ -90,8 +90,8 @@
     <bean id="EYFINGER" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库基本信息配置 -->
         <property name="url" value="${proxool.urlFinger}" />
-        <property name="username" value="sa" />
-        <property name="password" value="Asdf1234" />
+        <property name="username" value="${proxool.userFinger}" />
+        <property name="password" value="${proxool.passwordFinger}" />
         <property name="driverClassName" value="${proxool.driver}" />
         <!-- 最大并发连接数 -->
         <property name="maxActive" value="${maxActive}" />
@@ -108,8 +108,8 @@
     <bean id="JGXT" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库基本信息配置 -->
         <property name="url" value="${proxool.urlJGXT}" />
-        <property name="username" value="sa" />
-        <property name="password" value="Asdf1234" />
+        <property name="username" value="${proxool.userJGXT}" />
+        <property name="password" value="${proxool.passwordJGXT}" />
         <property name="driverClassName" value="${proxool.driver}" />
         <!-- 最大并发连接数 -->
         <property name="maxActive" value="${maxActive}" />
@@ -127,8 +127,8 @@
     <bean id="IMSDB" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 数据库基本信息配置 -->
         <property name="url" value="${proxool.urlIM}" />
-        <property name="username" value="sa" />
-        <property name="password" value="Asdf1234" />
+        <property name="username" value="${proxool.userIM}" />
+        <property name="password" value="${proxool.passwordIM}" />
         <property name="driverClassName" value="${proxool.driver}" />
         <!-- 最大并发连接数 -->
         <property name="maxActive" value="${maxActive}" />

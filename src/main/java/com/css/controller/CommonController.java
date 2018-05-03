@@ -73,4 +73,9 @@ public class CommonController {
     public String  entrance (){
         return "entrance";
     }
+
+    @RequestMapping("/404")
+    public String pageNotFound(){
+        return "404";
+    }
 }
