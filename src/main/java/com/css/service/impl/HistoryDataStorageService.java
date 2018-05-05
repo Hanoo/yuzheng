@@ -102,13 +102,23 @@ public class HistoryDataStorageService {
         String stTime = sdf.format(timeInstance.getTime());// "2017-03-09 00:00:00"
         logger.info("本次抓取的开始时间：" + stTime);
 
+        timeInstance.set(Calendar.MINUTE, 30);
+        String endTime = sdf.format(timeInstance.getTime());// "2017-03-09 00:30:00"
+        logger.info("本次抓取的截至时间：" + endTime);
+
+        List data = xunGengService.getXunGengHistory(stTime, endTime);
+        DataSourceTypeManager.set(DataSources.JIANYU);
+        hDataService.saveXGHistory(data, stTime, endTime);
+
+        stTime = endTime;
+        logger.info("本次抓取的开始时间：" + stTime);
         timeInstance.set(Calendar.HOUR_OF_DAY, timePoint);
         timeInstance.set(Calendar.MINUTE, 59);
         timeInstance.set(Calendar.SECOND, 59);
-        String endTime = sdf.format(timeInstance.getTime());// "2017-03-09 23:59:59"
+        endTime = sdf.format(timeInstance.getTime());// "2017-03-09 23:59:59"
         logger.info("本次抓取的截至时间：" + endTime);
-        List data = xunGengService.getXunGengHistory(stTime, endTime);
 
+        data = xunGengService.getXunGengHistory(stTime, endTime);
         DataSourceTypeManager.set(DataSources.JIANYU);
         hDataService.saveXGHistory(data, stTime, endTime);
     }

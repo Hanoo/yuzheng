@@ -289,12 +289,25 @@ public class DianMingController {
     @ResponseBody
     public List getHistoryData(String timeParam) throws Exception{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat queryFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date queryTime = sdf.parse(timeParam);
         Calendar instance = Calendar.getInstance();
         instance.setTime(queryTime);
-        String stTime = sdf.format(instance.getTime());
-        instance.set(Calendar.HOUR_OF_DAY, instance.get(Calendar.HOUR_OF_DAY)+1);
-        String endTime = sdf.format(instance.getTime());
+        String stTime;
+        int minute = instance.get(Calendar.MINUTE);
+        if(minute<30) {
+            instance.set(Calendar.MINUTE, 0);
+            stTime = queryFormat.format(instance.getTime());
+
+            instance.set(Calendar.MINUTE, 29);
+        } else {
+            instance.set(Calendar.MINUTE, 30);
+            stTime = queryFormat.format(instance.getTime());
+
+            instance.set(Calendar.MINUTE, 59);
+        }
+        instance.set(Calendar.SECOND, 59);
+        String endTime = queryFormat.format(instance.getTime());
 
         List data = dianMingService.getDianMingByTime(stTime, endTime);
         return data;
