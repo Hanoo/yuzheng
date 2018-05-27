@@ -147,8 +147,6 @@ public class DianMingController {
             //获取未到点名人员明细
             List wdDmList = dianMingService.getWdDmInfo(reqMap);
             reqJson = JSON.listToJson(wdDmList);
-            System.out.print("ssssssssssssssssssssss" + wdDmList.size());
-            System.out.print("JSON" + reqJson);
         } catch (Exception e) {
             e.printStackTrace();
         }

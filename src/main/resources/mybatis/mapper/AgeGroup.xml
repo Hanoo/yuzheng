@@ -10,31 +10,31 @@
     <select id="getAgeGroups" resultMap="BaseResultMap">
         SELECT '1930' as 'ageGroup', COUNT(id) as 'count'
         FROM DA_JBXX
-        where DA_JBXX.csrq>19300101 and 19301231>DA_JBXX.csrq
+        where DA_JBXX.csrq>19300101 and 19391231>DA_JBXX.csrq and zr>GETDATE()
         UNION ALL
         SELECT '1940' as 'ageGroup', COUNT(id) as 'count'
         FROM DA_JBXX
-        where DA_JBXX.csrq>19400101 and 19401231>DA_JBXX.csrq
+        where DA_JBXX.csrq>19400101 and 19491231>DA_JBXX.csrq and zr>GETDATE()
         UNION ALL
         SELECT '1950' as 'ageGroup', COUNT(id) as 'count'
         FROM DA_JBXX
-        where DA_JBXX.csrq>19500101 and 19501231>DA_JBXX.csrq
+        where DA_JBXX.csrq>19500101 and 19591231>DA_JBXX.csrq and zr>GETDATE()
         UNION ALL
         SELECT '1960' as 'ageGroup', COUNT(id) as 'count'
         FROM DA_JBXX
-        where DA_JBXX.csrq>19600101 and 19601231>DA_JBXX.csrq
+        where DA_JBXX.csrq>19600101 and 19691231>DA_JBXX.csrq and zr>GETDATE()
         UNION ALL
         SELECT '1970' as 'ageGroup', COUNT(id) as 'count'
         FROM DA_JBXX
-        where DA_JBXX.csrq>19700101 and 19701231>DA_JBXX.csrq
+        where DA_JBXX.csrq>19700101 and 19791231>DA_JBXX.csrq and zr>GETDATE()
         UNION ALL
         SELECT '1980' as 'ageGroup', COUNT(id) as 'count'
         FROM DA_JBXX
-        where DA_JBXX.csrq>19800101 and 19801231>DA_JBXX.csrq
+        where DA_JBXX.csrq>19800101 and 19891231>DA_JBXX.csrq and zr>GETDATE()
         UNION ALL
         SELECT '1990' as 'ageGroup', COUNT(id) as 'count'
         FROM DA_JBXX
-        where DA_JBXX.csrq>19900101 and 19901231>DA_JBXX.csrq
+        where DA_JBXX.csrq>19900101 and 19991231>DA_JBXX.csrq and zr>GETDATE()
     </select>
 
     <select id="getSentenceLength" resultMap="BaseResultMap">
