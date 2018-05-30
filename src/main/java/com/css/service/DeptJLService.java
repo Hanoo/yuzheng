@@ -46,4 +46,11 @@ public interface DeptJLService {
     int insertManualJlInfo(Map jlInfo) throws Exception;
 
     List getJLByTime(String stTime, String endTime) throws Exception;
+
+    /**
+     * 统计各部门警力情况
+     * @return
+     * @throws Exception
+     */
+    List<DeptJL> getDeptJLCount(int size) throws Exception;
 }

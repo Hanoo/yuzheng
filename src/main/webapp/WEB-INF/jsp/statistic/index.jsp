@@ -121,9 +121,16 @@
                                 </div>
                                 <div style="width: 100%"  >
                                     <div class="card-box">
-                                        <h4 class=" header-title m-t-0 m-b-30">
-                                            警力分布
-                                        </h4>
+                                        <div class="page-title-box">
+
+                                            <h4 class="page-title" style="font-size:21px;font-weight:700">部门警力</h4>
+
+                                            <ol class="breadcrumb float-right">
+                                                <li class="breadcrumb-item"><a href="statistic/deptJingLi">更多...</a></li>
+                                            </ol>
+                                            <div class="clearfix"></div>
+                                        </div>
+
                                         <div class="row" id="empTypeHJTop">
                                             <div class="clear"></div>
                                         </div>

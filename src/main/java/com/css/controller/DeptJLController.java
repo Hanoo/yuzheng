@@ -217,11 +217,37 @@ public class DeptJLController {
     }
 
 
+    /**
+     * 查询所有部门出勤情况，只显示前17条
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/toJlSync")
     @ResponseBody
-    public List<DeptJL> toJlSync() {
-        List<DeptJL> deptJLList = getJLCount();
-        return deptJLList;
+    public List<DeptJL> toJlSync() throws Exception {
+        return  deptJLService.getDeptJLCount(17);
+    }
+
+    /**
+     * 查询所有部门出勤情况
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/jl/getAllDeptsJLCount")
+    @ResponseBody
+    public List<DeptJL> getAllDeptsJLCount() throws Exception {
+        return  deptJLService.getDeptJLCount(999);
+    }
+
+    /**
+     * 查询监区警力
+     * @return 监区警力统计模型
+     * @throws Exception
+     */
+    @RequestMapping("/jl/getPAreaJLCount")
+    @ResponseBody
+    public List<DeptJL> getPAreaJLCount() throws Exception {
+        return  deptJLService.getYDDeptJLCount();
     }
 
     @RequestMapping("/toJlSyncHJ")
@@ -329,16 +355,4 @@ public class DeptJLController {
         return new ModelAndView(new JingLiExcel("监区警力统计表"+stTime+"至"+endTime+".xls"), data);
     }
 
-    private List<DeptJL> getJLCount() {
-
-        List<DeptJL> deptJLList = new ArrayList<DeptJL>();
-        try {
-            deptJLList = deptJLService.getYDDeptJLCount();
-            //String jsonStr = JSON.listToJson(deptJLList);
-            //mv.getModel().put("jsonStr",jsonStr);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return deptJLList;
-    }
 }

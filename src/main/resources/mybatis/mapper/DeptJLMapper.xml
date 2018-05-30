@@ -57,12 +57,24 @@
 
     <!--所有部门合计统计情况 ${params}：自定义条件可加人员类型限制；${params1}：自定义条件可加入 部门类型限制-->
     <select id="getYDDeptJLCountHJ" parameterType="java.util.Map" resultMap="deptJLCountHJMap">
-       SELECT SUM(ys.realCount) totalRealCount,SUM(ys.planCount) totalPlanCount,(CASE WHEN SUM(ys.planCount) = '0' THEN '0%' ELSE CONVERT(varchar(10), CONVERT(decimal(10, 2), CONVERT(decimal, SUM(ys.realCount)) / CONVERT(decimal, SUM(ys.planCount)) * 100)) + '%' END) perc FROM
+       SELECT
+           SUM(ys.realCount) totalRealCount,
+           SUM(ys.planCount) totalPlanCount,
+           (CASE WHEN SUM(ys.planCount) = '0' THEN '0%' ELSE CONVERT(varchar(10), CONVERT(decimal(10, 2), CONVERT(decimal, SUM(ys.realCount)) / CONVERT(decimal, SUM(ys.planCount)) * 100)) + '%' END) perc
+       FROM
 
-            (SELECT yingdao.DeptID,yingdao.DeptNo,yingdao.DeptName,yingdao.EmpCount planCount,shidao.i realCount,(CASE WHEN yingdao.EmpCount is NULL OR yingdao.EmpCount=0 OR shidao.i is NULL OR shidao.i=0 THEN '0%' ELSE CONVERT(varchar(10), CONVERT(decimal(10, 2), CONVERT(decimal, shidao.i) / CONVERT(decimal, yingdao.EmpCount) * 100)) + '%' END) perc FROM
-	            (SELECT DeptID,SUM(CASE WHEN t.IoDoorB=1 THEN t.ios ELSE 0 END) i,SUM(CASE WHEN t.IoDoorB=0 THEN t.ios ELSE 0 END) o FROM
+            (SELECT yingdao.DeptID,
+                    yingdao.DeptNo,
+                    yingdao.DeptName,
+                    yingdao.EmpCount planCount,
+                    shidao.i realCount,
+                    (CASE WHEN yingdao.EmpCount is NULL OR yingdao.EmpCount=0 OR shidao.i is NULL OR shidao.i=0 THEN '0%' ELSE CONVERT(varchar(10), CONVERT(decimal(10, 2), CONVERT(decimal, shidao.i) / CONVERT(decimal, yingdao.EmpCount) * 100)) + '%' END) perc
+            FROM
+	            (SELECT DeptID,SUM(CASE WHEN t.IoDoorB=1 THEN t.ios ELSE 0 END) i,SUM(CASE WHEN t.IoDoorB=0 THEN t.ios ELSE 0 END) o
+	            FROM
 		            (SELECT DeptID,IoDoorB,COUNT(*) ios FROM HrEmployee emp WHERE 1=1 AND  emp.Leave=0 AND emp.EmpType=1  GROUP BY emp.DeptID,emp.IoDoorB ) t
-	            GROUP BY t.DeptID)shidao
+	            GROUP BY t.DeptID
+	            ) shidao
 
 	        LEFT JOIN
 
@@ -73,10 +85,11 @@
 				  dept.DeptType,
 				  dept_count.EmpCount
 
-			    FROM HrDept dept
-			    LEFT JOIN (SELECT DeptID ,COUNT(*) EmpCount from HrEmployee emp WHERE 1=1 AND emp.Leave=0 AND emp.EmpType=1 GROUP BY DeptID) dept_count
-			    ON dept.DeptID=dept_count.DeptID
-			    WHERE 1=1)yingdao
+			FROM HrDept dept
+			LEFT JOIN
+			    (SELECT DeptID ,COUNT(*) EmpCount from HrEmployee emp WHERE emp.Leave=0 AND emp.EmpType=1 GROUP BY DeptID) dept_count
+			ON dept.DeptID=dept_count.DeptID
+			) yingdao
             ON shidao.DeptID=yingdao.DeptID
             WHERE 1=1 ${params})ys
     </select>

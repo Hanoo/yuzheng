@@ -135,10 +135,16 @@
                         <span> 首页 </span>
                     </a>
                 </li>
-                <li class="has_sub">
+                <li>
+                    <a href="/statistic/index/#" class="waves-effect waves-primary">
+                        <i class="ti-bar-chart-alt"></i>
+                        <span>数据统计</span>
+                    </a>
+                </li>
+                <li>
                     <a href="/statistic/jingLi" class="waves-effect waves-primary">
                         <i class=" ti-user"></i>
-                        <span>警力分布</span>
+                        <span>监区警力</span>
                     </a>
                 </li>
                 <li>
@@ -157,6 +163,12 @@
                     <a href="/statistic/wRecFrame" class="waves-effect waves-primary">
                         <i class="ti-bell"></i>
                         <span>预警纪录</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/statistic/deptJingLi" class="waves-effect waves-primary">
+                        <i class="ti-layout-grid3-alt"></i>
+                        <span>部门警力</span>
                     </a>
                 </li>
             </ul>

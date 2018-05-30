@@ -6,10 +6,7 @@ import org.junit.Test;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.crypto.SecretKeyFactory;
 public class GenTest {
@@ -62,5 +59,17 @@ public class GenTest {
 
         SimpleDateFormat sdfNoSec = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         System.out.println(sdf.format(calendar.getTime()));
+    }
+
+    @Test
+    public void testList() {
+        List list = new LinkedList();
+        for(int i=0;i<100;i++) {
+            list.add(new Integer(i));
+        }
+        List newList = list.subList(0, 50);
+        for(int j=0;j<newList.size();j++) {
+            System.out.println(newList.get(j));
+        }
     }
 }

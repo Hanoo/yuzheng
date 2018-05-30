@@ -1,4 +1,4 @@
-var radius = [47, 57];//pie内外半径
+var radius = [37, 47];//pie内外半径
 var legend_data = [];//pie图例
 var pie = echarts.init(document.getElementById('jlPie'));
 
@@ -105,12 +105,20 @@ var option = {
 
 /*获取pie-option-series 所需数据*/
 function getSeries_data(json) {
+    var screenWidth = document.body.clientWidth;
+    var picCountPerLine = 6;
+    if(screenWidth>1900) {
+        picCountPerLine = 8;
+        radius = [47, 57];
+    }
+    var lines = Math.ceil(json.length/picCountPerLine);
+
     var series_data = [];
     for (var i = 0; i < json.length; i++) {
         var m = json[i];
         //计算pie环图坐标
-        var x = (0.1 + (i % 6) * 0.16) * 100 + '%';
-        var y = (0.22 + Math.floor(i / 6) * 0.26) * 100 + '%';
+        var x = (1/picCountPerLine/2 + (i % picCountPerLine) * 1/picCountPerLine) * 100 + '%';
+        var y = (1/lines/2 + Math.floor(i / picCountPerLine) * 1/lines) * 100 + '%';
 
         var a = Math.random() * 100;
         //全局变量legend_data赋值
@@ -143,7 +151,7 @@ pie.on('click', function (params) {
     if (key == 0) {
         $('#dlg').dialog({
             title: '未出勤人员列表' + '（' + name + ')',
-            width: 800,
+            width: 850,
             height: 600,
             closed: false,
             cache: false,
@@ -154,7 +162,7 @@ pie.on('click', function (params) {
     } else if (key == 1) {
         $('#dlg').dialog({
             title: '出勤人员列表' + '（' + name + ')',
-            width: 800,
+            width: 850,
             height: 600,
             closed: false,
             cache: false,
@@ -168,7 +176,7 @@ function refData() {
     // 异步获取各监区警力数据并显示饼图
     $.ajax({
         type: 'GET',
-        url: '/jl/getPAreaJLCount',
+        url: '/jl/getAllDeptsJLCount',
         success: function (data) {
             var optionNew = pie.getOption();
             optionNew.series = getSeries_data(data);

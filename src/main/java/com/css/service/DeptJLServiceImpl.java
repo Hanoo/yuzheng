@@ -29,18 +29,18 @@ public class DeptJLServiceImpl implements DeptJLService {
     @Value("${jlsxsj}")
     private String jlsxsj;//警力刷新时间间隔
 
-  /*
-  获取部门应到人数
-  例如：{DeptID=31, DeptNo='0031', DeptName='一监区', EmpCount=18}
-  */
+    /**
+      获取部门应到人数
+      例如：{DeptID=31, DeptNo='0031', DeptName='一监区', EmpCount=18}
+    */
     public List<DeptJL> getYDDeptJLCount() throws Exception {
         //获取数据源
         DataSourceTypeManager.set(DataSources.IMSDB);
 
         //设置sql参数
         Map map = new HashMap();
-        //map.put("params"," AND 1=1");//可自定义条件 加入人员类型限制
-        map.put("params"," AND yingdao.DeptType=1 ORDER BY yingdao.DeptID");//可自定义条件 加入部门类型限制
+        //可自定义条件，加入部门类型限制，1 即部门类型为监区
+        map.put("params"," AND yingdao.DeptType=1 ORDER BY yingdao.DeptID");
 
         List deptJLlList =(List) dao.findForList("DeptJLMapper.getYDDeptJLCount",map);
 
@@ -301,5 +301,23 @@ public class DeptJLServiceImpl implements DeptJLService {
         params.put("stTime", stTime);
         List list = (List)dao.findForList("DeptJLMapper.getJLByTime", params);
         return list;
+    }
+
+    public List<DeptJL> getDeptJLCount(int size) throws Exception {
+        //获取数据源
+        DataSourceTypeManager.set(DataSources.IMSDB);
+
+        //设置sql参数
+        Map params = new HashMap();
+        //可自定义条件，加入部门类型限制，1 即部门类型为监区
+        params.put("params"," ORDER BY yingdao.DeptID");
+
+        List deptJLlList =(List) dao.findForList("DeptJLMapper.getYDDeptJLCount",params);
+
+        if (size >= deptJLlList.size()) {
+            return deptJLlList;
+        } else {
+            return deptJLlList.subList(0, size);
+        }
     }
 }

@@ -165,6 +165,11 @@ public class StatisticController {
         return "statistic/xunGeng";
     }
 
+    @RequestMapping("/deptJingLi")
+    public String deptJingLi() {
+        return "statistic/deptJingLi";
+    }
+
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute(IConstant.SESSION_ATTRIBUTE_USER);
